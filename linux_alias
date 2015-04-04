@@ -1,0 +1,23 @@
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+alias emacs='env XMODIFIERS= emacs'
+alias e='emacsclient -n'
+alias edit='emacsclient -n'
+
+alias hgrep='history|grep --color'
+alias phgrep='cat ~/.persistent_history|grep --color'
+alias psg='ps -ef | grep'
+alias psj='ps -ef | grep java'
+
+alias ctrlc='xclip -selection c'
+alias ctrlv='xclip -selection c -o'
+alias xopen='xdg-open'
+
+alias drae='sdcv -u drae'
+alias e2s='sdcv -u "English-Spanish dictionary"'
+alias s2e='sdcv -u "Spanish-English dictionary"'
+alias e2e='sdcv -u "Concise Oxford English Dictionary (En-En)"'
+
+alias meminfo='egrep --color "Mem|Cache|Swap" /proc/meminfo'

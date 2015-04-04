@@ -1,0 +1,5 @@
+export PATH=$PATH:$HOME/conf/bin
+export HISTTIMEFORMAT="%d/%m/%y %T "
+export ALTERNATE_EDITOR=emacs EDITOR=emacsclient VISUAL=emacsclient
+
+xsetwacom --set 21 touch off

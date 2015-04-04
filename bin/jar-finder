@@ -1,0 +1,40 @@
+#!/bin/bash
+# Work in progress
+
+find . -name "*.jar" -not -path "./mobicents-read-only/*" -not -path "./wsdl/*" -not -path "./jain-slee.ss7/*" > jar-list
+
+grep "xml\-1" jar-list > xml-jars
+echo "---" >> xml-jars
+
+loop-jar-list() {
+
+    local JARLIST=$1
+    local JARCONTAINER=$2
+    echo "Results in file $JARLIST :" >> xml-jars
+    while read f; do
+
+        if [ -z "$JARCONTAINER" ]; then
+            echo "This should be initial jar-list"
+        else
+            jar xvf $JARCONTAINER
+        fi
+
+        local TEMPFILE=.tmp-contents-`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
+        jar tvf $f > $TEMPFILE
+        grep "xml\-1.*jar" $TEMPFILE >> xml-jars
+        if [ $? -eq 0 ]; then
+            echo "Found in" $f >> xml-jars
+        fi;
+
+        local TEMPJARS=.tmp-jars-`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
+        awk '/\.jar/ { print $8 }' $TEMPFILE > $TEMPJARS
+
+        [[ -s $TEMPJARS ]] && loop-jar-list $TEMPJARS $f
+
+        #        rm -f $TEMPFILE
+        #        rm-f $TEMPJARS
+
+    done < $JARLIST
+}
+
+loop-jar-list jar-list

@@ -320,7 +320,8 @@ Check buf-move-right, left, up, down"
                             (setq company-idle-delay 0)
                             (setq ac-sources '(ac-source-love))
                             (push ac-source-lua ac-sources)
-                            (auto-complete-mode)))
+                            (auto-complete-mode)
+                            ))
 
 
 ;; --- Processing ---

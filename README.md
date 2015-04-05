@@ -1,18 +1,23 @@
-# my conf
-This repo stores my configuration settings for Emacs & bash under Linux and Mac OS X.
+# myconf
+This repo stores my configuration settings for bash & GNU Emacs under Linux and Mac OS X.
 
-TDB: Create links to files in here, etc...
-TDB: Stores init files, utility scripts, etc...
+In order to set bash environment and aliases, it is necessary to source the corresponding script.
+For example, on Ubuntu 14.04:
 
-For example, in my Ubuntu 14.04 machine I have:
+    user@ubuntu:~$ cat .bash_aliases
+    . ~/myconf/linux_alias
 
-    etomort@elx306b6vv:~$ cat .bash_aliases
-    . ~/conf/linux_alias
-
-    etomort@elx306b6vv:~$ tail -3 .bashrc
+    user@ubuntu:~$ tail -3 .bashrc
     # --- my conf
-    . ~/conf/linux_env
-    . ~/conf/persistent_history
+    . ~/myconf/linux_env
+    . ~/myconf/persistent_history
 
+On Mac OS X:
+
+    TDB
+
+To load emacs `init.el` file, create a symbolic link like:
+
+    user@hostname:~/.emacs.d$ ln -s ~/myconf/init.el init.el
 
 TODO: I might change its name to **onmyset**, as it has a [funny meaning.](http://es.urbandictionary.com/define.php?term=On+My+Set)

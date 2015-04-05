@@ -303,8 +303,8 @@ Check buf-move-right, left, up, down"
 
 
 ;; --- Lua & Löve ---
-(add-to-list 'load-path "~/.emacs.d/auto-complete-lua/")
-(add-to-list 'load-path "~/.emacs.d/auto-complete-love/")
+(add-to-list 'load-path "~/.emacs.d/auto-complete-lua.el/")
+(add-to-list 'load-path "~/.emacs.d/auto-complete-love.el/")
 (require 'auto-complete-lua)
 (require 'auto-complete-love)
 
@@ -313,7 +313,8 @@ Check buf-move-right, left, up, down"
                             (setq company-idle-delay 0)
                             (setq ac-sources '(ac-source-love))
                             (push ac-source-lua ac-sources)
-                            (auto-complete-mode)))
+                            (auto-complete-mode)
+                            ))
 
 
 ;; --- Processing ---

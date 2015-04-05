@@ -7,7 +7,7 @@
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
 (require 'iso-transl) ;; Make dead keys work
-(cua-mode t) ;; Ctrl+Z, Ctrl+X, Ctrl+C, Ctrl+V
+(cua-mode t) ;; Ctrl+Z, Ctrl+X, Ctrl+C, Ctrl+V (Cmd+ in Mac OSX)
 
 (column-number-mode t)
 (show-paren-mode 1)
@@ -74,8 +74,15 @@
 (cond
  ((string-equal system-type "darwin")
   ;; Mac stuff
-  (setq mac-option-modifier 'nil)
+  (setq mac-option-modifier 'command)
   (setq mac-command-modifier 'meta)
+
+  (define-key global-map (kbd "C-<f2>")
+    (lambda ()
+      (interactive)
+      (x-popup-menu (list '(0 0) (selected-frame))
+                    (mouse-menu-bar-map))))
+
   (set-face-attribute 'default nil :height 200))
  ;; Ubuntu stuff
  ((set-face-attribute 'default nil :height 140)))
@@ -255,7 +262,7 @@ Check buf-move-right, left, up, down"
 ;; (add-hook 'c-mode-common-hook 'google-set-c-style)
 
 ;; Considering _ part of a word
-(modify-syntax-entry ?_ "w" c++-mode-syntax-table)
+;; (modify-syntax-entry ?_ "w" c++-mode-syntax-table)
 
 
 ;; --- Flycheck / other language related keys ---
@@ -303,8 +310,8 @@ Check buf-move-right, left, up, down"
 
 
 ;; --- Lua & Löve ---
-(add-to-list 'load-path "~/.emacs.d/auto-complete-lua/")
-(add-to-list 'load-path "~/.emacs.d/auto-complete-love/")
+(add-to-list 'load-path "~/.emacs.d/auto-complete-lua.el/")
+(add-to-list 'load-path "~/.emacs.d/auto-complete-love.el/")
 (require 'auto-complete-lua)
 (require 'auto-complete-love)
 

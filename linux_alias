@@ -1,3 +1,6 @@
+setxkbmap -layout us -option ctrl:nocaps
+setxkbmap -layout es -option ctrl:nocaps
+
 alias ctrlc='xclip -selection c'
 alias ctrlv='xclip -selection c -o'
 alias xopen='xdg-open'

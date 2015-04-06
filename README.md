@@ -1,7 +1,7 @@
 # myconf
 This repo stores my configuration settings for bash & GNU Emacs under Linux and Mac OS X.
 
-In order to set bash environment and aliases, it is necessary to source the corresponding script.
+In order to set bash environment and aliases, it is necessary to source the corresponding script.</br>
 For example, on Ubuntu 14.04:
 
     user@ubuntu:~$ cat .bash_aliases

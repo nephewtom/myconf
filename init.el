@@ -69,6 +69,9 @@
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
+(require 'magit)
+(setq magit-last-seen-setup-instructions "1.4.0")
+
 
 ;; --- Font size & Mac OS X stuff
 (cond
@@ -86,10 +89,6 @@
   (set-face-attribute 'default nil :height 200))
  ;; Ubuntu stuff
  ((set-face-attribute 'default nil :height 140)))
-
-;; Theme & Fonts
-;;(load-theme 'wombat t)
-;;(set-default-font "Ubuntu Mono 13")
 
 
 ;; --- Ido stuff ---
@@ -292,6 +291,7 @@ Check buf-move-right, left, up, down"
 
 
 ;; --- Markdown stuff ---
+(require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))

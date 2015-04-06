@@ -4,17 +4,25 @@ This repo stores my configuration settings for bash & GNU Emacs under Linux and 
 In order to set bash environment and aliases, it is necessary to source the corresponding script.</br>
 For example, on Ubuntu 14.04:
 
-    user@ubuntu:~$ cat .bash_aliases
-    . ~/myconf/linux_alias
-
     user@ubuntu:~$ tail -3 .bashrc
     # --- my conf
+    . ~/myconf/common_env
     . ~/myconf/linux_env
     . ~/myconf/persistent_history
 
-On Mac OS X:
+    user@ubuntu:~$ cat .bash_aliases
+    . ~/myconf/common_alias
+    . ~/myconf/linux_alias
 
-    TDB
+For example, on Mac OS X:
+
+    iMac:~ tomas$ cat .bash_profile
+    export PATH=${PATH}:~/bin
+    . ~/myconf/common_env
+    . ~/myconf/mac_env
+    . ~/myconf/persistent_history
+    . ~/myconf/common_alias
+    . ~/myconf/mac_alias
 
 To load emacs `init.el` file, create a symbolic link like:
 

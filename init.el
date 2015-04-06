@@ -70,6 +70,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (require 'magit)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 
 ;; --- Font size & Mac OS X stuff

@@ -1,16 +1,3 @@
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
-
-alias emacs='env XMODIFIERS= emacs'
-alias e='emacsclient -n'
-alias edit='emacsclient -n'
-
-alias hgrep='history|grep --color'
-alias phgrep='cat ~/.persistent_history|grep --color'
-alias psg='ps -ef | grep'
-alias psj='ps -ef | grep java'
-
 alias ctrlc='xclip -selection c'
 alias ctrlv='xclip -selection c -o'
 alias xopen='xdg-open'

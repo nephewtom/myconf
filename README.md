@@ -12,9 +12,15 @@ For example, on Ubuntu 14.04:
     . ~/myconf/linux_env
     . ~/myconf/persistent_history
 
-On Mac OS X:
+For example, on Mac OS X:
 
-    TDB
+    iMac:~ tomas$ cat .bash_profile
+    export PATH=${PATH}:~/bin
+    . ~/myconf/common_env
+    . ~/myconf/mac_env
+    . ~/myconf/persistent_history
+    . ~/myconf/common_alias
+    . ~/myconf/mac_alias
 
 To load emacs `init.el` file, create a symbolic link like:
 

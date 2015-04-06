@@ -1,3 +1,7 @@
+alias emacs='env XMODIFIERS= emacs'
+alias e='emacsclient -n'
+alias edit='emacsclient -n'
+
 alias ctrlc='xclip -selection c'
 alias ctrlv='xclip -selection c -o'
 alias xopen='xdg-open'

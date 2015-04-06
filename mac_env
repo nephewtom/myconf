@@ -1,0 +1,6 @@
+export PATH=${PATH}:~/bin
+export PATH=${PATH}:/Applications/Racket\ v5.3.6/bin/
+#PATH=${PATH}:/Applications/Xcode.app/Contents/Developer/usr/bin/
+
+# Github API token for homebrew
+export HOMEBREW_GITHUB_API_TOKEN=9101912256fb052b52349688853d1d685005157f

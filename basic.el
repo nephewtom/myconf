@@ -43,3 +43,13 @@
 (setq company-backends (delete 'company-semantic company-backends))
 (add-to-list 'company-backends 'company-c-headers)
 (global-set-key (kbd "M-y") 'company-complete)
+
+
+;; --- Reminder: Not using CUA mode, the typical values are:
+;; C-w kill-region      Cut
+;; C-y yank             Paste
+;; M-w kill-ring-save   Copy
+;; M-y yank-pop         ¿?
+
+(provide 'basic)
+;;; basic.el ends here

@@ -297,9 +297,31 @@ Check buf-move-right, left, up, down"
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (setq markdown-open-command "haroopad")
-
 (eval-after-load 'markdown-mode '(define-key markdown-mode-map (kbd "C-c C-c t") 'markdown-toc/generate-toc))
 
+;; From: https://github.com/shime/emacs-livedown
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
+(require 'livedown)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(c-basic-offset 4)
+ '(custom-safe-themes (quote ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
+ '(flycheck-clang-language-standard nil)
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(livedown:autostart nil)
+ '(livedown:open t)
+ '(livedown:port 1337)
+ '(vc-follow-symlinks t))
+    ; port for livedown server
+(global-set-key (kbd "C-M-m") 'livedown:preview)
+
+;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/
+(setq markdown-command "/home/etomort/myconf/bin/flavor.rb")
+
+;; Stuff to edit content in web forms via "Edit with Emacs"
 (require 'edit-server)
 (edit-server-start)
 (add-to-list 'edit-server-url-major-mode-alist '("^stackoverflow" . markdown-mode))
@@ -407,18 +429,10 @@ Check buf-move-right, left, up, down"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(hc-tab ((t (:background "wheat")))))
+ '(hc-tab ((t (:background "wheat"))))
+ '(magit-item-highlight ((t nil))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(c-basic-offset 4)
- '(custom-safe-themes (quote ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
- '(flycheck-clang-language-standard nil)
- '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(vc-follow-symlinks t))
+
 
 ;;; init.el ends here
 (put 'dired-find-alternate-file 'disabled nil)

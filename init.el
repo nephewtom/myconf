@@ -214,14 +214,14 @@ Check buf-move-right, left, up, down"
 (require 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
-(define-key ac-mode-map (kbd "C-M-y") 'auto-complete)
+(define-key ac-mode-map (kbd "C-M-y") 'auto-complete) ;; ????
+(global-set-key (kbd "C-M-y") 'auto-complete) ;; By Tom, to test
 
 (require 'yasnippet)
 (yas-global-mode 1)
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
-;;(define-key yas-minor-mode-map (kbd "C-y") 'yas-expand)
-;; TODO: choose key... but first learn to use it...
+(global-set-key (kbd "C-S-y") 'yas-expand)
 
 
 ;; --- Company, Irony, Clang, C++ stuff  ---

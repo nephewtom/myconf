@@ -1,4 +1,4 @@
-export PATH=$PATH:$HOME/conf/bin
+export PATH=$PATH:$HOME/myconf/bin
 export HISTTIMEFORMAT="%d/%m/%y %T "
 export ALTERNATE_EDITOR=emacs EDITOR=emacsclient VISUAL=emacsclient
 

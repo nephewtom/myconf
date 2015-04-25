@@ -31,6 +31,7 @@
 
 ;; changes default Emacs behaviour, allowing to delete without kill-ring & inserting over selection.
 (delete-selection-mode 1)
+(setq default-directory "~")
 
 ;;; --- Personal rebinding of common keys
 

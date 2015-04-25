@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SEDEXP="'s/ /_/g'"
+SEDEXP='s/ /_/g'
 
 while test $# -gt 0
 do
@@ -31,12 +31,14 @@ done
 echo ""
 
 if [ "$HELP" == true ]; then
-    echo -e "\nUsage: "`basename $0` "<options>:"
+    echo -e "\nUsage: "`basename $0` "<options>"
+    echo "Options:"
     echo "   -r recursive"
     echo "   -e execute, not only show"
     echo "   -s use dash '-' instead of underscore"
     echo "   -d rename also directories"
     echo -e "   -h help\n"
+    echo "If no options are provided, it shows the directories and files that would be renamed."
     exit 0
 fi
 
@@ -46,12 +48,16 @@ then
     if [ "$RECURSIVE" == true ]; then
         if [ "$DIRS" == true ]; then
             find -depth -name "* *" -type d | rename "$SEDEXP"
+            echo "Recursively executed on directories:" $SEDEXP
         fi
+        echo "Recursively executed on files:" $SEDEXP
 	find -depth -name "* *" -type f | rename "$SEDEXP"
     else
         if [ "$DIRS" == true ]; then
             find -maxdepth 1 -name "* *" -type d | rename "$SEDEXP"
+            echo "Executed on directories:" $SEDEXP
         fi
+        echo "Execute on files:" $SEDEXP
 	find -maxdepth 1 -name "* *" -type f | rename "$SEDEXP"
     fi
 else

@@ -80,7 +80,7 @@
   ;; Mac stuff
   (setq mac-option-modifier 'command)
   (setq mac-command-modifier 'meta)
-  (global-set-key (kbd "M-w") 'kill-this-buffer) ;; Let's see if is better this on Mac
+  (global-set-key (kbd "M-w") 'kill-this-buffer) ;; this works on Mac too
   (define-key global-map (kbd "C-<f2>")
     (lambda ()
       (interactive)
@@ -91,9 +91,9 @@
  ;; Ubuntu stuff
  (
   (set-face-attribute 'default nil :height 140)
-  (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
   ))
 
+(global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 
 ;; --- Ido stuff ---
 (require 'ido)
@@ -318,7 +318,7 @@ Check buf-move-right, left, up, down"
  '(livedown:open t)
  '(livedown:port 1337)
  '(vc-follow-symlinks t))
-    ; port for livedown server
+                                        ; port for livedown server
 (global-set-key (kbd "C-M-m") 'livedown:preview)
 
 ;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/

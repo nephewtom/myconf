@@ -59,7 +59,9 @@
 (global-set-key (kbd "<f11>") 'hc-toggle-highlight-tabs)
 (global-set-key (kbd "M-ñ") 'eval-expression) ;; Same as US layout
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
-
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'split-window-below)
+(global-set-key (kbd "M-3") 'split-window-right)
 
 ;; --- Packages ELPA, MELPA, Marmalade ---
 ;; Needs to be before any package in those. E.g.: It fails to loas buffer-move,
@@ -168,6 +170,7 @@ Check buf-move-right, left, up, down"
 ;; --- Helm ---
 (require 'helm)
 (require 'helm-config)
+(helm-mode 0)
 (helm-autoresize-mode t) ;; do not know why does not work
 (global-set-key (kbd "M-x") 'helm-M-x)
 ;; In case I need to change it.

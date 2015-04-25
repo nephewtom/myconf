@@ -82,7 +82,7 @@
   ;; Mac stuff
   (setq mac-option-modifier 'command)
   (setq mac-command-modifier 'meta)
-
+  (global-set-key (kbd "M-w") 'kill-this-buffer) ;; Let's see if is better this on Mac
   (define-key global-map (kbd "C-<f2>")
     (lambda ()
       (interactive)
@@ -91,7 +91,10 @@
 
   (set-face-attribute 'default nil :height 200))
  ;; Ubuntu stuff
- ((set-face-attribute 'default nil :height 140)))
+ (
+  (set-face-attribute 'default nil :height 140)
+  (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+  ))
 
 
 ;; --- Ido stuff ---
@@ -107,7 +110,6 @@
 
 
 ;; --- Buffers & Ibuffer stuff ---
-(global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;; Prefer ibuffer to buffers-list
 (add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
 

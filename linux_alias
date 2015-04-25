@@ -1,6 +1,3 @@
-setxkbmap -layout us -option ctrl:nocaps
-setxkbmap -layout es -option ctrl:nocaps
-
 alias emacs='env XMODIFIERS= emacs'
 alias e='emacsclient -n'
 alias edit='emacsclient -n'

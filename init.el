@@ -64,6 +64,15 @@
 (global-set-key (kbd "M-2") 'split-window-below)
 (global-set-key (kbd "M-3") 'split-window-right)
 
+(defun move-end-of-line-newline-and-indent ()
+  "Insert a newline, then indent according to major mode."
+  (interactive "*")
+  (move-end-of-line 1)
+  (newline)
+  (indent-according-to-mode))
+(global-set-key (kbd "C-j") 'move-end-of-line-newline-and-indent)
+
+
 ;; --- Packages ELPA, MELPA, Marmalade ---
 ;; Needs to be before any package in those. E.g.: It fails to loas buffer-move,
 ;; if (require 'buffer-move) is placed just before this package stuff
@@ -233,7 +242,7 @@ Check buf-move-right, left, up, down"
 
 ;; --- Company, Irony, Clang, C++ stuff  ---
 (require 'company)
-(setq company-global-modes '(not emacs-lisp-mode processing-mode))
+(setq company-global-modes '(not emacs-lisp-mode processing-mode text-mode))
 (global-set-key (kbd "M-y") 'company-complete)
 
 (add-hook 'c-mode-common-hook 'my-after-c-hook)
@@ -336,6 +345,9 @@ Check buf-move-right, left, up, down"
 (when (require 'edit-server nil t)
   (setq edit-server-new-frame nil)
   (edit-server-start))
+
+;; When using firefox plugin itsalltext with Emacs, finish editing on Emacs with C-x #
+;; http://psung.blogspot.com.es/2009/05/using-itsalltext-with-emacsemacsclient.html
 
 
 ;; --- Lua & Löve ---

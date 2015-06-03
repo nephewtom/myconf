@@ -43,15 +43,21 @@
   "Emulates yy command on vim."
   (interactive)
   (move-beginning-of-line 1)
-  (kill-line)
-  (yank)
+  (cua-set-mark)
+  (move-end-of-line 1) ;; Or (next-line)
+  (kill-ring-save 0 1)
+  (cua-set-mark)
   (move-beginning-of-line 1))
-(global-set-key (kbd "C-y") 'yyank-like-vim)
+
+;; TOM: This is incomplete and does not work
+;; Check: http://emacswiki.org/emacs/CopyingWholeLines
+;;(global-set-key (kbd "C-y") 'yyank-like-vim)
+
 
 ;; These two move cursor down/up 10 characters. Personal taste.
 (global-set-key "\M-n" "\C-u10\C-n")
 (global-set-key "\M-p" "\C-u10\C-p")
-(global-set-key (kbd "M-ç") 'delete-horizontal-space)
+(global-set-key (kbd "M-ñ") 'delete-horizontal-space)
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 
 (global-set-key (kbd "C-l") 'goto-line) ;; Like Eclipse
@@ -348,6 +354,11 @@ Check buf-move-right, left, up, down"
 
 ;; When using firefox plugin itsalltext with Emacs, finish editing on Emacs with C-x #
 ;; http://psung.blogspot.com.es/2009/05/using-itsalltext-with-emacsemacsclient.html
+
+
+;; --- Org mode ---
+(require 'org)
+(define-key org-mode-map (kbd "C-<tab>") nil)
 
 
 ;; --- Lua & Löve ---

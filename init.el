@@ -33,31 +33,35 @@
 (delete-selection-mode 1)
 (setq default-directory "~")
 
+;; Ok. So lets change C-h to be used as backspace
+;; This is an advice from:
+;; http://www.emacswiki.org/emacs/EmacsCrashTips
+;;(keyboard-translate ?\C-h ?\C-?)
+
 ;;; --- Personal rebinding of common keys
 
 ;; Similar to vim as they may remind me so...
 (global-set-key (kbd "M-j") 'join-line) ;; Almost like J in vim (joins to previos line)
 (global-set-key (kbd "M-z") 'recenter-top-bottom) ;; Almost as zz zt...
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim?
-(defun yyank-like-vim ()
-  "Emulates yy command on vim."
-  (interactive)
-  (move-beginning-of-line 1)
-  (cua-set-mark)
-  (move-end-of-line 1) ;; Or (next-line)
-  (kill-ring-save 0 1)
-  (cua-set-mark)
-  (move-beginning-of-line 1))
+(defun yyank-like-vim (arg)
+  "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
+  (interactive "p")
+  (kill-ring-save (line-beginning-position)
+                  (line-beginning-position (+ 1 arg)))
+  (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
 
-;; TOM: This is incomplete and does not work
-;; Check: http://emacswiki.org/emacs/CopyingWholeLines
-;;(global-set-key (kbd "C-y") 'yyank-like-vim)
+;; From: http://emacswiki.org/emacs/CopyingWholeLines
+(global-set-key (kbd "C-y") 'yyank-like-vim)
 
 
 ;; These two move cursor down/up 10 characters. Personal taste.
 (global-set-key "\M-n" "\C-u10\C-n")
 (global-set-key "\M-p" "\C-u10\C-p")
-(global-set-key (kbd "M-ñ") 'delete-horizontal-space)
+(global-set-key (kbd "M-p") 'scroll-down-command)
+(global-set-key (kbd "M-n") 'scroll-up-command)
+
+(global-set-key (kbd "M-ç") 'delete-horizontal-space)
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 
 (global-set-key (kbd "C-l") 'goto-line) ;; Like Eclipse
@@ -124,6 +128,12 @@
    (not (member name ido-dont-ignore-buffer-names))))
 (setq ido-ignore-buffers (list "\\` " #'ido-ignore-most-star-buffers))
 
+;; TODO: Check if tramp (ssh emahost) works...
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x b") 'helm-mini)
+;; Not using Ido?
+;; C-l goes back
+;; TAB open/closes file
 
 ;; --- Buffers & Ibuffer stuff ---
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;; Prefer ibuffer to buffers-list
@@ -188,11 +198,14 @@ Check buf-move-right, left, up, down"
 ;; --- Helm ---
 (require 'helm)
 (require 'helm-config)
-(helm-mode 0)
+(helm-mode 1)
 (helm-autoresize-mode t) ;; do not know why does not work
 (global-set-key (kbd "M-x") 'helm-M-x)
 ;; In case I need to change it.
 ;;(global-set-key (kbd "M-x") 'execute-extended-command)
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+;;(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+;;(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 
 ;; --- Comments like Eclise ---
@@ -230,7 +243,7 @@ Check buf-move-right, left, up, down"
 ;; --- Elisp ---
 (require 'hl-defined)
 (add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
-
+ (setq ediff-split-window-function 'split-window-horizontally)
 
 ;; --- Auto-Complete & Yasnippet ---
 (require 'auto-complete)
@@ -285,6 +298,7 @@ Check buf-move-right, left, up, down"
 ;; Considering _ part of a word
 ;; (modify-syntax-entry ?_ "w" c++-mode-syntax-table)
 
+(load "~/.emacs.d/dup-mode.el")
 
 ;; --- Flycheck / other language related keys ---
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -333,9 +347,12 @@ Check buf-move-right, left, up, down"
  '(custom-safe-themes (quote ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
  '(flycheck-clang-language-standard nil)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)
+ '(org-agenda-files (quote ("~/ONGOING.org" "~/demo.org")))
+ '(org-startup-truncated t)
  '(vc-follow-symlinks t))
                                         ; port for livedown server
 (global-set-key (kbd "C-M-m") 'livedown:preview)
@@ -358,8 +375,8 @@ Check buf-move-right, left, up, down"
 
 ;; --- Org mode ---
 (require 'org)
-(define-key org-mode-map (kbd "C-<tab>") nil)
-
+;; (define-key org-mode-map (kbd "C-<tab>") nil)
+(global-set-key "\C-ca" 'org-agenda)
 
 ;; --- Lua & Löve ---
 (add-to-list 'load-path "~/.emacs.d/auto-complete-lua.el/")
@@ -430,8 +447,10 @@ Check buf-move-right, left, up, down"
 
 ;; --- Sublimity ---
 (require 'sublimity)
-(sublimity-mode 1)
-(sublimity-map)
+;;(sublimity-mode 1)
+;;(sublimity-map)
+;; Descomentar esos 2 si quieres ese plugin.
+
 ;; ;; (require 'sublimity-scroll)
 ;; You may configure the speed of smooth-scroll by setting two variables.
 ;; (setq sublimity-scroll-weight 10
@@ -466,3 +485,4 @@ Check buf-move-right, left, up, down"
 
 ;;; init.el ends here
 (put 'dired-find-alternate-file 'disabled nil)
+(find-file "~/ONGOING.org")

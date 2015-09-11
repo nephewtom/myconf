@@ -115,7 +115,8 @@
   (set-face-attribute 'default nil :height 140)
   ))
 
-(global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+(global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+;;(global-unset-key (kbd "C-w"))
 
 ;; --- Ido stuff ---
 (require 'ido)
@@ -136,8 +137,18 @@
 ;; TAB open/closes file
 
 ;; --- Buffers & Ibuffer stuff ---
+
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;; Prefer ibuffer to buffers-list
 (add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
+
+;; Remove from Ibuffers the buffers that match these regexp
+(require 'ibuf-ext)
+(add-to-list 'ibuffer-never-show-predicates "^\\*helm")
+(add-to-list 'ibuffer-never-show-predicates "^\\*Messages")
+(add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
+(add-to-list 'ibuffer-never-show-predicates "^\\*Help")
+(add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
+
 
 ;; (defadvice split-window (after move-point-to-new-window activate)
 ;;   "Move d."
@@ -351,7 +362,7 @@ Check buf-move-right, left, up, down"
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)
- '(org-agenda-files (quote ("~/ONGOING.org" "~/demo.org")))
+ '(org-agenda-files (quote ("~/citas.org" "~/ONGOING.org" "~/demo.org")))
  '(org-startup-truncated t)
  '(vc-follow-symlinks t))
                                         ; port for livedown server

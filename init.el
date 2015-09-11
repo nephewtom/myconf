@@ -371,10 +371,12 @@ Check buf-move-right, left, up, down"
 ;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/
 (setq markdown-command "/home/etomort/myconf/bin/flavor.rb")
 
-;; Stuff to edit content in web forms via "Edit with Emacs"
+;; --- Edit with Emacs ---
+;; Stuff to edit content in web forms via "Edit with Emacs" Chrome plugin
 (require 'edit-server)
 (edit-server-start)
 (add-to-list 'edit-server-url-major-mode-alist '("^stackoverflow" . markdown-mode))
+(add-to-list 'edit-server-url-major-mode-alist '("^emacs\\.stackexchange" . markdown-mode))
 
 (when (require 'edit-server nil t)
   (setq edit-server-new-frame nil)

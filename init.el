@@ -115,8 +115,9 @@
   (set-face-attribute 'default nil :height 140)
   ))
 
+(global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
-;;(global-unset-key (kbd "C-w"))
+
 
 ;; --- Ido stuff ---
 (require 'ido)

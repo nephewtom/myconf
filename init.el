@@ -118,6 +118,16 @@
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 
+;; --- Move text ---
+;; It allows you to move the current line using M-up / M-down
+;; if a region is marked, it will move the region instead.
+(require 'move-text)
+(move-text-default-bindings)
+
+;; --- Smart line ---
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
+(add-to-list 'rm-excluded-modes " MRev")
 
 ;; --- Ido stuff ---
 (require 'ido)
@@ -356,7 +366,7 @@ Check buf-move-right, left, up, down"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
- '(custom-safe-themes (quote ("4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
+ '(custom-safe-themes (quote ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
  '(flycheck-clang-language-standard nil)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
@@ -493,7 +503,8 @@ Check buf-move-right, left, up, down"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(hc-tab ((t (:background "wheat"))))
- '(magit-item-highlight ((t nil))))
+ '(magit-item-highlight ((t nil)))
+ '(sml/modes ((t (:inherit sml/global :foreground "dark violet" :weight bold)))))
 
 
 

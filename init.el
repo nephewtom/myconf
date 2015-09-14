@@ -82,7 +82,6 @@
   (indent-according-to-mode))
 (global-set-key (kbd "C-j") 'move-end-of-line-newline-and-indent)
 
-
 ;; --- Packages ELPA, MELPA, Marmalade ---
 ;; Needs to be before any package in those. E.g.: It fails to loas buffer-move,
 ;; if (require 'buffer-move) is placed just before this package stuff
@@ -267,12 +266,14 @@ Check buf-move-right, left, up, down"
 (add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
  (setq ediff-split-window-function 'split-window-horizontally)
 
-;; --- Auto-Complete & Yasnippet ---
+;; --- Auto-Complete, hippie-expand & Yasnippet ---
 (require 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
 (define-key ac-mode-map (kbd "C-M-y") 'auto-complete) ;; ????
 (global-set-key (kbd "C-M-y") 'auto-complete) ;; By Tom, to test
+
+(global-set-key (kbd "C-ñ") 'hippie-expand)
 
 (require 'yasnippet)
 (yas-global-mode 1)
@@ -347,10 +348,33 @@ Check buf-move-right, left, up, down"
 
 (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
 
+;; --- XML Stuff ---
+(add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
+(require 'hideshow)
+(require 'sgml-mode)
+(require 'nxml-mode)
+
+(add-to-list 'hs-special-modes-alist
+             '(nxml-mode
+               "<!--\\|<[^/>]*[^/]>"
+               "-->\\|</[^/>]*[^/]>"
+
+               "<!--"
+               sgml-skip-tag-forward
+               nil))
+
+(add-hook 'nxml-mode-hook 'hs-minor-mode)
+
+;; optional key bindings, easier than hs defaults
+(define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+
+(require 'auto-complete-nxml)
+(setq auto-complete-nxml-popup-help-key "C-ñ")
+(setq auto-complete-nxml-toggle-automatic-key "C-c C-t")
+
 
 ;; --- Markdown stuff ---
 (require 'markdown-mode)
-(add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))

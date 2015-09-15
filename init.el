@@ -127,6 +127,7 @@
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
 (add-to-list 'rm-excluded-modes " MRev")
+(add-to-list 'rm-excluded-modes " ARev")
 
 ;; --- Ido stuff ---
 (require 'ido)
@@ -398,7 +399,7 @@ Check buf-move-right, left, up, down"
  '(livedown:open t)
  '(livedown:port 1337)
  '(org-agenda-files (quote ("~/citas.org" "~/ONGOING.org" "~/demo.org")))
- '(org-startup-truncated t)
+ '(org-startup-truncated nil)
  '(vc-follow-symlinks t))
                                         ; port for livedown server
 (global-set-key (kbd "C-M-m") 'livedown:preview)
@@ -423,7 +424,12 @@ Check buf-move-right, left, up, down"
 
 ;; --- Org mode ---
 (require 'org)
-;; (define-key org-mode-map (kbd "C-<tab>") nil)
+(add-hook 'org-mode-hook (lambda () (local-unset-key (kbd "C-<tab>"))))
+
+;; (eval-after-load "org
+;;   '(define-key org-mode-map (kbd "C-<tab>") nil))
+
+;; (define-key org-mode-map (kbd "C-<tab>") nil)p
 (global-set-key "\C-ca" 'org-agenda)
 
 ;; --- Lua & Löve ---

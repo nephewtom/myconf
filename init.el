@@ -40,10 +40,15 @@
 
 ;;; --- Personal rebinding of common keys
 
+(global-unset-key (kbd "C-w"))
+(global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+
 ;; Similar to vim as they may remind me so...
 (global-set-key (kbd "M-j") 'join-line) ;; Almost like J in vim (joins to previos line)
+;; join-line is a defalias of delete-indentation.
 (global-set-key (kbd "M-z") 'recenter-top-bottom) ;; Almost as zz zt...
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim?
+
 (defun yyank-like-vim (arg)
   "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
   (interactive "p")
@@ -83,17 +88,23 @@
 (global-set-key (kbd "C-j") 'move-end-of-line-newline-and-indent)
 
 ;; --- Packages ELPA, MELPA, Marmalade ---
-;; Needs to be before any package in those. E.g.: It fails to loas buffer-move,
+;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
 ;; if (require 'buffer-move) is placed just before this package stuff
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
+
 (require 'magit)
 (setq magit-last-seen-setup-instructions "1.4.0")
 
 (delete 'Git vc-handled-backends)
+
+;;(require 'psvn)
+(autoload 'svn-status "dsvn" "Run `svn status'." t)
+(autoload 'svn-update "dsvn" "Run `svn update'." t)
+(require 'vc-svn)
 
 ;; --- Font size & Mac OS X stuff
 (cond
@@ -114,8 +125,6 @@
   (set-face-attribute 'default nil :height 140)
   ))
 
-(global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 
 ;; --- Move text ---
 ;; It allows you to move the current line using M-up / M-down
@@ -140,12 +149,6 @@
    (not (member name ido-dont-ignore-buffer-names))))
 (setq ido-ignore-buffers (list "\\` " #'ido-ignore-most-star-buffers))
 
-;; TODO: Check if tramp (ssh emahost) works...
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x b") 'helm-mini)
-;; Not using Ido?
-;; C-l goes back
-;; TAB open/closes file
 
 ;; --- Buffers & Ibuffer stuff ---
 
@@ -171,7 +174,8 @@
   "Swap to previous buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
-(global-set-key (kbd "<f8>") 'switch-to-previous-buffer) ;; Personal taste
+(global-set-key (kbd "<f8>") 'switch-to-previous-buffer)
+(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
 
 (defun transpose-buffers (arg)
   "Transpose the buffers shown in two windows.  ARG?
@@ -229,6 +233,13 @@ Check buf-move-right, left, up, down"
 ;;(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 ;;(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; TODO: Check if tramp (ssh emahost) works...
+(global-set-key (kbd "C-x b") 'helm-mini)
+;; Not using Ido?
+;; C-l goes back
+;; TAB open/closes file
+
 
 ;; --- Comments like Eclise ---
 (defun comment-eclipse ()
@@ -252,7 +263,7 @@ Check buf-move-right, left, up, down"
 
 ;; --- Dired ---
 (require 'dired )
-(setq dired-listing-switches "-lk")
+(setq dired-listing-switches "-lka")
 ;; move to up directory with '.'
 (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
 ;; Following key is already binded to 'a'
@@ -541,3 +552,4 @@ Check buf-move-right, left, up, down"
 ;;; init.el ends here
 (put 'dired-find-alternate-file 'disabled nil)
 (find-file "~/ONGOING.org")
+(put 'erase-buffer 'disabled nil)

@@ -424,6 +424,7 @@ Check buf-move-right, left, up, down"
 (edit-server-start)
 (add-to-list 'edit-server-url-major-mode-alist '("^stackoverflow" . markdown-mode))
 (add-to-list 'edit-server-url-major-mode-alist '("^emacs\\.stackexchange" . markdown-mode))
+(add-to-list 'edit-server-url-major-mode-alist '("^unix\\.stackexchange" . markdown-mode))
 
 (when (require 'edit-server nil t)
   (setq edit-server-new-frame nil)

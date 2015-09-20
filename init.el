@@ -538,6 +538,31 @@ Check buf-move-right, left, up, down"
   (setq debug-on-error nil))t
 
 
+;; --- Extend xah-lookup with spanish & alias
+(require 'xah-lookup)
+
+(defun xah-lookup-drae (&optional φword)
+  "Lookup definition of current ΦWORD or text selection in URL `http://buscon.rae.es/drae/srv/search?val='."
+  (interactive)
+  (xah-lookup-word-on-internet
+   φword
+   "http://buscon.rae.es/drae/srv/search?val=�"
+   xah-lookup-dictionary-browser-function))
+
+(defun xah-lookup-linguee (&optional φword)
+  "Lookup definition of current ΦWORD or text selection in URL `http://www.linguee.es/espanol-ingles/search?source=auto&query='."
+  (interactive)
+  (xah-lookup-word-on-internet
+   φword
+   "http://www.linguee.es/espanol-ingles/search?source=auto&query=�"
+   xah-lookup-dictionary-browser-function))
+
+(defalias 'xlg 'xah-lookup-google)
+(defalias 'xld 'xah-lookup-drae)
+(defalias 'xll 'xah-lookup-linguee)
+(defalias 'xlw 'xah-lookup-wikipedia)
+
+
 ;; --- Custom stuff
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

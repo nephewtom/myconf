@@ -33,6 +33,10 @@
 (delete-selection-mode 1)
 (setq default-directory "~")
 
+;; frame title
+(setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
+                                                      (buffer-file-name) "%b"))))
+
 ;; Ok. So lets change C-h to be used as backspace
 ;; This is an advice from:
 ;; http://www.emacswiki.org/emacs/EmacsCrashTips

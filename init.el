@@ -567,6 +567,29 @@ Check buf-move-right, left, up, down"
 (defalias 'xll 'xah-lookup-linguee)
 (defalias 'xlw 'xah-lookup-wikipedia)
 
+(global-set-key (kbd "C-h 1") 'browse-url-at-point)
+
+;; --- Calendar stuff
+(setq calendar-week-start-day 1)
+
+; Display week number
+(setq calendar-intermonth-text
+      '(propertize
+        (format "%2d"
+                (car
+                 (calendar-iso-from-absolute
+                  (calendar-absolute-from-gregorian (list month day year)))))
+        'font-lock-face 'font-lock-warning-face))
+
+(setq calendar-intermonth-header
+      (propertize "Wk"                  ; or e.g. "KW" in Germany
+                  'font-lock-face 'font-lock-keyword-face))
+
+;; --- Emoji stuff... on hold. I think I need unicode-fonts.
+;; (require 'emoji-cheat-sheet-plus)
+;; (add-to-list 'company-backends 'company-emoji)
+;; (add-to-list 'load-path "~/.emacs.d/elpa/emoji-cheat-sheet-plus-20150617.631/emoji-cheat-sheet/")
+
 
 ;; --- Custom stuff
 (custom-set-faces

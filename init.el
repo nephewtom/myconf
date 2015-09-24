@@ -263,7 +263,7 @@ Check buf-move-right, left, up, down"
     (comment-or-uncomment-region start end)))
 
 (global-set-key (kbd "C-/") 'comment-eclipse)
-
+(global-set-key (kbd "C-S-c") 'comment-eclipse)
 
 ;; --- Dired ---
 (require 'dired )
@@ -407,6 +407,7 @@ Check buf-move-right, left, up, down"
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
  '(custom-safe-themes (quote ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
+ '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(flycheck-clang-language-standard nil)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))

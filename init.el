@@ -37,13 +37,7 @@
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
 
-;; Ok. So lets change C-h to be used as backspace
-;; This is an advice from:
-;; http://www.emacswiki.org/emacs/EmacsCrashTips
-;;(keyboard-translate ?\C-h ?\C-?)
-
 ;;; --- Personal rebinding of common keys
-
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 
@@ -63,6 +57,9 @@
 ;; From: http://emacswiki.org/emacs/CopyingWholeLines
 (global-set-key (kbd "C-y") 'yyank-like-vim)
 
+;; This changes C-h to be used as backspace
+;; Advice from: http://www.emacswiki.org/emacs/EmacsCrashTips
+;;(keyboard-translate ?\C-h ?\C-?)
 
 ;; These two move cursor down/up 10 characters. Personal taste.
 (global-set-key "\M-n" "\C-u10\C-n")
@@ -70,6 +67,7 @@
 (global-set-key (kbd "M-p") 'scroll-down-command)
 (global-set-key (kbd "M-n") 'scroll-up-command)
 
+;; Same position as US keyboard layout
 (global-set-key (kbd "M-ç") 'delete-horizontal-space)
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 
@@ -91,6 +89,7 @@
   (indent-according-to-mode))
 (global-set-key (kbd "C-j") 'move-end-of-line-newline-and-indent)
 
+
 ;; --- Packages ELPA, MELPA, Marmalade ---
 ;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
 ;; if (require 'buffer-move) is placed just before this package stuff
@@ -109,6 +108,7 @@
 (autoload 'svn-status "dsvn" "Run `svn status'." t)
 (autoload 'svn-update "dsvn" "Run `svn update'." t)
 (require 'vc-svn)
+
 
 ;; --- Font size & Mac OS X stuff
 (cond
@@ -136,11 +136,13 @@
 (require 'move-text)
 (move-text-default-bindings)
 
+
 ;; --- Smart line ---
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
 (add-to-list 'rm-excluded-modes " MRev")
 (add-to-list 'rm-excluded-modes " ARev")
+
 
 ;; --- Ido stuff ---
 (require 'ido)
@@ -265,6 +267,7 @@ Check buf-move-right, left, up, down"
 (global-set-key (kbd "C-/") 'comment-eclipse)
 (global-set-key (kbd "C-S-c") 'comment-eclipse)
 
+
 ;; --- Dired ---
 (require 'dired )
 (setq dired-listing-switches "-lka")
@@ -275,12 +278,14 @@ Check buf-move-right, left, up, down"
 
 ;; Auto-refresh dired on file change
 (add-hook 'dired-mode-hook 'auto-revert-mode)
+(setq dired-auto-revert-buffer t)
 
 
 ;; --- Elisp ---
 (require 'hl-defined)
 (add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
- (setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-split-window-function 'split-window-horizontally)
+
 
 ;; --- Auto-Complete, hippie-expand & Yasnippet ---
 (require 'auto-complete)
@@ -364,6 +369,7 @@ Check buf-move-right, left, up, down"
 
 (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
 
+
 ;; --- XML Stuff ---
 (add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
 (require 'hideshow)
@@ -400,28 +406,12 @@ Check buf-move-right, left, up, down"
 ;; From: https://github.com/shime/emacs-livedown
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
 (require 'livedown)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(c-basic-offset 4)
- '(custom-safe-themes (quote ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(flycheck-clang-language-standard nil)
- '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
- '(livedown:autostart nil)
- '(livedown:open t)
- '(livedown:port 1337)
- '(org-agenda-files (quote ("~/citas.org" "~/ONGOING.org" "~/demo.org")))
- '(org-startup-truncated nil)
- '(vc-follow-symlinks t))
-                                        ; port for livedown server
+
 (global-set-key (kbd "C-M-m") 'livedown:preview)
 
 ;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/
 (setq markdown-command "/home/etomort/myconf/bin/flavor.rb")
+
 
 ;; --- Edit with Emacs ---
 ;; Stuff to edit content in web forms via "Edit with Emacs" Chrome plugin
@@ -442,12 +432,8 @@ Check buf-move-right, left, up, down"
 ;; --- Org mode ---
 (require 'org)
 (add-hook 'org-mode-hook (lambda () (local-unset-key (kbd "C-<tab>"))))
-
-;; (eval-after-load "org
-;;   '(define-key org-mode-map (kbd "C-<tab>") nil))
-
-;; (define-key org-mode-map (kbd "C-<tab>") nil)p
 (global-set-key "\C-ca" 'org-agenda)
+
 
 ;; --- Lua & Löve ---
 (add-to-list 'load-path "~/.emacs.d/auto-complete-lua.el/")
@@ -569,10 +555,11 @@ Check buf-move-right, left, up, down"
 
 (global-set-key (kbd "C-h 1") 'browse-url-at-point)
 
+
 ;; --- Calendar stuff
 (setq calendar-week-start-day 1)
 
-; Display week number
+                                        ; Display week number
 (setq calendar-intermonth-text
       '(propertize
         (format "%2d"
@@ -601,6 +588,23 @@ Check buf-move-right, left, up, down"
  '(magit-item-highlight ((t nil)))
  '(sml/modes ((t (:inherit sml/global :foreground "dark violet" :weight bold)))))
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(c-basic-offset 4)
+ '(custom-safe-themes (quote ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
+ '(ediff-window-setup-function (quote ediff-setup-windows-plain))
+ '(flycheck-clang-language-standard nil)
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
+ '(livedown:autostart nil)
+ '(livedown:open t)
+ '(livedown:port 1337) ; port for livedown server
+ '(org-agenda-files (quote ("~/ONGOING.org")))
+ '(org-startup-truncated nil)
+ '(vc-follow-symlinks t))
 
 
 ;;; init.el ends here

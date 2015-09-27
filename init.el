@@ -89,6 +89,12 @@
   (indent-according-to-mode))
 (global-set-key (kbd "C-j") 'move-end-of-line-newline-and-indent)
 
+;; Adjusting Split Pane Size
+(global-set-key (kbd "C-x +") 'enlarge-window)
+(global-set-key (kbd "C-x -") 'shrink-window)
+(global-set-key (kbd "C-x ç") 'shrink-window-if-larger-than-buffer)
+(global-set-key (kbd "C-x ñ") 'balance-windows)
+
 
 ;; --- Packages ELPA, MELPA, Marmalade ---
 ;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
@@ -231,7 +237,7 @@ Check buf-move-right, left, up, down"
 (require 'helm)
 (require 'helm-config)
 (helm-mode 1)
-(helm-autoresize-mode t) ;; do not know why does not work
+(helm-autoresize-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x)
 ;; In case I need to change it.
 ;;(global-set-key (kbd "M-x") 'execute-extended-command)
@@ -532,6 +538,7 @@ Check buf-move-right, left, up, down"
 ;; --- Extend xah-lookup with spanish & alias
 (require 'xah-lookup)
 
+;; M-x rae
 (defun xah-lookup-drae (&optional φword)
   "Lookup definition of current ΦWORD or text selection in URL `http://buscon.rae.es/drae/srv/search?val='."
   (interactive)
@@ -540,6 +547,7 @@ Check buf-move-right, left, up, down"
    "http://buscon.rae.es/drae/srv/search?val=�"
    xah-lookup-dictionary-browser-function))
 
+;; M-x uee
 (defun xah-lookup-linguee (&optional φword)
   "Lookup definition of current ΦWORD or text selection in URL `http://www.linguee.es/espanol-ingles/search?source=auto&query='."
   (interactive)

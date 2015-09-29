@@ -81,6 +81,7 @@
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'split-window-below)
 (global-set-key (kbd "M-3") 'split-window-right)
+(global-set-key (kbd "M-0") 'delete-window)
 
 (defun move-end-of-line-newline-and-indent ()
   "Insert a newline, then indent according to major mode."
@@ -165,8 +166,8 @@
 
 
 ;; --- Buffers & Ibuffer stuff ---
-
-(global-set-key (kbd "C-x C-b") 'ibuffer) ;; Prefer ibuffer to buffers-list
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+;;(global-set-key (kbd "C-x C-b") 'ibuffer) ;; Prefer ibuffer to buffers-list
 (add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
 
 ;; Remove from Ibuffers the buffers that match these regexp

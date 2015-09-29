@@ -3,7 +3,8 @@
 
 ;;; Code:
 
-;;; --- General topics ---
+;; --- General configuration ---
+
 (server-start) ;; emacs server
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
@@ -38,15 +39,21 @@
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
 
-;;; --- Personal rebinding of common keys ---
-(global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+;; --- Useful functions for buffers, yank, move & its bindings ---
 
-;; Similar to vim as they may remind me so...
-(global-set-key (kbd "M-j") 'join-line) ;; Almost like J in vim (joins to previos line)
-;; join-line is a defalias of delete-indentation.
-(global-set-key (kbd "M-z") 'recenter-top-bottom) ;; Almost as zz zt...
-(global-set-key (kbd "C-.") 'repeat) ;; Like . in vim?
+(defun switch-to-previous-buffer ()
+  "Swap to previous buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+(global-set-key (kbd "<f8>") 'switch-to-previous-buffer)
+(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
+
+(defun indent-buffer ()
+  "Select current buffer and indent it."
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+(global-set-key (kbd "<f9>") 'indent-buffer) ;; Personal taste
 
 (defun yyank-like-vim (arg)
   "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
@@ -58,13 +65,33 @@
 ;; From: http://emacswiki.org/emacs/CopyingWholeLines
 (global-set-key (kbd "C-y") 'yyank-like-vim)
 
+(defun move-end-of-line-newline-and-indent ()
+  "Insert a newline, then indent according to major mode."
+  (interactive "*")
+  (move-end-of-line 1)
+  (newline)
+  (indent-according-to-mode))
+(global-set-key (kbd "C-j") 'move-end-of-line-newline-and-indent)
+
+(toggle-uniquify-buffer-names) ;; Different buffer name for same name files
+
+
+;; --- Personal rebinding of common keys ---
+
+(global-unset-key (kbd "C-w"))
+(global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+
+;; Similar to vim as they may remind me so...
+(global-set-key (kbd "M-j") 'join-line) ;; Almost like J in vim (joins to previos line)
+;; join-line is a defalias of delete-indentation.
+(global-set-key (kbd "M-z") 'recenter-top-bottom) ;; Almost as zz zt...
+(global-set-key (kbd "C-.") 'repeat) ;; Like . in vim?
+
 ;; This changes C-h to be used as backspace
 ;; Advice from: http://www.emacswiki.org/emacs/EmacsCrashTips
 (keyboard-translate ?\C-h ?\C-?)
 
 ;; Scroll up & down in M-n & M-p
-;;(global-set-key "\M-n" "\C-u10\C-n")
-;;(global-set-key "\M-p" "\C-u10\C-p")
 (global-set-key (kbd "M-p") 'scroll-down-command)
 (global-set-key (kbd "M-n") 'scroll-up-command)
 
@@ -83,13 +110,6 @@
 (global-set-key (kbd "M-3") 'split-window-right)
 (global-set-key (kbd "M-0") 'delete-window)
 
-(defun move-end-of-line-newline-and-indent ()
-  "Insert a newline, then indent according to major mode."
-  (interactive "*")
-  (move-end-of-line 1)
-  (newline)
-  (indent-according-to-mode))
-(global-set-key (kbd "C-j") 'move-end-of-line-newline-and-indent)
 
 ;; Adjusting Split Pane Size
 (global-set-key (kbd "C-x +") 'enlarge-window)
@@ -98,28 +118,48 @@
 (global-set-key (kbd "C-x ñ") 'balance-windows)
 
 
-;; --- Packages ELPA, MELPA, Marmalade ---
-;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
-;; if (require 'buffer-move) is placed just before this package stuff
-(require 'package)
-(package-initialize)
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; --- Comments like Eclise ---
+
+(defun comment-eclipse ()
+  "Emulate comment code as Eclipse does it."
+  (interactive)
+  (let ((start (line-beginning-position))
+        (end (line-end-position)))
+    (when (or (not transient-mark-mode) (region-active-p))
+      (setq start (save-excursion
+                    (goto-char (region-beginning))
+                    (beginning-of-line)
+                    (point))
+            end (save-excursion
+                  (goto-char (region-end))
+                  (end-of-line)
+                  (point))))
+    (comment-or-uncomment-region start end)))
+
+(global-set-key (kbd "C-/") 'comment-eclipse)
+(global-set-key (kbd "C-S-c") 'comment-eclipse)
 
 
-;; --- Git & Svn ---
-(require 'magit)
-(setq magit-last-seen-setup-instructions "1.4.0")
+;; --- Calendar stuff ---
 
-(delete 'Git vc-handled-backends)
+(setq calendar-week-start-day 1)
 
-;;(require 'psvn)
-(autoload 'svn-status "dsvn" "Run `svn status'." t)
-(autoload 'svn-update "dsvn" "Run `svn update'." t)
-(require 'vc-svn)
+;; Display week number
+(setq calendar-intermonth-text
+      '(propertize
+        (format "%2d"
+                (car
+                 (calendar-iso-from-absolute
+                  (calendar-absolute-from-gregorian (list month day year)))))
+        'font-lock-face 'font-lock-warning-face))
+
+(setq calendar-intermonth-header
+      (propertize "Wk"                  ; or e.g. "KW" in Germany
+                  'font-lock-face 'font-lock-keyword-face))
 
 
-;; --- Font size & Mac OS X stuff
+;; --- Font size & Mac OS X stuff ---
+
 (cond
  ((string-equal system-type "darwin")
   ;; Mac stuff
@@ -139,7 +179,31 @@
   ))
 
 
+;; --- Packages ELPA, MELPA, Marmalade ---
+
+;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
+;; if (require 'buffer-move) is placed just before this package stuff
+(require 'package)
+(package-initialize)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+
+;; --- Git & Svn ---
+
+(require 'magit)
+(setq magit-last-seen-setup-instructions "1.4.0")
+
+(delete 'Git vc-handled-backends)
+
+;;(require 'psvn)
+(autoload 'svn-status "dsvn" "Run `svn status'." t)
+(autoload 'svn-update "dsvn" "Run `svn update'." t)
+(require 'vc-svn)
+
+
 ;; --- Move text ---
+
 ;; It allows you to move the current line using M-up / M-down
 ;; if a region is marked, it will move the region instead.
 (require 'move-text)
@@ -147,28 +211,14 @@
 
 
 ;; --- Smart line ---
+
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
 (add-to-list 'rm-excluded-modes " MRev")
 (add-to-list 'rm-excluded-modes " ARev")
 
 
-;; --- Ido stuff ---
-;; (require 'ido)
-;; (ido-mode t)
-;; (defvar ido-dont-ignore-buffer-names '("*scratch*" "*eshell*" "*shell*"))
-;; (defun ido-ignore-most-star-buffers (name)
-;;   "This function make ido ignore NAME buffers with star except those of previous variable."
-;;   (and
-;;    (string-match-p "^*" name)
-;;    (not (member name ido-dont-ignore-buffer-names))))
-;; (setq ido-ignore-buffers (list "\\` " #'ido-ignore-most-star-buffers))
-
-
 ;; --- Buffers & Ibuffer stuff ---
-
-;;(global-set-key (kbd "C-x C-b") 'ibuffer) ;; Prefer ibuffer to buffers-list
-(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
 
 ;; Remove from Ibuffers the buffers that match these regexp
 (require 'ibuf-ext)
@@ -178,24 +228,12 @@
 (add-to-list 'ibuffer-never-show-predicates "^\\*Help")
 (add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
 
-(defun switch-to-previous-buffer ()
-  "Swap to previous buffer."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
-(global-set-key (kbd "<f8>") 'switch-to-previous-buffer)
-(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
-
-(defun indent-buffer ()
-  "Select current buffer and indent it."
-  (interactive)
-  (save-excursion
-    (indent-region (point-min) (point-max) nil)))
-(global-set-key (kbd "<f9>") 'indent-buffer) ;; Personal taste
-
-(toggle-uniquify-buffer-names) ;; Different buffer name for same name files
+(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
 
 
-;; --- Emacs windows stuff
+;; --- Emacs windows stuff ---
+
+;; Do I actually use this?
 (global-set-key [C-next] 'windmove-right)
 (global-set-key [C-prior] 'windmove-left)
 (global-set-key [C-tab] 'other-window)
@@ -237,28 +275,8 @@
 ;;(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 
-;; --- Comments like Eclise ---
-(defun comment-eclipse ()
-  "Emulate comment code as Eclipse does it."
-  (interactive)
-  (let ((start (line-beginning-position))
-        (end (line-end-position)))
-    (when (or (not transient-mark-mode) (region-active-p))
-      (setq start (save-excursion
-                    (goto-char (region-beginning))
-                    (beginning-of-line)
-                    (point))
-            end (save-excursion
-                  (goto-char (region-end))
-                  (end-of-line)
-                  (point))))
-    (comment-or-uncomment-region start end)))
-
-(global-set-key (kbd "C-/") 'comment-eclipse)
-(global-set-key (kbd "C-S-c") 'comment-eclipse)
-
-
 ;; --- Dired ---
+
 (require 'dired )
 (setq dired-listing-switches "-lk")
 ;; move to up directory with '.'
@@ -272,12 +290,14 @@
 
 
 ;; --- Elisp ---
+
 (require 'hl-defined)
 (add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
 (setq ediff-split-window-function 'split-window-horizontally)
 
 
 ;; --- Auto-Complete, hippie-expand & Yasnippet ---
+
 (require 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
@@ -294,6 +314,7 @@
 
 
 ;; --- Company, Irony, Clang, C++ stuff  ---
+
 (require 'company)
 (setq company-global-modes '(not emacs-lisp-mode processing-mode text-mode))
 (global-set-key (kbd "M-y") 'company-complete)
@@ -310,11 +331,17 @@
   (setq c-basic-offset 4)
   )
 
-;; From Irony https://github.com/Sarcasm/irony-mode .
+
+;; --- Irony ---
+
+;; From: https://github.com/Sarcasm/irony-mode
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+
+;; --- C/C++ ---
 
 ;; Switches between .h & .cpp files in C/C++
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
@@ -334,7 +361,9 @@
 
 (load "~/.emacs.d/dup-mode.el")
 
+
 ;; --- Flycheck / other language related keys ---
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (global-set-key (kbd "<f12>") 'recompile)
 (global-set-key (kbd "<f3>") 'ffap)
@@ -342,6 +371,7 @@
 
 
 ;; --- ggtags ---
+
 (require 'ggtags)
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -361,6 +391,7 @@
 
 
 ;; --- XML Stuff ---
+
 (add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
 (require 'hideshow)
 (require 'sgml-mode)
@@ -386,6 +417,7 @@
 
 
 ;; --- Markdown stuff ---
+
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
@@ -404,12 +436,12 @@
 
 (global-set-key (kbd "C-M-m") 'livedown:preview)
 
-
 ;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/
 (setq markdown-command "/home/etomort/myconf/bin/flavor.rb")
 
 
 ;; --- Edit with Emacs ---
+
 ;; Stuff to edit content in web forms via "Edit with Emacs" Chrome plugin
 (require 'edit-server)
 (edit-server-start)
@@ -431,21 +463,6 @@
                                             (define-key org-mode-map (kbd "C-y") nil))
                                             )))
 (global-set-key "\C-ca" 'org-agenda)
-
-
-;; --- Lua & Löve ---
-(add-to-list 'load-path "~/.emacs.d/auto-complete-lua.el/")
-(add-to-list 'load-path "~/.emacs.d/auto-complete-love.el/")
-(require 'auto-complete-lua)
-(require 'auto-complete-love)
-
-(add-hook 'lua-mode-hook '(lambda ()
-                            (global-company-mode)
-                            (setq company-idle-delay 0)
-                            (setq ac-sources '(ac-source-love))
-                            (push ac-source-lua ac-sources)
-                            (auto-complete-mode)
-                            ))
 
 
 ;; --- Processing ---
@@ -527,7 +544,8 @@
   (setq debug-on-error nil))t
 
 
-;; --- Extend xah-lookup with spanish & alias
+;; --- Extend xah-lookup with spanish & alias ---
+
 (require 'xah-lookup)
 
 ;; M-x rae
@@ -557,21 +575,19 @@
 (define-key help-map (kbd "0") 'xah-lookup-linguee)
 
 
-;; --- Calendar stuff
-(setq calendar-week-start-day 1)
+;; --- Lua & Löve ---
+(add-to-list 'load-path "~/.emacs.d/auto-complete-lua.el/")
+(add-to-list 'load-path "~/.emacs.d/auto-complete-love.el/")
+(require 'auto-complete-lua)
+(require 'auto-complete-love)
 
-;; Display week number
-(setq calendar-intermonth-text
-      '(propertize
-        (format "%2d"
-                (car
-                 (calendar-iso-from-absolute
-                  (calendar-absolute-from-gregorian (list month day year)))))
-        'font-lock-face 'font-lock-warning-face))
-
-(setq calendar-intermonth-header
-      (propertize "Wk"                  ; or e.g. "KW" in Germany
-                  'font-lock-face 'font-lock-keyword-face))
+(add-hook 'lua-mode-hook '(lambda ()
+                            (global-company-mode)
+                            (setq company-idle-delay 0)
+                            (setq ac-sources '(ac-source-love))
+                            (push ac-source-lua ac-sources)
+                            (auto-complete-mode)
+                            ))
 
 
 ;; --- Emoji stuff... on hold. I think I need unicode-fonts.

@@ -2,7 +2,8 @@
 ;;; Commentary:
 
 ;;; Code:
-;;; General topics.
+
+;;; --- General topics ---
 (server-start) ;; emacs server
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
@@ -37,7 +38,7 @@
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
 
-;;; --- Personal rebinding of common keys
+;;; --- Personal rebinding of common keys ---
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 
@@ -59,11 +60,11 @@
 
 ;; This changes C-h to be used as backspace
 ;; Advice from: http://www.emacswiki.org/emacs/EmacsCrashTips
-;;(keyboard-translate ?\C-h ?\C-?)
+(keyboard-translate ?\C-h ?\C-?)
 
-;; These two move cursor down/up 10 characters. Personal taste.
-(global-set-key "\M-n" "\C-u10\C-n")
-(global-set-key "\M-p" "\C-u10\C-p")
+;; Scroll up & down in M-n & M-p
+;;(global-set-key "\M-n" "\C-u10\C-n")
+;;(global-set-key "\M-p" "\C-u10\C-p")
 (global-set-key (kbd "M-p") 'scroll-down-command)
 (global-set-key (kbd "M-n") 'scroll-up-command)
 
@@ -105,6 +106,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 
+;; --- Git & Svn ---
 (require 'magit)
 (setq magit-last-seen-setup-instructions "1.4.0")
 
@@ -174,13 +176,6 @@
 (add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
 (add-to-list 'ibuffer-never-show-predicates "^\\*Help")
 (add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
-
-
-;; (defadvice split-window (after move-point-to-new-window activate)
-;;   "Move d."
-;;   (other-window 1)
-;;   (switch-to-previous-buffer)
-;;   (other-window 1))
 
 (defun switch-to-previous-buffer ()
   "Swap to previous buffer."
@@ -401,6 +396,7 @@
 
 (global-set-key (kbd "C-M-m") 'livedown:preview)
 
+
 ;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/
 (setq markdown-command "/home/etomort/myconf/bin/flavor.rb")
 
@@ -566,6 +562,7 @@
 (setq calendar-intermonth-header
       (propertize "Wk"                  ; or e.g. "KW" in Germany
                   'font-lock-face 'font-lock-keyword-face))
+
 
 ;; --- Emoji stuff... on hold. I think I need unicode-fonts.
 ;; (require 'emoji-cheat-sheet-plus)

@@ -166,7 +166,7 @@
 
 
 ;; --- Buffers & Ibuffer stuff ---
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+
 ;;(global-set-key (kbd "C-x C-b") 'ibuffer) ;; Prefer ibuffer to buffers-list
 (add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
 
@@ -216,7 +216,7 @@
 
 
 ;; --- Helm ---
-;;
+
 ;; Reminders:
 ;; * helm-find: C-x c /
 ;; * To find from helm-find-files (C-x C-f), press: C-c /
@@ -228,18 +228,13 @@
 (helm-mode 1)
 (helm-autoresize-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x b") 'helm-mini)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 ;;(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 ;;(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-;; TODO: Check if tramp (ssh emahost) works...
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-
-(global-set-key (kbd "C-x b") 'helm-mini)
-;; Not using Ido?
-;; C-l goes back
-;; TAB open/closes file
 
 
 ;; --- Comments like Eclise ---

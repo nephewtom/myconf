@@ -542,18 +542,19 @@
    "http://www.linguee.es/espanol-ingles/search?source=auto&query=�"
    xah-lookup-dictionary-browser-function))
 
-(defalias 'xlg 'xah-lookup-google)
-(defalias 'xld 'xah-lookup-drae)
-(defalias 'xll 'xah-lookup-linguee)
-(defalias 'xlw 'xah-lookup-wikipedia)
+(defalias 'xlgoogle 'xah-lookup-google) ;; M-x xlg
+(defalias 'xlwikipedia 'xah-lookup-wikipedia) ;; M-x xlw
 
-(global-set-key (kbd "C-h 1") 'browse-url-at-point)
+(global-set-key (kbd "<f1> 7") 'browse-url-at-point)
+(define-key help-map (kbd "8") 'xah-lookup-google)
+(define-key help-map (kbd "9") 'xah-lookup-word-definition)
+(define-key help-map (kbd "0") 'xah-lookup-linguee)
 
 
 ;; --- Calendar stuff
 (setq calendar-week-start-day 1)
 
-                                        ; Display week number
+;; Display week number
 (setq calendar-intermonth-text
       '(propertize
         (format "%2d"

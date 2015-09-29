@@ -265,7 +265,7 @@
 
 ;; --- Dired ---
 (require 'dired )
-(setq dired-listing-switches "-lka")
+(setq dired-listing-switches "-lk")
 ;; move to up directory with '.'
 (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
 ;; Following key is already binded to 'a'

@@ -396,7 +396,12 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (setq markdown-open-command "haroopad")
-(eval-after-load 'markdown-mode '(define-key markdown-mode-map (kbd "C-c C-c t") 'markdown-toc/generate-toc))
+(eval-after-load 'markdown-mode
+  '(progn
+     (define-key markdown-mode-map (kbd "C-c C-c t") 'markdown-toc/generate-toc)
+     (define-key markdown-mode-map (kbd "M-p") nil)
+     (define-key markdown-mode-map (kbd "M-n") nil)
+     ))
 
 ;; From: https://github.com/shime/emacs-livedown
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
@@ -427,7 +432,9 @@
 
 ;; --- Org mode ---
 (require 'org)
-(add-hook 'org-mode-hook (lambda () (local-unset-key (kbd "C-<tab>"))))
+(add-hook 'org-mode-hook (lambda () (progn ((define-key org-mode-map (kbd "C-<tab>") nil)
+                                            (define-key org-mode-map (kbd "C-y") nil))
+                                            )))
 (global-set-key "\C-ca" 'org-agenda)
 
 

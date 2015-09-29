@@ -154,15 +154,15 @@
 
 
 ;; --- Ido stuff ---
-(require 'ido)
-(ido-mode t)
-(defvar ido-dont-ignore-buffer-names '("*scratch*" "*eshell*" "*shell*"))
-(defun ido-ignore-most-star-buffers (name)
-  "This function make ido ignore NAME buffers with star except those of previous variable."
-  (and
-   (string-match-p "^*" name)
-   (not (member name ido-dont-ignore-buffer-names))))
-(setq ido-ignore-buffers (list "\\` " #'ido-ignore-most-star-buffers))
+;; (require 'ido)
+;; (ido-mode t)
+;; (defvar ido-dont-ignore-buffer-names '("*scratch*" "*eshell*" "*shell*"))
+;; (defun ido-ignore-most-star-buffers (name)
+;;   "This function make ido ignore NAME buffers with star except those of previous variable."
+;;   (and
+;;    (string-match-p "^*" name)
+;;    (not (member name ido-dont-ignore-buffer-names))))
+;; (setq ido-ignore-buffers (list "\\` " #'ido-ignore-most-star-buffers))
 
 
 ;; --- Buffers & Ibuffer stuff ---

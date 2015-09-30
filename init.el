@@ -459,9 +459,10 @@
 
 ;; --- Org mode ---
 (require 'org)
-(add-hook 'org-mode-hook (lambda () (progn ((define-key org-mode-map (kbd "C-<tab>") nil)
-                                            (define-key org-mode-map (kbd "C-y") nil))
-                                            )))
+(add-hook 'org-mode-hook (lambda ()
+                           (define-key org-mode-map (kbd "C-<tab>") nil)
+                           (define-key org-mode-map (kbd "C-y") nil)))
+
 (global-set-key "\C-ca" 'org-agenda)
 
 
@@ -629,3 +630,4 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (find-file "~/ONGOING.org")
 (put 'erase-buffer 'disabled nil)
+(put 'narrow-to-region 'disabled nil)

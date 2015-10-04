@@ -391,8 +391,11 @@
 
 
 ;; --- XML Stuff ---
+(add-to-list 'auto-mode-alist
+             (cons (concat "\\." (regexp-opt '("xml" "xsd" "sch" "rng" "xslt" "svg" "rss" "wsdl") t) "\\'")
+                   'nxml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
 
-(add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
 (require 'hideshow)
 (require 'sgml-mode)
 (require 'nxml-mode)

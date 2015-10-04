@@ -87,10 +87,6 @@
 (global-set-key (kbd "M-z") 'recenter-top-bottom) ;; Almost as zz zt...
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim?
 
-;; This changes C-h to be used as backspace
-;; Advice from: http://www.emacswiki.org/emacs/EmacsCrashTips
-(keyboard-translate ?\C-h ?\C-?)
-
 ;; Scroll up & down in M-n & M-p
 (global-set-key (kbd "M-p") 'scroll-down-command)
 (global-set-key (kbd "M-n") 'scroll-up-command)

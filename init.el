@@ -462,6 +462,27 @@
                            (define-key org-mode-map (kbd "C-<tab>") nil)
                            (define-key org-mode-map (kbd "C-y") nil)))
 
+(setq org-todo-keyword-faces
+      '(
+        ("TODO" . (:foreground "blue" :weight bold))
+        ("WAITING" . (:foreground "orange" :weight bold))
+        ("IN-PROGRESS" . (:foreground "red" :weight bold))
+        ("DONE" . (:foreground "forest green" :weight bold))
+        ))
+
+(setq org-todo-keywords
+      '((sequence "TODO" "WAITING" "IN-PROGRESS" "DONE")))
+
+;; (setq org-todo-keywords-faces
+;;       '(
+;;         ("IN-PROGRESS" . (:foreground "red" :weight bold))
+;;         ("TODO" . (:foreground "blue" :weight bold))
+;;         ("WAITING" . (:foreground "yellow" :weight bold))
+;;         ("DONE" . (:foreground "green" :weight bold))
+;;         ("CANCELED" . (:foreground "black" :weight bold))
+;;         ))
+;; (setq org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE" "CANCELED")))
+;;# -*- org-todo-keywords-faces: (("IN-PROGRESS" . "red") ("TODO" . "blue") ("WAITING" . "yellow") ("DONE" . "green") ("CANCELED" . "black")); -*-
 (global-set-key "\C-ca" 'org-agenda)
 
 
@@ -612,16 +633,26 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
- '(custom-safe-themes (quote ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
+ '(custom-safe-themes
+   (quote
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(flycheck-clang-language-standard nil)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
  '(livedown:autostart nil)
  '(livedown:open t)
- '(livedown:port 1337) ; port for livedown server
+ '(livedown:port 1337)
  '(org-agenda-files (quote ("~/ONGOING.org")))
  '(org-startup-truncated nil)
+ '(safe-local-variable-values
+   (quote
+    ((org-todo-keywords-faces
+      ("IN-PROGRESS" . "red")
+      ("TODO" . "blue")
+      ("WAITING" . "yellow")
+      ("DONE" . "green")
+      ("CANCELED" . "black")))))
  '(vc-follow-symlinks t))
 
 

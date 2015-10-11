@@ -468,21 +468,21 @@
         ("WAITING" . (:foreground "orange" :weight bold))
         ("IN-PROGRESS" . (:foreground "red" :weight bold))
         ("DONE" . (:foreground "forest green" :weight bold))
+        ("CANCELLED" . (:foreground "black" :weight bold))
         ))
 
 (setq org-todo-keywords
-      '((sequence "TODO" "WAITING" "IN-PROGRESS" "DONE")))
+      '((sequence "TODO" "WAITING" "IN-PROGRESS" "DONE" "CANCELLED")))
 
-;; (setq org-todo-keywords-faces
-;;       '(
-;;         ("IN-PROGRESS" . (:foreground "red" :weight bold))
-;;         ("TODO" . (:foreground "blue" :weight bold))
-;;         ("WAITING" . (:foreground "yellow" :weight bold))
-;;         ("DONE" . (:foreground "green" :weight bold))
-;;         ("CANCELED" . (:foreground "black" :weight bold))
-;;         ))
-;; (setq org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE" "CANCELED")))
-;;# -*- org-todo-keywords-faces: (("IN-PROGRESS" . "red") ("TODO" . "blue") ("WAITING" . "yellow") ("DONE" . "green") ("CANCELED" . "black")); -*-
+(set-face-attribute 'org-priority nil
+                    :foreground "aquamarine1"
+                    :background "black"
+                    :inherit font-lock-keyword-face
+                    :inverse-video t
+                    :box '(:line-width 2
+                           :color "orange"
+                           :style released-button))
+
 (global-set-key "\C-ca" 'org-agenda)
 
 

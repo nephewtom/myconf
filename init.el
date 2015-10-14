@@ -484,7 +484,10 @@
 (require 'org)
 (add-hook 'org-mode-hook (lambda ()
                            (define-key org-mode-map (kbd "C-<tab>") nil)
-                           (define-key org-mode-map (kbd "C-y") nil)))
+                           (define-key org-mode-map (kbd "C-y") nil)
+                           (define-key org-mode-map (kbd "M-n") 'org-forward-heading-same-level)
+                           (define-key org-mode-map (kbd "M-p") 'org-backward-heading-same-level)
+                           ))
 
 (setq org-todo-keyword-faces
       '(

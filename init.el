@@ -39,7 +39,32 @@
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
 
-;; --- Useful functions for buffers, yank, move & its bindings ---
+;; --- Cut, Copy with universal arguments without selection  ---
+
+(defun dd-like-vim (arg)
+  "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
+  (interactive "p")
+  (kill-region (line-beginning-position)
+               (line-beginning-position (+ 1 arg)))
+  (message "%d line%s cut" arg (if (= 1 arg) "" "s")))
+(global-set-key (kbd "C-x C-x") 'dd-like-vim)
+
+(defun yyank-like-vim (arg)
+  "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
+  (interactive "p")
+  (kill-ring-save (line-beginning-position)
+                  (line-beginning-position (+ 1 arg)))
+  (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
+
+;; From: http://emacswiki.org/emacs/CopyingWholeLines
+(global-set-key (kbd "C-y") 'yyank-like-vim)
+
+(global-set-key (kbd "<f2>") 'dd-like-vim)
+(global-set-key (kbd "<f3>") 'yyank-like-vim)
+(global-set-key (kbd "<f4>") 'yank)
+
+
+;; --- Useful functions and bindings for buffers ---
 
 (defun switch-to-previous-buffer ()
   "Swap to previous buffer."
@@ -54,16 +79,6 @@
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 (global-set-key (kbd "<f9>") 'indent-buffer) ;; Personal taste
-
-(defun yyank-like-vim (arg)
-  "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
-  (interactive "p")
-  (kill-ring-save (line-beginning-position)
-                  (line-beginning-position (+ 1 arg)))
-  (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
-
-;; From: http://emacswiki.org/emacs/CopyingWholeLines
-(global-set-key (kbd "C-y") 'yyank-like-vim)
 
 (defun move-end-of-line-newline-and-indent ()
   "Insert a newline, then indent according to major mode."
@@ -341,7 +356,7 @@
 
 ;; Switches between .h & .cpp files in C/C++
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
-(global-set-key (kbd "<f4>") 'ff-find-other-file) ;; like QtCreator
+;; (global-set-key (kbd "<f4>") 'ff-find-other-file) ;; like QtCreator
 
 ;; Disable AC mode in for c++
 (defadvice auto-complete-mode (around disable-auto-complete-for-c++)
@@ -362,7 +377,6 @@
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (global-set-key (kbd "<f12>") 'recompile)
-(global-set-key (kbd "<f3>") 'ffap)
 (global-set-key (kbd "C-,") 'iedit-mode)
 
 

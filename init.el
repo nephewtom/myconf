@@ -110,7 +110,6 @@
 (global-set-key (kbd "M-ç") 'delete-horizontal-space)
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 
-(global-set-key (kbd "C-l") 'goto-line) ;; Like Eclipse
 (global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f11>") 'hc-toggle-highlight-tabs)
@@ -121,6 +120,17 @@
 (global-set-key (kbd "M-3") 'split-window-right)
 (global-set-key (kbd "M-0") 'delete-window)
 
+;; Duplicate line
+(defun duplicate-line()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank)
+  (open-line 1)
+  (forward-line 1)
+  (yank)
+)
+(global-set-key (kbd "C-l") 'duplicate-line)
 
 ;; Adjusting Split Pane Size
 (global-set-key (kbd "C-x +") 'enlarge-window)

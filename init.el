@@ -345,19 +345,11 @@
   "This is my hook after c-mode-common-hook."
   (global-company-mode)
   (setq company-backends (delete 'company-semantic company-backends))
-  (add-to-list 'company-backends 'company-irony)
   (add-to-list 'company-backends 'company-clang)
   (add-to-list 'company-backends 'company-c-headers)
   (setq company-idle-delay 0)
   (setq c-basic-offset 4)
   )
-
-
-;; --- Irony ---
-
-;; From: https://github.com/Sarcasm/irony-mode
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
@@ -681,7 +673,7 @@ by using nxml's indentation rules."
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(flycheck-clang-language-standard nil)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
+;; '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)

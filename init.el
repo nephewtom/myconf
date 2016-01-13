@@ -38,6 +38,8 @@
 ;; frame title
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
+;; Set unlimited buffer size for terminal
+(setq term-buffer-maximum-size 0)
 
 ;; --- Cut, Copy with universal arguments without selection  ---
 

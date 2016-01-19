@@ -123,15 +123,41 @@
 (global-set-key (kbd "M-0") 'delete-window)
 
 ;; Duplicate line
-(defun duplicate-line()
-  (interactive)
-  (move-beginning-of-line 1)
-  (kill-line)
-  (yank)
-  (open-line 1)
-  (forward-line 1)
-  (yank)
-)
+(defun duplicate-line (ARG)
+  "Duplicate current line, ARG, leaving point in lower line."
+  (interactive "*p")
+
+  ;; save the point for undo
+  (setq buffer-undo-list (cons (point) buffer-undo-list))
+
+  ;; local variables for start and end of line
+  (let ((bol (save-excursion (beginning-of-line) (point)))
+        eol)
+    (save-excursion
+
+      ;; don't use forward-line for this, because you would have
+      ;; to check whether you are at the end of the buffer
+      (end-of-line)
+      (setq eol (point))
+
+      ;; store the line and disable the recording of undo information
+      (let ((line (buffer-substring bol eol))
+            (buffer-undo-list t)
+            (count ARG))
+        ;; insert the line arg times
+        (while (> count 0)
+          (newline)         ;; because there is no newline in 'line'
+          (insert line)
+          (setq count (1- count)))
+        )
+
+      ;; create the undo information
+      (setq buffer-undo-list (cons (cons eol (point)) buffer-undo-list)))
+    ) ; end-of-let
+
+  ;; put the point in the lowest line and return
+  (next-line ARG))
+
 (global-set-key (kbd "C-l") 'duplicate-line)
 
 ;; Adjusting Split Pane Size
@@ -506,9 +532,7 @@ by using nxml's indentation rules."
                     :background "black"
                     :inherit font-lock-keyword-face
                     :inverse-video t
-                    :box '(:line-width 2
-                           :color "orange"
-                           :style released-button))
+                    :box '(:line-width 2 :color "orange" :style released-button))
 
 (global-set-key "\C-ca" 'org-agenda)
 
@@ -666,7 +690,7 @@ by using nxml's indentation rules."
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(flycheck-clang-language-standard nil)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
-;; '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
+ ;; '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)

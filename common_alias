@@ -2,6 +2,9 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 
+alias lt='ls -ltr'
+alias ltt='ls -ltr | tail'
+
 alias hgrep='history|grep --color'
 alias phgrep='cat ~/.persistent_history|grep --color'
 alias psg='ps -ef | grep'

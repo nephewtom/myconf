@@ -25,8 +25,9 @@
 ;;(blink-cursor-mode 1) ;;
 
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
-;; Reminder! To untabify a whole buffer, use: C-x h to mark it all
-;; and then use: M-x untabify
+;; Reminder! To untabify a whole buffer, mark the whole buffer and
+;; use: M-x untabify
+(global-set-key (kbd "C-<f4>") 'mark-whole-buffer)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-auto-revert-mode t) ;; automatically revert buffer when file changes
@@ -67,6 +68,7 @@
 
 
 ;; --- Useful functions and bindings for buffers ---
+(global-set-key [C-tab] 'other-window)
 
 (defun switch-to-previous-buffer ()
   "Swap to previous buffer."
@@ -285,7 +287,6 @@
 ;; Do I actually use this?
 (global-set-key [C-next] 'windmove-right)
 (global-set-key [C-prior] 'windmove-left)
-(global-set-key [C-tab] 'other-window)
 (global-set-key [C-S-iso-lefttab] 'windmove-up)
 
 (require 'buffer-move)

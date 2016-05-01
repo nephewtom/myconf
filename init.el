@@ -455,9 +455,11 @@
                nil))
 
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
+(add-hook 'html-mode-hook 'hs-minor-mode)
 
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+(define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
 (require 'auto-complete-nxml)
 (setq auto-complete-nxml-popup-help-key "C-ñ")

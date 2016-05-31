@@ -456,15 +456,9 @@
                sgml-skip-tag-forward
                nil))
 
-(add-hook 'nxml-mode-hook 'hs-minor-mode)
-(add-hook 'html-mode-hook 'hs-minor-mode)
-
-;; optional key bindings, easier than hs defaults
-(define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
-(define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
 (require 'auto-complete-nxml)
-(setq auto-complete-nxml-popup-help-key "C-ñ")
+(setq auto-complete-nxml-popup-help-key "C-ñ") ;; TODO: Change this key-binding
 (setq auto-complete-nxml-toggle-automatic-key "C-c C-t")
 
 ;; From http://blog.bookworm.at/2007/03/pretty-print-xml-with-emacs.html

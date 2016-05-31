@@ -42,6 +42,9 @@
 ;; Set unlimited buffer size for terminal
 (setq term-buffer-maximum-size 0)
 
+;; Check: http://emacs.stackexchange.com/questions/22621/cutting-selection-with-cua-mode-bindings-after-searching/
+(define-key isearch-mode-map (kbd "C-x") nil)
+
 ;; --- Cut, Copy with universal arguments without selection  ---
 
 (defun dd-like-vim (arg)

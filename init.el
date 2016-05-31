@@ -441,6 +441,34 @@
                    'nxml-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.wsdl\\'" . xml-mode))
 
+;; TODO: Consider how to use hideshow and with with programming modes
+;; TODO: Also consider to change its bindings, as C-c @ C-h, etc... are kind of long
+;; TODO: Check: https://www.emacswiki.org/emacs/HideShow
+;; *** Bindings from hideshow.el ***
+;; (defvar hs-minor-mode-map
+;;   (let ((map (make-sparse-keymap)))
+;;     ;; These bindings roughly imitate those used by Outline mode.
+;;     (define-key map "\C-c@\C-h"	      'hs-hide-block)
+;;     (define-key map "\C-c@\C-s"	      'hs-show-block)
+;;     (define-key map "\C-c@\C-\M-h"    'hs-hide-all)
+;;     (define-key map "\C-c@\C-\M-s"    'hs-show-all)
+;;     (define-key map "\C-c@\C-l"	      'hs-hide-level)
+;;     (define-key map "\C-c@\C-c"	      'hs-toggle-hiding)
+;;     (define-key map [(shift mouse-2)] 'hs-mouse-toggle-hiding)
+;;     map)
+;;   "Keymap for hideshow minor mode.")
+
+;; TODO: Check yafolding mode. It looks very simple and easy to use.
+;; TODO: It has very easy key-bindings, though C-RET collide with cua-set-rectangle-mark
+;; TODO: Check: https://github.com/zenozeng/yafolding.el
+;; *** Bindings from yafolding.el ***
+;; (defvar yafolding-mode-map
+;;   (let ((map (make-sparse-keymap)))
+;;     (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
+;;     (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
+;;     (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
+;;     map))
+
 (require 'hideshow)
 (require 'sgml-mode)
 (require 'nxml-mode)

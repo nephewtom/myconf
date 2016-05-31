@@ -619,11 +619,16 @@ by using nxml's indentation rules."
   (elpy-use-ipython)
   )
 (add-hook 'python-mode-hook 'my-python-hook)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 (defadvice auto-complete-mode (around disable-auto-complete-for-python)
   "Disable AC (auto-complete mode) for python mode, as elpy use company."
   (unless (eq major-mode 'python-mode) ad-do-it))
 (ad-activate 'auto-complete-mode)
+
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 
 ;; --- Astyle, uncrustify, GNU indent, etc.. TODO

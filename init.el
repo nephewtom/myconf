@@ -560,6 +560,7 @@ by using nxml's indentation rules."
                            (define-key org-mode-map (kbd "C-y") nil)
                            (define-key org-mode-map (kbd "M-n") 'org-forward-heading-same-level)
                            (define-key org-mode-map (kbd "M-p") 'org-backward-heading-same-level)
+                           (define-key org-mode-map (kdb "\C-ca") 'org-agenda)
                            ))
 
 (setq org-todo-keyword-faces
@@ -580,8 +581,6 @@ by using nxml's indentation rules."
                     :inherit font-lock-keyword-face
                     :inverse-video t
                     :box '(:line-width 2 :color "orange" :style released-button))
-
-(global-set-key "\C-ca" 'org-agenda)
 
 
 ;; --- Processing ---

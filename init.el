@@ -674,11 +674,12 @@ by using nxml's indentation rules."
 
 ;; M-x rae
 (defun xah-lookup-drae (&optional φword)
-  "Lookup definition of current ΦWORD or text selection in URL `http://buscon.rae.es/drae/srv/search?val='."
+  "Lookup definition of current ΦWORD or text selection in URL 'http://dle.rae.es/?w=�'."
+  "Note: this is the old address `http://buscon.rae.es/drae/srv/search?val='."
   (interactive)
   (xah-lookup-word-on-internet
    φword
-   "http://buscon.rae.es/drae/srv/search?val=�"
+   "http://dle.rae.es/?w=�"
    xah-lookup-dictionary-browser-function))
 
 ;; M-x uee

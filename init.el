@@ -166,10 +166,10 @@
 (global-set-key (kbd "C-l") 'duplicate-line)
 
 ;; Adjusting Split Pane Size
-(global-set-key (kbd "C-x +") 'enlarge-window)
+(global-set-key (kbd "C-x =") 'enlarge-window)
 (global-set-key (kbd "C-x -") 'shrink-window)
-(global-set-key (kbd "C-x ç") 'shrink-window-if-larger-than-buffer)
-(global-set-key (kbd "C-x ñ") 'balance-windows)
+(global-set-key (kbd "C-x +") 'shrink-window-if-larger-than-buffer)+
+(global-set-key (kbd "C-x _") 'balance-windows)
 
 
 ;; --- Comments like Eclise ---

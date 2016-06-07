@@ -496,9 +496,13 @@ by using nxml's indentation rules."
 (define-key hs-minor-mode-map (kbd "C-c @ C-M-s") nil)
 (define-key hs-minor-mode-map (kbd "C-c @ C-c") nil)
 (define-key hs-minor-mode-map (kbd "C-c <left>") 'hs-hide-block)
+(define-key hs-minor-mode-map (kbd "C-c h") 'hs-hide-block)
 (define-key hs-minor-mode-map (kbd "C-c <right>") 'hs-show-block)
+(define-key hs-minor-mode-map (kbd "C-c s") 'hs-show-block)
 (define-key hs-minor-mode-map (kbd "C-c <up>") 'hs-hide-all)
+(define-key hs-minor-mode-map (kbd "C-c M-h") 'hs-hide-all)
 (define-key hs-minor-mode-map (kbd "C-c <down>") 'hs-show-all)
+(define-key hs-minor-mode-map (kbd "C-c M-s") 'hs-show-all)
 (define-key hs-minor-mode-map (kbd "C-c C-c") 'hs-toggle-hiding)
 
 ;; TODO: Check yafolding mode. It looks very simple and easy to use.

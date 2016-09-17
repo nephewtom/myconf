@@ -127,7 +127,7 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 
 
-;; --- Auto-Complete, hippie-expand & Yasnippet ---
+;; --- Auto-Complete ---
 
 (require 'auto-complete)
 (require 'auto-complete-config)
@@ -135,16 +135,19 @@
 (define-key ac-mode-map (kbd "C-M-y") 'auto-complete) ;; ????
 (global-set-key (kbd "C-M-y") 'auto-complete) ;; By Tom, to test
 
-(global-set-key (kbd "C-ñ") 'hippie-expand)
+;; --- Yasnippet & hippie-expand ---
 
 (require 'yasnippet)
 (yas-global-mode 1)
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "<tab>") nil) ;; ???
+(define-key yas-minor-mode-map (kbd "TAB") nil) ;; ???
 (global-set-key (kbd "C-S-y") 'yas-expand)
 
+(global-set-key (kbd "C-ñ") 'hippie-expand)
 
 ;; --- Company, Irony, Clang, C++ stuff  ---
+;; NOTE: headers completion is BROKEN.
+;; TODO: try to go step-by-step in a init-cpp.el
 
 (require 'company)
 (setq company-global-modes '(not emacs-lisp-mode processing-mode text-mode))

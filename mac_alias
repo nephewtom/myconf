@@ -1,10 +1,13 @@
 alias ls='ls -G'
+alias ll='ls -alF'
 alias dir='ls -G -l'
+alias rm='rm -i'
+
+alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+
+alias mvim="open -a MacVim"
 
 alias chrome='open -a "Google Chrome"'
 
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
-alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
-
-alias vi="open \"mvim://open?url=file://$1\""
-alias mvim="open -a MacVim"
+alias love="/Applications/love.app/Contents/MacOS/love"

@@ -1,0 +1,10 @@
+* Show all networking related to a given port
+  sudo lsof -i :8122
+
+** Options:
+   * -i, -s: to list only network files with TCP state LISTEN, use: -iTCP -sTCP:LISTEN
+   * -n: inhibits the conversion of network numbers to host names for network files.
+   * -P: inhibits  the conversion of port numbers to port names for network files
+
+   sudo lsof -iTCP -sTCP:LISTEN -P -n
+   sudo lsof -i -P -n

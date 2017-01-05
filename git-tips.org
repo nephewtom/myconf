@@ -1,0 +1,64 @@
+* Log show filenames: git log --name-only
+  http://stackoverflow.com/questions/1230084/how-to-have-git-log-show-filenames-like-svn-log-v
+
+
+* View change history of file (diff): git log -p <filename>
+  http://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning
+
+
+* Create a remote branch: git checkout -b your_branch | git push -u origin your_branch
+  First, you must create your branch locally
+
+  git checkout -b your_branch
+
+  After that, you can work locally in your branch, when you are ready to share the branch, push it.
+  The next command push the branch to the remote repository origin and tracks it
+
+  git push -u origin your_branch
+  http://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
+
+
+* Diff which files changes between branches: git diff --name-status master..branchName
+  Only show filename:
+  git diff --name-status master..branchName
+
+  Show file differences:
+  git diff master..branchName
+  http://stackoverflow.com/questions/822811/showing-which-files-have-changed-between-two-revisions
+
+
+* Stop tracking a remote branch
+  http://stackoverflow.com/questions/3046436/how-do-you-stop-tracking-a-remote-branch-in-git
+  Simply delete your remote tracking branch :
+  (This will not delete the branch on the remote repo!)
+
+  git branch -d -r origin/<remote branch name>
+
+  Remove the upstream information for <branchname>:
+  If no branch is specified it defaults to the current branch.
+
+  git branch --unset-upstream
+
+
+* Delete local branch: git branch -d the_local_branch
+  http://makandracards.com/makandra/621-git-delete-a-branch-local-or-remote
+
+
+* Discard unstaged changes: git checkout path/to/file/to/revert
+  http://stackoverflow.com/questions/52704/how-do-you-discard-unstaged-changes-in-git
+
+
+* Log short just one commit line: git log --pretty=oneline --abbrev-commit
+  http://stackoverflow.com/questions/4479225/how-to-output-git-log-with-the-first-line-only
+
+
+* Log short just one commit line with author: git log --pretty=format:"%h%x09%an%x09%ad%x09%s"
+  http://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date
+
+
+* Show staged changes: git diff --cached
+  http://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged
+
+
+* Undo last commit and keep changes at index: git reset --soft HEAD~1
+  http://stackoverflow.com/questions/927358/how-to-undo-last-commits-in-git

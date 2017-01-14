@@ -1,15 +1,16 @@
 #+STARTUP: overview
 
-* GoTo Declaration: Ctrl-b
-* Navigate Class (Open Type in Eclipse): Ctrl-n
-* View Type Hierarchy: Ctrl-h
-* Super Method/Class: Ctrl-u
-* GoTo Implementation: Ctrl-Alt-b (Show various options if applies)
+* GoTo Declaration: Ctrl+B
+* GoTo Implementation: Ctrl+Alt+B
 
-* Forward/Backward navigation: Ctrl-Alt-Arrows
-* Move between tabs: Alt-Arrows
-* Close tab: Ctrl-F4
+* Forward/Backward navigation: Ctrl+Alt+Arrows
+* Navigate | Class (Open Type in Eclipse): Ctrl+N
+* Navigate | File Structure: Ctrl+F12
+* Navigate | Type Hierarchy: Ctrl+H
+* Navigate | Super Method/Class: Ctrl+U
 
-* Select word: Ctrl-w
+* Select word: Ctrl+W
 
-* Apropos action/shortcut: Ctrl-Shift-a
+* Move between tabs: Alt+Arrows
+* Close tab: Ctrl+F4
+* Apropos action/shortcut: Ctrl+Shift+A

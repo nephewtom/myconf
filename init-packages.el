@@ -16,6 +16,7 @@
 
 ;; TODO: Understand how packages are loaded...
 
+;; --- Scroll bar ---
 ;; Tom question: Why is this needed here?
 ;; It seems if I put it into init-basic.el, gets disabled after the lines above,
 ;; regarding package initialize.
@@ -318,7 +319,7 @@ by using nxml's indentation rules."
 
 ;; --- Markdown stuff ---
 
-(require 'markdown-mode)
+;;(require 'markdown-mode) ;; Commented because it is breaking color-theme-print
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
@@ -364,7 +365,7 @@ by using nxml's indentation rules."
                            (define-key org-mode-map (kbd "C-y") nil)
                            (define-key org-mode-map (kbd "M-n") 'org-forward-heading-same-level)
                            (define-key org-mode-map (kbd "M-p") 'org-backward-heading-same-level)
-                           (define-key org-mode-map (kdb "\C-ca") 'org-agenda)
+                           (define-key org-mode-map (kbd "\C-ca") 'org-agenda)
                            ))
 
 (setq org-todo-keyword-faces

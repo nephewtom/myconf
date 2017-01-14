@@ -137,7 +137,6 @@ Version 2016-06-18"
 ;; Similar to vim as they may remind me so...
 (global-set-key (kbd "M-j") 'join-line) ;; Almost like J in vim (joins to previos line)
 ;; join-line is a defalias of delete-indentation.
-(global-set-key (kbd "M-z") 'recenter-top-bottom) ;; Almost as zz zt...
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim?
 
 ;; Scroll up & down in M-n & M-p

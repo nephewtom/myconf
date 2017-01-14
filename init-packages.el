@@ -552,6 +552,10 @@ by using nxml's indentation rules."
 (ad-activate 'term-char-mode)
 
 
+;; --- Needs to be here cause it was overwriten by other package
+(global-set-key (kbd "M-z") 'recenter-top-bottom) ;; Almost as zz zt...
+
+
 ;; --- Custom stuff
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -562,38 +566,8 @@ by using nxml's indentation rules."
  '(magit-item-highlight ((t nil)))
  '(sml/modes ((t (:inherit sml/global :foreground "dark violet" :weight bold)))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(c-basic-offset 4)
- '(custom-safe-themes
-   (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(flycheck-clang-language-standard nil)
- '(initial-frame-alist (quote ((fullscreen . maximized))))
- ;; '(irony-supported-major-modes (quote (c++-mode c-mode objc-mode dup-mode)))
- '(livedown:autostart nil)
- '(livedown:open t)
- '(livedown:port 1337)
- '(org-agenda-files (quote ("~/smip/SMIP-GOING.org")))
- '(org-startup-truncated nil)
- '(safe-local-variable-values
-   (quote
-    ((org-todo-keywords-faces
-      ("IN-PROGRESS" . "red")
-      ("TODO" . "blue")
-      ("WAITING" . "yellow")
-      ("DONE" . "green")
-      ("CANCELED" . "black")))))
- '(vc-follow-symlinks t))
-
-
 ;;; init.el ends here
 (put 'dired-find-alternate-file 'disabled nil)
-;; (find-file "~/ONGOING.org")
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 

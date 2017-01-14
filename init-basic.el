@@ -47,31 +47,58 @@
 ;; Check: http://emacs.stackexchange.com/questions/22621/cutting-selection-with-cua-mode-bindings-after-searching/
 (define-key isearch-mode-map (kbd "C-x") nil)
 
-;; --- Cut, Copy with universal arguments without selection  ---
 
-(defun dd-like-vim (arg)
-  "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
-  (interactive "p")
-  (kill-region (line-beginning-position)
-               (line-beginning-position (+ 1 arg)))
-  (message "%d line%s cut" arg (if (= 1 arg) "" "s")))
-(global-set-key (kbd "C-x C-x") 'dd-like-vim)
+;; --- Cut, Copy, Paste from Xah Lee functions   ---
+;; Check http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
+(defun xah-cut-line-or-region ()
+  "Cut current line, or text selection.
+When `universal-argument' is called first,
+cut whole buffer (respects `narrow-to-region').
+Version 2015-06-10"
+  (interactive)
+  (if current-prefix-arg
+      (progn ; not using kill-region because we don't want to include previous kill
+        (kill-new (buffer-string))
+        (delete-region (point-min) (point-max)))
+    (progn (if (use-region-p)
+               (kill-region (region-beginning) (region-end) t)
+             (kill-region (line-beginning-position) (line-beginning-position 2))))))
 
-(defun yyank-like-vim (arg)
-  "Emulates yy command on vim, copy lines (as many as ARG = prefix argument)."
-  (interactive "p")
-  (kill-ring-save (line-beginning-position)
-                  (line-beginning-position (+ 1 arg)))
-  (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
+(defun xah-copy-line-or-region ()
+  "Copy current line, or text selection.
+When called repeatedly, append copy subsequent lines.
+When `universal-argument' is called first,
+copy whole buffer (respects `narrow-to-region').
+Version 2016-06-18"
+  (interactive)
+  (let (-p1 -p2)
+    (if current-prefix-arg
+        (setq -p1 (point-min) -p2 (point-max))
+      (if (use-region-p)
+          (setq -p1 (region-beginning) -p2 (region-end))
+        (setq -p1 (line-beginning-position) -p2 (+ (line-end-position) 1))))
+    (if (eq last-command this-command)
+        (progn
+          (progn ; hack. exit if there's no more next line
+            (end-of-line)
+            (forward-char)
+            (backward-char))
+          ;; (push-mark (point) "NOMSG" "ACTIVATE")
+          (kill-append "\n" nil)
+          (kill-append (buffer-substring-no-properties (line-beginning-position) (+ (line-end-position) 1)) nil)
+          (message "Line copy appended"))
+      (progn
+        (kill-ring-save -p1 -p2)
+        (if current-prefix-arg
+            (message "Buffer text copied")
+          (message "Text copied"))))
+    (end-of-line)
+    (forward-char)
+    ))
 
-;; From: http://emacswiki.org/emacs/CopyingWholeLines
-(global-set-key (kbd "C-y") 'yyank-like-vim)
-
-(global-set-key (kbd "<f2>") 'dd-like-vim)
-(global-set-key (kbd "<f3>") 'yyank-like-vim)
-(global-set-key (kbd "<f4>") 'yank)
-
-;; TODO: check http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
+(global-set-key (kbd "<f2>") 'xah-cut-line-or-region) ; cut
+(global-set-key (kbd "<f3>") 'xah-copy-line-or-region) ; copy
+(global-set-key (kbd "<f4>") 'yank) ; paste
 
 
 ;; --- Useful functions and bindings for buffers ---

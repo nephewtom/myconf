@@ -144,7 +144,7 @@
 (define-key yas-minor-mode-map (kbd "TAB") nil) ;; ???
 (global-set-key (kbd "C-S-y") 'yas-expand)
 
-(global-set-key (kbd "C-ñ") 'hippie-expand)
+(global-set-key (kbd "C-;") 'hippie-expand)
 
 ;; --- Company, Irony, Clang, C++ stuff  ---
 ;; NOTE: headers completion is BROKEN.

@@ -14,6 +14,14 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+;; TODO: Understand how packages are loaded...
+
+;; Tom question: Why is this needed here?
+;; It seems if I put it into init-basic.el, gets disabled after the lines above,
+;; regarding package initialize.
+(scroll-bar-mode t)
+
+
 ;; --- Git & Svn ---
 
 (require 'magit)

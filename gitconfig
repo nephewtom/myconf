@@ -1,0 +1,21 @@
+[diff]
+  tool = kdiff3
+  tool = meld 
+
+[user]
+  name = Tomas Orti
+  email = tomas.orti.martin@ericsson.com
+
+[sendpack]
+  sideband = false
+
+[http]
+
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p

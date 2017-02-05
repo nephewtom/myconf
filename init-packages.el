@@ -346,7 +346,8 @@ by using nxml's indentation rules."
         ))
 
 (setq org-todo-keywords
-      '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE" "CANCELLED" "NOTE" "TENTATIVE")))
+      '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE")
+        (sequence "NOTE" "TENTATIVE" "CANCELLED")))
 
 (set-face-attribute 'org-priority nil
                     :foreground "aquamarine1"

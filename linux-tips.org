@@ -1,0 +1,36 @@
+* Know the creation time of a file/directory:
+  http://unix.stackexchange.com/questions/24441/get-file-created-creation-time
+  http://unix.stackexchange.com/questions/50177/birth-is-empty-on-ext4/50184#50184
+  #+BEGIN_SRC shell
+    # Get device in /dev :
+    [root@iop-smip-sm2m-nfs core]# df -h .
+    Filesystem            Size  Used Avail Use% Mounted on
+    /dev/mapper/vg_iopsmipsm2mnfs-lv_home
+                          144G   93M  136G   1% /NFS
+
+    # Get the inode of file/dir :
+    [root@iop-smip-sm2m-nfs core]# stat -c %i reports/
+    4456479
+
+    # Get the info with debugfs
+    [root@iop-smip-sm2m-nfs core]# debugfs -R 'stat <4456479>' /dev/mapper/vg_iopsmipsm2mnfs-lv_home
+    debugfs 1.41.12 (17-May-2010)
+    Inode: 4456479   Type: directory    Mode:  0775   Flags: 0x80000
+    Generation: 352045172    Version: 0x00000000:00000004
+    User:   501   Group:   501   Size: 4096
+    File ACL: 0    Directory ACL: 0
+    Links: 5   Blockcount: 8
+    Fragment:  Address: 0    Number: 0    Size: 0
+     ctime: 0x58809adf:24d9ba3c -- Thu Jan 19 11:54:23 2017
+     atime: 0x58947ec4:004067f0 -- Fri Feb  3 13:59:48 2017
+     mtime: 0x58809adf:24d9ba3c -- Thu Jan 19 11:54:23 2017
+    crtime: 0x579779d1:e4d1f580 -- Tue Jul 26 16:55:13 2016
+    Size of extra inode fields: 28
+    Extended attributes stored in inode body: 
+      selinux = "system_u:object_r:home_root_t:s0\000" (33)
+    EXTENTS:
+    (0): 17834037
+    [root@iop-smip-sm2m-nfs core]# 
+
+  
+  #+END_SRC

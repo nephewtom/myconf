@@ -1,0 +1,7 @@
+* Checkout project: svn co svn://m2mdev01/m2mcore/trunk/
+
+* Logging: svn log | sed -n '/javier.caballero.chamorro/,/-----$/ p'
+
+* svn copy ^/trunk/mongoDB@11592 mongoDB
+
+* Merge: http://svnbook.red-bean.com/nightly/en/svn.branchmerge.basicmerging.html#svn.branchmerge.basicmerging.resurrect

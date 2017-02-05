@@ -1,0 +1,34 @@
+* zip/unzip files
+  From: http://stackoverflow.com/questions/1431351/how-do-i-uncompress-unzip-within-emacs
+
+  To zip files, open the directory in dired. Mark the files you want to zip with m. Then type
+  
+  ! zip foo.zip * <RET>
+
+  To extract an entire archive from dired you can mark a file and run *& unzip*, just as you would in a shell.
+
+* Match brackets
+  https://www.gnu.org/savannah-checkouts/gnu/emacs/manual/html_node/emacs/Moving-by-Parens.html
+  http://stackoverflow.com/questions/261522/what-is-the-command-to-match-brackets-in-emacs
+
+* Get rid of *reference to free variable*
+  http://stackoverflow.com/a/12432468/316232
+  http://stackoverflow.com/questions/12432093/get-rid-of-reference-to-free-variable-byte-compilation-warnings
+
+* Org mode to RTF
+  https://www.google.es/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=org-mode%20to%20rtf
+  http://blog.binchen.org/posts/how-to-take-screen-shot-for-business-people-efficiently-in-emacs.html
+
+* Gnus email client
+  Hi everyone. If you've grown tired of Thunderbird as email client (I
+  truly have) you may want to try out Gnus in Emacs. I've written a wiki 
+  applicable to GNU Emacs 24.3.1 (probably to other versions as well) on 
+  how to configure Gnus at work, please visit:
+  https://wiki.lmera.ericsson.se/wiki/ELX/HOWTOS/Gnus 
+  Good luck!
+
+* Eclim: https://github.com/emacs-eclim/emacs-eclim
+
+* Remove  characters from a file
+  1. Go to the beginning of the document
+  2. Type: M-x replace-string RET C-q C-m RET RET

@@ -207,7 +207,12 @@ Version 2016-06-18"
 
 (global-set-key (kbd "C-l") 'duplicate-line)
 
+;; Adjust font-size
+;; TODO: Review & test
+(global-set-key (kbd "C-=") 'text-scale-adjust)
+
 ;; Adjusting Split Pane Size
+;; TODO: Review & test
 (global-set-key (kbd "C-x =") 'enlarge-window)
 (global-set-key (kbd "C-x -") 'shrink-window)
 (global-set-key (kbd "C-x +") 'shrink-window-if-larger-than-buffer)

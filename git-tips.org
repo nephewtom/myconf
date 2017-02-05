@@ -62,3 +62,9 @@
 
 * Undo last commit and keep changes at index: git reset --soft HEAD~1
   http://stackoverflow.com/questions/927358/how-to-undo-last-commits-in-git
+
+* Rename git branch locally and remotely
+  https://gist.github.com/lttlrck/9628955
+  git branch -m old_branch new_branch         # Rename branch locally    
+  git push origin :old_branch                 # Delete the old branch (colon does it)
+  git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote

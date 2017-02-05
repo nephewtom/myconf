@@ -31,7 +31,7 @@
 ;; TODO: When switch-to-previous-buffer (f8), this says 'Mark set',
 ;; and I need to hit F6 twice... Test it with emacs -q... and how to fix it
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;;(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-auto-revert-mode t) ;; automatically revert buffer when file changes
 
 ;; changes default Emacs behaviour, allowing to delete without kill-ring & inserting over selection.

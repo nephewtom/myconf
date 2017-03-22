@@ -71,7 +71,7 @@
 (add-to-list 'ibuffer-never-show-predicates "^\\*JDEE")
 
 (add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
-(global-set-key (kbd "<f7>") 'ibuffer)
+
 
 ;; --- Emacs windows stuff ---
 

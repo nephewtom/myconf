@@ -113,6 +113,7 @@ Version 2016-06-18"
 
 ;; --- Useful functions and bindings for buffers ---
 (global-set-key [C-tab] 'other-window)
+(global-set-key (kbd "<f7>") 'ibuffer)
 
 (defun switch-to-previous-buffer ()
   "Swap to previous buffer."

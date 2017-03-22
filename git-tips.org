@@ -26,6 +26,8 @@
   git diff master..branchName
   http://stackoverflow.com/questions/822811/showing-which-files-have-changed-between-two-revisions
 
+* Diff a file between branches: *git diff branchA branchB -- myfile*
+  http://stackoverflow.com/questions/4099742/how-to-compare-files-from-two-different-branches
 
 * Stop tracking a remote branch
   http://stackoverflow.com/questions/3046436/how-do-you-stop-tracking-a-remote-branch-in-git

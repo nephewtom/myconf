@@ -32,3 +32,8 @@
 * Remove  characters from a file
   1. Go to the beginning of the document
   2. Type: M-x replace-string RET C-q C-m RET RET
+
+* Replace character with newline:
+  1. Go to the beginning of the document
+  2. Type: M-x replace-string RET <char> RET C-q C-j RET
+  http://stackoverflow.com/questions/613022/how-to-replace-a-character-with-a-newline-in-emacs

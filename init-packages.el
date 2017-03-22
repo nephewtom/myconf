@@ -340,22 +340,22 @@ by using nxml's indentation rules."
         ("IN-PROGRESS" . (:foreground "red" :weight bold))
         ("WAITING" . (:foreground "orange" :weight bold))
         ("DONE" . (:foreground "forest green" :weight bold))
-        ("CANCELLED" . (:foreground "black" :weight bold))
+
+        ("REVIEW" . (:foreground "purple" :weight bold))
         ("NOTE" . (:foreground "black" :weight bold))
-        ("TENTATIVE" . (:foreground "purple" :weight bold))
+        ("TRY" . (:foreground "purple" :weight bold))
+        ("CANCELLED" . (:foreground "black" :weight bold))
+
+        ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
         ))
 
 (setq org-todo-keywords
       '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE")
-        (sequence "NOTE" "TENTATIVE" "CANCELLED")))
+        (sequence "REVIEW" "NOTE" "TRY" "CANCELLED" "|" "WTF")))
 
-(set-face-attribute 'org-priority nil
-                    :foreground "aquamarine1"
-                    :background "black"
-                    :inherit font-lock-keyword-face
-                    :inverse-video t
-                    :box '(:line-width 2 :color "orange" :style released-button))
-
+(setq org-priority-faces '((?A . (:background "#DD0000"  :foreground "black" :box '(:line-width 2 :style released-button)))
+                           (?B . (:background "#A366FF" :foreground "black" :box '(:line-width 2 :style released-button)))
+                           (?C . (:background "#00CCFF" :foreground "black" :box '(:line-width 2 :style released-button)))))
 
 ;; --- Processing ---
 (autoload 'processing-mode "processing-mode" "Processing mode" t)

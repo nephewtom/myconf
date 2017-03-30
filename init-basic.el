@@ -155,7 +155,7 @@ Version 2016-06-18"
 (global-set-key (kbd "M-n") 'scroll-up-command)
 
 ;; Same position as US keyboard layout (M-\) [US keyboard has \, Spanish ç]
-(global-set-key (kbd "M-ç") 'delete-horizontal-space)
+(global-set-key (kbd "M-'") 'delete-horizontal-space)
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 ;; In that SO question says to use delete-indentation function
 ;; Tomi, what is the difference between both?

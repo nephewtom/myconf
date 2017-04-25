@@ -341,9 +341,10 @@ by using nxml's indentation rules."
         ("WAITING" . (:foreground "orange" :weight bold))
         ("DONE" . (:foreground "forest green" :weight bold))
 
-        ("REVIEW" . (:foreground "purple" :weight bold))
-        ("NOTE" . (:foreground "black" :weight bold))
         ("TRY" . (:foreground "purple" :weight bold))
+        ("NOTE" . (:foreground "black" :weight bold))
+        ("REVIEW" . (:foreground "purple" :weight bold))
+        ("PERMANENT" . (:foreground "red" :weight bold))
         ("CANCELLED" . (:foreground "black" :weight bold))
 
         ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
@@ -351,7 +352,7 @@ by using nxml's indentation rules."
 
 (setq org-todo-keywords
       '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE")
-        (sequence "REVIEW" "NOTE" "TRY" "CANCELLED" "|" "WTF")))
+        (sequence "TRY" "NOTE" "REVIEW" "PERMANENT" "CANCELLED" "|" "WTF")))
 
 (setq org-priority-faces '((?A . (:background "#DD0000"  :foreground "black" :box '(:line-width 2 :style released-button)))
                            (?B . (:background "#A366FF" :foreground "black" :box '(:line-width 2 :style released-button)))

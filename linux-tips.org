@@ -34,3 +34,15 @@
 
   
   #+END_SRC
+
+* Measure size of directories
+  du -chsh * | sort -n
+  du -h -d 1 | sort -n
+
+* rsync
+  23/11/15 14:21:13 | rsync -LvzP sogadm@10.95.183.190:/var/sog/pgngn/CRH1091367-R5A.zip .
+  27/04/16 19:37:16 | rsync vm-Windows7/ /media/etomort/WD_DISK/
+  27/04/16 19:37:44 | rsync -a  vm-Windows7/ /media/etomort/WD_DISK/
+  24/06/16 00:42:14 | rsync -v es_windows_7_professional_n_with_sp1_x64_dvd_u_677144.iso  manager@54.76.253.178:/home/manager/
+  24/06/16 20:24:50 | rsync -vhP --progress es_windows_7_professional_n_with_sp1_x64_dvd_u_677144.iso  manager@54.76.253.178:/home/manager/
+  12/08/16 14:50:03 | rsync -vhP --progress sysadmin@smip-sm2m-rpm:/var/www/html/smip/portal/R7/m2m-kermit-2.6.0_1267-759b83bf.noarch.rpm .

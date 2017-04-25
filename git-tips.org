@@ -59,14 +59,19 @@
 
 ** Delete local branch: *git branch -d the_local_branch*
   http://makandracards.com/makandra/621-git-delete-a-branch-local-or-remote
+** Delete local & remote branch: *git branch -d branch_name && git push origin --delete branch_name*
+   http://stackoverflow.com/questions/2003505/how-to-delete-a-git-branch-both-locally-and-remotely
 ** Rename git branch locally and remotely
   https://gist.github.com/lttlrck/9628955
   git branch -m old_branch new_branch         # Rename branch locally    
   git push origin :old_branch                 # Delete the old branch (colon does it)
   git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote
 
+** Checkout remote branch: *git fetch && git checkout <branch-name>*
+   http://stackoverflow.com/questions/1783405/how-to-check-out-a-remote-git-branch
 
-* Undoing
+
+* Undoing/Delete
 ** Discard unstaged changes: *git checkout path/to/file/to/revert*
   http://stackoverflow.com/questions/52704/how-do-you-discard-unstaged-changes-in-git
 
@@ -82,8 +87,24 @@
 
   http://stackoverflow.com/questions/2389361/undo-a-git-merge-that-hasnt-been-pushed-yet
 
+** Delete file from repo: *git rm file1.txt*
+   http://stackoverflow.com/questions/2047465/how-can-i-delete-a-file-from-git-repo
+   git rm file1.txt
+   git commit -m "remove file1.txt"
+   But if you want to remove the file only from the Git repository and not remove it from the filesystem, use:
 
-* Theory
+   git rm --cached file1.txt
+   And to push changes to remote repo
+
+   git push origin branch_name  
+
+
+* Workflow/Theory
+** When to *git pull*
+   I would say, after stage the changes.
+   If it is done after commit, to avoid an extra merge commit, do *git pull --rebase*
+   Othe way is to *git stash* before *git pull* and then *git stash apply*
+   http://stackoverflow.com/questions/18529206/when-do-i-need-to-do-git-pull-before-or-after-git-add-git-commit
 ** What is HEAD
    http://stackoverflow.com/questions/2529971/what-is-the-head-in-git
    Interesting answer and comments that explain that a branch point to a commit.
@@ -92,3 +113,14 @@
    - If you look at the contents of .git/HEAD you'll see something like "ref: refs/heads/master"
 
    More complete: http://stackoverflow.com/questions/964876/head-and-orig-head-in-git/964927#964927
+
+
+* Other
+** Check if pull needed on branch: *git remote update && git status -uno*
+   - First use *git remote update*, to bring your remote refs up to date
+   - Then:
+     1) *git status -uno* will tell you whether the branch you are tracking is ahead, behind or has diverged.
+        If it says nothing, the local and remote are the same.
+     2) *git show-branch *master* will show you the commits in all of the branches whose names end in master
+        (eg master and origin/master).
+   http://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git

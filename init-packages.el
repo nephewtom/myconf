@@ -99,8 +99,8 @@
 ;; Reminders:
 ;; * helm-find: C-x c /
 ;; * To find from helm-find-files (C-x C-f), press: C-c /
-;; * To grep from helm-find-files (C-x C-f), press: C-u M-g s
-;; * helm-do-grep: C-x c M-g s
+;; * To grep from helm-find-files (C-x C-f), press: C-u C-s
+;; * helm-do-grep:
 ;;
 (require 'helm)
 (require 'helm-config)
@@ -111,6 +111,7 @@
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-x b") 'helm-mini)
 
+;; TODO: Understand what is this for...
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
@@ -357,6 +358,9 @@ by using nxml's indentation rules."
 (setq org-priority-faces '((?A . (:background "#DD0000"  :foreground "black" :box '(:line-width 2 :style released-button)))
                            (?B . (:background "#A366FF" :foreground "black" :box '(:line-width 2 :style released-button)))
                            (?C . (:background "#00CCFF" :foreground "black" :box '(:line-width 2 :style released-button)))))
+
+(eval-after-load "org"
+  '(require 'ox-md nil t))
 
 ;; --- Processing ---
 (autoload 'processing-mode "processing-mode" "Processing mode" t)

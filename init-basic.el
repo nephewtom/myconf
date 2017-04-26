@@ -16,7 +16,7 @@
 (electric-pair-mode 1)
 (defvar electric-pair-pairs) ;; make electric-pair-mode work on more brackets
 (setq electric-pair-pairs '( (?\" . ?\") (?\{ . ?\}) ) )
-(electric-indent-mode 1)
+(electric-indent-mode 1) ;; indent after enter
 
 (global-linum-mode t) ;; line numbers in all buffers
 (global-hl-line-mode t) ;; highlight current line
@@ -28,7 +28,7 @@
 ;; Reminder! To untabify a whole buffer, mark the whole buffer and
 ;; use: M-x untabify
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
-;; TODO: When switch-to-previous-buffer (f8), this says 'Mark set',
+;; TODO: When switch-to-previous-buffer (f6), this says 'Mark set',
 ;; and I need to hit F6 twice... Test it with emacs -q... and how to fix it
 
 ;;(add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -36,7 +36,7 @@
 
 ;; changes default Emacs behaviour, allowing to delete without kill-ring & inserting over selection.
 (delete-selection-mode 1)
-(setq default-directory "~")
+(setq default-directory "~/")
 
 ;; frame title
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
@@ -143,7 +143,7 @@ Version 2016-06-18"
 ;; --- Personal rebinding of common keys ---
 
 (global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+(global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 
 ;; Similar to vim as they may remind me so...
 (global-set-key (kbd "M-j") 'join-line) ;; Almost like J in vim (joins to previos line)

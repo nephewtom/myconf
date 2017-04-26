@@ -1,28 +1,42 @@
-;;; package --- Emacs init-packages.el file
-;;; Commentary:
+;; util.el
+;; markdown.el
+;; org-mode.el
+;; hideshow.el
+;; nxml.el
+;; etc...
 
-;;; Code:
+;; Ivy?
+;; https://oremacs.com/2017/04/09/ivy-0.9.0/
 
-(setq package-enable-at-startup nil)
-(package-initialize)
-
-;; --- Scroll bar ---
-;; Tom question: Why is this needed here?
-;; It seems if I put it into init-basic.el, gets disabled after the lines above,
-;; regarding package initialize.
-(scroll-bar-mode t)
 
 ;; --- Packages ELPA, MELPA, Marmalade ---
 
-;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
-;; if (require 'buffer-move) is placed just before this package stuff
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-;; TODO: Understand how packages are loaded...
+;; --- Smart line ---
+;; https://github.com/Malabarba/smart-mode-line
+(setq sml/no-confirm-load-theme t)
+(setq sml/theme 'light)
+(sml/setup)
+(add-to-list 'rm-excluded-modes " MRev")
+(add-to-list 'rm-excluded-modes " ARev")
+
+;; --- Move text ---
+
+;; It allows you to move the current line using M-up / M-down
+;; if a region is marked, it will move the region instead.
+(require 'move-text)
+(move-text-default-bindings)
+
+;; --- Company ---
+
+(require 'company)
+(setq company-global-modes '(not emacs-lisp-mode processing-mode text-mode))
+(global-set-key (kbd "M-y") 'company-complete)
 
 
 ;; --- Git & Svn ---
@@ -38,41 +52,6 @@
 (autoload 'svn-update "dsvn" "Run `svn update'." t)
 (require 'vc-svn)
 
-
-;; --- Move text ---
-
-;; It allows you to move the current line using M-up / M-down
-;; if a region is marked, it will move the region instead.
-(require 'move-text)
-(move-text-default-bindings)
-
-
-;; --- Smart line ---
-;; https://github.com/Malabarba/smart-mode-line
-(setq sml/no-confirm-load-theme t)
-(sml/setup)
-(add-to-list 'rm-excluded-modes " MRev")
-(add-to-list 'rm-excluded-modes " ARev")
-
-
-;; --- Buffers & Ibuffer stuff ---
-
-;; Remove from Ibuffers the buffers that match these regexp
-(require 'ibuf-ext)
-(add-to-list 'ibuffer-never-show-predicates "^\\*helm ag")
-(add-to-list 'ibuffer-never-show-predicates "^\\*helm mini")
-(add-to-list 'ibuffer-never-show-predicates "^\\*helm find")
-(add-to-list 'ibuffer-never-show-predicates "^\\*helm grep exts")
-(add-to-list 'ibuffer-never-show-predicates "^\\*helm M-x")
-(add-to-list 'ibuffer-never-show-predicates "^\\*helm-mode")
-(add-to-list 'ibuffer-never-show-predicates "^\\*helm buffers")
-(add-to-list 'ibuffer-never-show-predicates "^\\*Messages")
-(add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
-(add-to-list 'ibuffer-never-show-predicates "^\\*Help")
-(add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
-(add-to-list 'ibuffer-never-show-predicates "^\\*JDEE")
-
-(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
 
 
 ;; --- Emacs windows stuff ---
@@ -96,48 +75,9 @@
 (require 'transpose-frame)
 
 
-;; --- Helm ---
+(load "~/myconf/emacs/helm-n-buffers.el")
+(load "~/myconf/emacs/dired.el")
 
-;; Reminders:
-;; * helm-find: C-x c /
-;; * To find from helm-find-files (C-x C-f), press: C-c /
-;; * To grep from helm-find-files (C-x C-f), press: C-u C-s
-;; * helm-do-grep:
-;;
-(require 'helm)
-(require 'helm-config)
-(helm-mode 1)
-(helm-autoresize-mode t)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x b") 'helm-mini)
-
-;; TODO: Understand what is this for...
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-
-;; --- Dired ---
-
-(require 'dired )
-(setq dired-listing-switches "-lk")
-;; move to up directory with '.'
-(define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
-;; Following key is already binded to 'a'
-(define-key dired-mode-map (kbd "f") 'dired-find-alternate-file)
-
-;; Auto-refresh dired on file change
-(add-hook 'dired-mode-hook 'auto-revert-mode)
-(setq dired-auto-revert-buffer t)
-
-
-;; --- Elisp ---
-
-(require 'hl-defined)
-(add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
-(setq ediff-split-window-function 'split-window-horizontally)
 
 
 ;; --- Auto-Complete ---
@@ -146,7 +86,7 @@
 (require 'auto-complete-config)
 (ac-config-default)
 (define-key ac-mode-map (kbd "C-M-y") 'auto-complete) ;; ????
-(global-set-key (kbd "C-M-y") 'auto-complete) ;; By Tom, to test
+(global-set-key (kbd "C-M-y") 'auto-complete) ;; By Tom, to tes
 
 ;; --- Yasnippet & hippie-expand ---
 
@@ -158,16 +98,11 @@
 
 (global-set-key (kbd "C-;") 'hippie-expand)
 
-;; --- Company ---
-
-(require 'company)
-(setq company-global-modes '(not emacs-lisp-mode processing-mode text-mode))
-(global-set-key (kbd "M-y") 'company-complete)
-
-(load "~/.emacs.d/dup-mode.el")
 
 
 ;; --- Flycheck / other language related keys ---
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (global-set-key (kbd "<f12>") 'recompile)
@@ -329,6 +264,8 @@ by using nxml's indentation rules."
 
 ;; --- Org mode ---
 (require 'org)
+(global-set-key (kbd "C-c l") 'org-store-link)
+
 (add-hook 'org-mode-hook (lambda ()
                            (define-key org-mode-map (kbd "C-<tab>") nil)
                            (define-key org-mode-map (kbd "C-y") nil)
@@ -363,6 +300,30 @@ by using nxml's indentation rules."
 
 (eval-after-load "org"
   '(require 'ox-md nil t))
+(eval-after-load "org"
+  '(require 'ox-gfm nil t))
+
+
+;; TODO: To export the current org-file to markdown,
+;; TODO: and then export that one to HTML and preview it in browser.
+;; TODO: Not working... I am getting:  org-export-md-and-html-preview: Wrong number of arguments: (0 . 0), 1
+;; TODO: Learn to debug emacs functions...
+;;
+;; (defun org-export-md-and-html-preview ()
+;;   "Exports org-mode file to markdown, html and previews it in browser"
+;;   (interactive)
+;;   (markdown-export-and-preview (org-md-export-to-markdown)))
+
+;; or...
+;;  (markdown-export-and-preview (find-file '(org-md-export-to-markdown))))
+
+
+;; Idea from:
+;; (defun markdown-export-and-preview ()
+;;   "Export to XHTML using `markdown-export' and browse the resulting file."
+;;   (interactive)
+;;   (browse-url-of-file (markdown-export)))
+
 
 ;; --- Processing ---
 (autoload 'processing-mode "processing-mode" "Processing mode" t)
@@ -547,7 +508,6 @@ by using nxml's indentation rules."
  '(sml/modes ((t (:inherit sml/global :foreground "dark violet" :weight bold)))))
 
 ;;; init.el ends here
-(put 'dired-find-alternate-file 'disabled nil)
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 

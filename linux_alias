@@ -1,7 +1,9 @@
 alias emacs='env XMODIFIERS= emacs'
-alias emacsq='emacs -mm -Q -l ~/myconf/init-basic.el &'
 alias e='emacsclient -n'
-alias edit='emacsclient -n'
+
+alias emacsq='emacs -mm -Q -l ~/myconf/emacs/init-basic.el &'
+alias emacscpp='emacs -mm -Q -l ~/myconf/emacs/init-cpp.el &'
+alias gnus='emacs -mm -Q -l ~/myconf/emacs/gnus.el &'
 
 alias ctrlc='xclip -selection c'
 alias ctrlv='xclip -selection c -o'

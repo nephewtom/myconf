@@ -3,24 +3,26 @@
 
 ;;; Code:
 
-;; --- Packages ELPA, MELPA, Marmalade ---
-
-;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
-;; if (require 'buffer-move) is placed just before this package stuff
-(require 'package)
+(setq package-enable-at-startup nil)
 (package-initialize)
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-;; TODO: Understand how packages are loaded...
 
 ;; --- Scroll bar ---
 ;; Tom question: Why is this needed here?
 ;; It seems if I put it into init-basic.el, gets disabled after the lines above,
 ;; regarding package initialize.
 (scroll-bar-mode t)
+
+;; --- Packages ELPA, MELPA, Marmalade ---
+
+;; Needs to be before any package in those. E.g.: It fails to load buffer-move,
+;; if (require 'buffer-move) is placed just before this package stuff
+(require 'package)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+;; TODO: Understand how packages are loaded...
 
 
 ;; --- Git & Svn ---

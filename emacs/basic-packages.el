@@ -27,6 +27,7 @@
 
 ;; --- Company ---
 (require 'company)
+(setq company-idle-delay 0)
 (setq company-global-modes '(not processing-mode text-mode))
 (global-set-key (kbd "M-y") 'company-complete)
 

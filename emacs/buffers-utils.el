@@ -13,3 +13,5 @@
 
 
 (toggle-uniquify-buffer-names) ;; Different buffer name for same name files
+
+(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically

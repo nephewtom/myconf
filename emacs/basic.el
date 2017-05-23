@@ -7,22 +7,21 @@
 (load "~/myconf/emacs/keybindings.el")
 (load "~/myconf/emacs/term.el")
 (load "~/myconf/emacs/compilation.el")
-
-;; --- Elisp related
-(require 'hl-defined)
-(add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
-
-;; http://emacsredux.com/blog/2014/06/18/quickly-find-emacs-lisp-sources/
-(define-key 'help-command (kbd "C-l") 'find-library)
-(define-key 'help-command (kbd "C-f") 'find-function)
-(define-key 'help-command (kbd "C-k") 'find-function-on-key)
-(define-key 'help-command (kbd "C-v") 'find-variable)
-
-;; Disable checkdoc in elisp
-(with-eval-after-load 'flycheck
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+(load "~/myconf/emacs/elisp.el")
 
 (package-initialize)
 
+;; It allows you to move the current line using M-up / M-down
+;; If a region is marked, it will move the region instead.
+(require 'move-text)
+(move-text-default-bindings)
+
+(load "~/myconf/emacs/smart-line.el")
+
+;; not working if only loading this basic.el file
+;; probably need the require package & refresh
+(load "~/myconf/emacs/company.el")
+
 ;;; basic.el ends here
 
+;; This is brokin in parte 

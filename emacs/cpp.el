@@ -1,11 +1,8 @@
+;; C/C++ Config
 ;; From: https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
 (require 'aggressive-indent) ;; Aggresive indentation
 (aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
 
-;; Bakckend for header files
-(add-to-list 'company-backends 'company-c-headers)
-
-;; C/C++ Config
 (semantic-mode 1)            ;; CEDET holdover
 (global-ede-mode 1)          ;; CEDET holdover
 (setq c-default-style "bsd") ;; BSD/Allman brackets

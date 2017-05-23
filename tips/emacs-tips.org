@@ -1,3 +1,9 @@
+* tramp and sudo
+  http://stackoverflow.com/questions/2177687/open-file-via-ssh-and-sudo-with-emacs
+  https://emacs.stackexchange.com/questions/21752/setting-up-shortcut-using-tramp-default-proxies-alist
+  /ssh:sysadmin@iop-core|sudo:iop-core:/root
+  C-x C-f /you@remotehost|sudo:remotehost:/path/to/file
+
 * zip/unzip files
   From: http://stackoverflow.com/questions/1431351/how-do-i-uncompress-unzip-within-emacs
 

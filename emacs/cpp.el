@@ -2,31 +2,8 @@
 (require 'aggressive-indent) ;; Aggresive indentation
 (aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
 
-(require 'company)
+;; Bakckend for header files
 (add-to-list 'company-backends 'company-c-headers)
-(setq company-idle-delay 0)
-
-(require 'hideshow)
-(add-hook 'prog-mode-hook #'hs-minor-mode)
-
-;; optional key bindings, easier than hs defaults
-
-;; (eval-after-load "hs-minor-mode"
-(define-key hs-minor-mode-map (kbd "C-c @ C-h") nil)
-(define-key hs-minor-mode-map (kbd "C-c @ C-s") nil)
-(define-key hs-minor-mode-map (kbd "C-c @ C-M-h") nil)
-(define-key hs-minor-mode-map (kbd "C-c @ C-M-s") nil)
-(define-key hs-minor-mode-map (kbd "C-c @ C-c") nil)
-(define-key hs-minor-mode-map (kbd "C-c <left>") 'hs-hide-block)
-(define-key hs-minor-mode-map (kbd "C-c h") 'hs-hide-block)
-(define-key hs-minor-mode-map (kbd "C-c <right>") 'hs-show-block)
-(define-key hs-minor-mode-map (kbd "C-c s") 'hs-show-block)
-(define-key hs-minor-mode-map (kbd "C-c <up>") 'hs-hide-all)
-(define-key hs-minor-mode-map (kbd "C-c M-h") 'hs-hide-all)
-(define-key hs-minor-mode-map (kbd "C-c <down>") 'hs-show-all)
-(define-key hs-minor-mode-map (kbd "C-c M-s") 'hs-show-all)
-(define-key hs-minor-mode-map (kbd "C-c C-c") 'hs-toggle-hiding)
-
 
 ;; C/C++ Config
 (semantic-mode 1)            ;; CEDET holdover

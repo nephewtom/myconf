@@ -6,14 +6,15 @@
 # -------------------------------------------------
 
 # monitor.xml path
-MONITOR_XML="$HOME/.config/monitors.xml"
-#MONITOR_XML="~/bin/monitors.xml"
+#MONITOR_XML="$HOME/.config/monitors.xml"
+MONITOR_XML="$HOME/bin/monitors.xml"
 
 echo "Info from" $MONITOR_XML
 echo "--------------------------------------------"
 
 # get number of declared monitors
 NUM=$(xmllint --xpath 'count(//monitors/configuration['1']/output)' $MONITOR_XML)
+echo "NUM:"$NUM
 
 # loop thru declared monitors to create the command line parameters
 for (( i=1; i<=$NUM; i++)); do
@@ -34,7 +35,7 @@ for (( i=1; i<=$NUM; i++)); do
   fi
 
   # if monitor is defined as primary, adds it to command line parameters
-  [ "$PRIMARY" = "yes" ] && PARAM_ARR=("${PARAM_ARR[@]}" "--primary")
+  # [ "$PRIMARY" = "yes" ] && PARAM_ARR=("${PARAM_ARR[@]}" "--primary")
 done
 
 echo -e "\nExecuting xrandr to fix monitors and resolutions:"
@@ -46,5 +47,6 @@ echo; echo
 
 xrandr "${PARAM_ARR[@]}"
 
-#echo "xrandr --output VGA1 --pos 1680x0 --mode 1280x1024 --rate 75"
-#echo "xrandr --output HDMI2 --pos 0x0 --mode 1680x1050 --rate 60 --rotate normal --primary"
+echo "This is what I used in the past"
+echo "xrandr --output VGA1 --pos 1680x0 --mode 1280x1024 --rate 75"
+echo "xrandr --output HDMI2 --pos 0x0 --mode 1680x1050 --rate 60 --rotate normal --primary"

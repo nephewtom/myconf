@@ -3,7 +3,8 @@
 (aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
 
 (require 'company)
-(setq company-global-modes '(not emacs-lisp-mode processing-mode text-mode))
+(add-to-list 'company-backends 'company-c-headers)
+(setq company-idle-delay 0)
 
 (require 'hideshow)
 (add-hook 'prog-mode-hook #'hs-minor-mode)

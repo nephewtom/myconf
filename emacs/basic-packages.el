@@ -13,12 +13,8 @@
 ;; https://github.com/jschaf/esup
 ;; https://github.com/dholm/benchmark-init-el
 
-;; --- Git ---
-(require 'magit)
-(setq magit-last-seen-setup-instructions "1.4.0")
-(global-set-key (kbd "C-x g") 'magit-status)
 
-
+(load "~/myconf/emacs/magit.el")
 (load "~/myconf/emacs/helm-n-buffers.el")
 (load "~/myconf/emacs/dired.el")
 

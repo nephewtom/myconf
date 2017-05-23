@@ -14,16 +14,28 @@
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (add-hook 'c-mode-common-hook 'hideshowvis-minor-mode)
 
+
+(require 'google-c-style) ;; TODO: Not tested
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
 ;; (Conditional) C/C++ Keybinds
-(add-hook 'c-mode-common-hook
-          (lambda () (local-set-key (kbd "<M-y>") 'company-complete)))
 (add-hook 'c-mode-common-hook
           (lambda () (local-set-key (kbd "C-c j") 'find-tag)))
 (add-hook 'c-mode-common-hook
           (lambda () (local-set-key (kbd "C-x C-o") 'ff-find-other-file)))
+;; (add-hook 'c-mode-common-hook
+;;           (lambda () (local-set-key (kbd "<M-y>") 'company-complete)))
+
+;; ggtags
+(require 'ggtags)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+              (ggtags-mode 1))))
+
+(define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
 
 
-;; For ELisp
-(require 'hl-defined)
-(add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
-
+;; F12 - compile
+(global-set-key (kbd "<f12>") 'recompile)

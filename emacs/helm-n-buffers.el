@@ -9,9 +9,9 @@
 (helm-mode 1)
 (helm-autoresize-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 
 ;; TODO: Understand what is this for...
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
@@ -34,4 +34,7 @@
 (add-to-list 'ibuffer-never-show-predicates "^\\*Help")
 (add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
 (add-to-list 'ibuffer-never-show-predicates "^\\*JDEE")
-(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
+(add-to-list 'ibuffer-never-show-predicates "^\\*magit-process")
+(add-to-list 'ibuffer-never-show-predicates "^\\*magit-diff")
+(add-to-list 'ibuffer-never-show-predicates "^\\*magit-log")
+

@@ -6,7 +6,6 @@
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
 
-
 ;; --- Columns, line-numbers, etc.
 (column-number-mode t)
 (global-linum-mode t) ;; line numbers in all buffers
@@ -33,18 +32,18 @@
 
 ;; --- Miscellaneous
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
-(setq term-buffer-maximum-size 0) ;; Set unlimited buffer size for terminal
 (delete-selection-mode 1) ;; Allows to delete without kill-ring & inserting over selection.
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
 (setq ediff-split-window-function 'split-window-horizontally)
 
+
+;; --- Move end of line / Join line
 (defun move-end-of-line-newline-and-indent ()
   "Insert a newline, then indent according to major mode."
   (interactive "*")
   (move-end-of-line 1)
   (newline)
   (indent-according-to-mode))
-(global-set-key (kbd "M-j") 'move-end-of-line-newline-and-indent)
 
 
 ;; --- Package initialize

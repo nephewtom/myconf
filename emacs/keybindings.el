@@ -11,18 +11,34 @@
 (global-set-key (kbd "M-n") 'scroll-up-command)
 
 
+;; --- Basic line operations
+(global-set-key (kbd "M-j") 'move-end-of-line-newline-and-indent) ;; general.el
+(global-set-key (kbd "M-h") 'join-line) 
+;; I used to set it to C-j... in order to be similar to vi J key
+;; join-line function is a defalias of delete-indentation.
+
+(global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
+(global-set-key (kbd "M-'") 'delete-horizontal-space)
+;; Same position as US keyboard layout (M-\) [US keyboard has \, Spanish ç]
+;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
+;; In that SO question says to use delete-indentation function
+;; Tomi, what is the difference between both?
+
+
 ;; --- FX keys
 (global-set-key (kbd "<f2>") 'xah-cut-line-or-region) ; cut
 (global-set-key (kbd "<f3>") 'xah-copy-line-or-region) ; copy
 (global-set-key (kbd "<f4>") 'yank) ; paste
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
-;; TODO: When switch-to-previous-buffer (f6), this says 'Mark set',
-;; and I need to hit F6 twice... Test it with emacs -q... and how to fix it
+;; TODO: When switch-to-previous-buffer (f6), minibuffer shows 'Mark set',
+;; and sometimes need to hit F6 twice... 
 (global-set-key (kbd "<f7>") 'ibuffer)
-(global-set-key (kbd "<f8>") 'switch-to-previous-buffer)
+(global-set-key (kbd "<f8>") 'switch-to-previous-buffer) ;; buffer-utils.el
 (global-set-key (kbd "<f9>") 'hc-toggle-highlight-tabs)
-(global-set-key (kbd "<f11>") 'indent-buffer) ;; Personal taste
+(global-set-key (kbd "<f11>") 'indent-buffer) ;; buffer-utils.el
+(global-set-key (kbd "<f12>") 'bookmark-jump)
+
 
 ;; --- Buffers & windows
 (global-unset-key (kbd "C-w"))
@@ -45,8 +61,8 @@
 ;; (global-set-key (kbd "C-x _") 'balance-windows)
 
 
-;; --- Comments like Eclise ---
-(defun comment-eclipse ()
+;; --- Comments
+(defun comment-line-or-region ()
   "Emulate comment code as Eclipse does it."
   (interactive)
   (let ((start (line-beginning-position))
@@ -60,24 +76,14 @@
                   (goto-char (region-end))
                   (end-of-line)
                   (point))))
-;; --- Comments like Eclise ---
     (comment-or-uncomment-region start end)))
 
-(global-set-key (kbd "C-/") 'comment-eclipse)
-(global-set-key (kbd "C-S-c") 'comment-eclipse)
+(global-set-key (kbd "C-/") 'comment-line-or-region)
+(global-set-key (kbd "C-S-c") 'comment-line-or-region) ; Eclipse has this one
 
 
 ;; --- Miscellaneous
 (global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
+(global-set-key (kbd "C-.") 'repeat) ;; Like . in vim
+(global-set-key (kbd "C-,") 'iedit-mode)
 
-(global-set-key (kbd "C-j") 'join-line) ;; Almost like J in vim (joins to previos line)
-;; TODO: Is C-j different for elisp mode?
-;; join-line function is a defalias of delete-indentation.
-
-(global-set-key (kbd "C-.") 'repeat) ;; Like . in vim?
-
-(global-set-key (kbd "M-'") 'delete-horizontal-space)
-;; Same position as US keyboard layout (M-\) [US keyboard has \, Spanish ç]
-;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
-;; In that SO question says to use delete-indentation function
-;; Tomi, what is the difference between both?

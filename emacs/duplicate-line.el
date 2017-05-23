@@ -34,4 +34,3 @@
   ;; put the point in the lowest line and return
   (next-line ARG))
 
-(global-set-key (kbd "C-l") 'duplicate-line)

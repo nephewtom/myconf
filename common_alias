@@ -5,7 +5,9 @@ alias cp='cp -i'
 alias lt='ls -ltr'
 alias ltt='ls -ltr | tail'
 
-alias hgrep='history|grep --color'
-alias phgrep='cat ~/.persistent_history|grep --color'
+alias hgrep='cat ~/.persistent_history|grep --color'
+alias phgrep=hgrep
+alias hist='tac ~/.persistent_history | less'
+
 alias psg='ps -ef | grep'
 alias psj='ps -ef | grep java'

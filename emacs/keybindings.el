@@ -1,5 +1,10 @@
 (require 'iso-transl) ;; Make dead keys work
 
+;; NOTE: Do not bind C-y & M-w to anything.
+;; NOTE: That way I keep their original meanings.
+;; NOTE: M-w (kill-ring-save)
+;; NOTE: C-y (yank) or (cua-paste)
+
 ;; --- Cua mode 
 (cua-mode t) ;; Ctrl+Z, Ctrl+X, Ctrl+C, Ctrl+V (Cmd+ in Mac OSX)
 (define-key isearch-mode-map (kbd "C-x") nil)
@@ -87,3 +92,5 @@
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim
 (global-set-key (kbd "C-,") 'iedit-mode)
 
+(global-set-key (kbd "M-y") 'company-complete)
+(global-set-key (kbd "C-x g") 'magit-status)

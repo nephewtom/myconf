@@ -2,7 +2,6 @@ alias emacs='env XMODIFIERS= emacs'
 alias e='emacsclient -n'
 
 alias emacsq='emacs -mm -Q -l ~/myconf/emacs/basic.el &'
-alias emacsp='emacs -mm -Q -l ~/myconf/emacs/init-basic-packages.el &'
 alias emacscpp='emacs -mm -Q -l ~/myconf/emacs/init-cpp.el &'
 alias gnus='emacs -mm -Q -l ~/myconf/emacs/gnus.el &'
 

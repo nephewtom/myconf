@@ -1,6 +1,9 @@
 ;; --- Dired ---
+;; TODO: Sort dired by time date as default 
+;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
+
 (require 'dired )
-(setq dired-listing-switches "-lk")
+(setq dired-listing-switches "-lkt")
 ;; move to up directory with '.'
 (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
 ;; Following key is already binded to 'a'

@@ -95,5 +95,6 @@
 
 (global-set-key (kbd "M-y") 'company-complete)
 (global-set-key (kbd "M-;") 'hippie-expand)
+(global-set-key (kbd "C-;") 'company-files)
 
 (global-set-key (kbd "C-x g") 'magit-status)

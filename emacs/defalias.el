@@ -15,3 +15,4 @@
 
 (defalias 'lb 'list-buffers)
 (defalias 'eb 'eval-buffer)
+(defalias 'er 'eval-region)

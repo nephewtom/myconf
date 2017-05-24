@@ -15,7 +15,7 @@
 
 
 (load "~/myconf/emacs/magit.el")
-(load "~/myconf/emacs/helm-n-buffers.el")
+(load "~/myconf/emacs/helm.el")
 (load "~/myconf/emacs/dired.el")
 
 (load "~/myconf/emacs/nxml.el")

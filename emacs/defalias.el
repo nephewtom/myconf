@@ -5,6 +5,7 @@
 (defalias 'hfind 'helm-find)
 (defalias 'hman 'helm-man-woman)
 (defalias 'hoccur 'helm-occur)
+(defalias 'hrec 'helm-recentf)
 
 ;; Try helm-swoop & swiper more...
 

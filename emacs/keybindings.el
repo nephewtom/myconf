@@ -23,7 +23,7 @@
 ;; join-line function is a defalias of delete-indentation.
 
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
-(global-set-key (kbd "M-'") 'delete-horizontal-space)
+(global-set-key (kbd "M-;") 'delete-horizontal-space)
 ;; Same position as US keyboard layout (M-\) [US keyboard has \, Spanish ç]
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 ;; In that SO question says to use delete-indentation function
@@ -83,8 +83,9 @@
                   (point))))
     (comment-or-uncomment-region start end)))
 
+(global-set-key (kbd "M-/") 'comment-dwim)
 (global-set-key (kbd "C-/") 'comment-line-or-region)
-(global-set-key (kbd "C-S-c") 'comment-line-or-region) ; Eclipse has this one
+(global-set-key (kbd "C-S-c") 'comment-line-or-region) ; Eclipse has this one too
 
 
 ;; --- Miscellaneous
@@ -93,4 +94,6 @@
 (global-set-key (kbd "C-,") 'iedit-mode)
 
 (global-set-key (kbd "M-y") 'company-complete)
+(global-set-key (kbd "M-;") 'hippie-expand)
+
 (global-set-key (kbd "C-x g") 'magit-status)

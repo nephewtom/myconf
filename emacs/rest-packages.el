@@ -1,5 +1,9 @@
-;; --- Emacs windows stuff ---
+;; --- Test OpenWith --- Could be useful... 
+;; https://stackoverflow.com/a/6845470/316232
+;; https://www.emacswiki.org/emacs/OpenWith
 
+
+;; --- Emacs windows stuff ---
 ;; Do I actually use this?
 (global-set-key [C-next] 'windmove-right)
 (global-set-key [C-prior] 'windmove-left)
@@ -20,15 +24,13 @@
 
 
 
-
-
 ;; --- Auto-Complete ---
-
 (require 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
 (define-key ac-mode-map (kbd "C-M-y") 'auto-complete) ;; ????
 (global-set-key (kbd "C-M-y") 'auto-complete) ;; By Tom, to tes
+
 
 ;; --- Yasnippet & hippie-expand ---
 
@@ -38,7 +40,6 @@
 (define-key yas-minor-mode-map (kbd "TAB") nil) ;; ???
 (global-set-key (kbd "C-S-y") 'yas-expand)
 
-(global-set-key (kbd "C-;") 'hippie-expand)
 
 ;; --- Flycheck / other language related keys ---
 ;;(add-hook 'after-init-hook #'global-flycheck-mode)
@@ -61,11 +62,8 @@
 (global-set-key (kbd "M-*") 'tags-loop-continue)
 
 
-;; ---
-
-
+;; --- Other modes
 (load "~/myconf/emacs/edit-with-emacs.el")
-
 ;; (load "~/myconf/emacs/processing.el")
 ;; (load "~/myconf/emacs/lua-love.el")
 (load "~/myconf/emacs/js-css-html.el")
@@ -89,4 +87,4 @@
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
-;;; init-packages.el ends here
+;;; rest-packages.el ends here

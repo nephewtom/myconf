@@ -29,6 +29,8 @@
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm M-x")
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm-mode")
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm buffers")
+(add-to-list 'ibuffer-never-show-predicates "^\\*helm man woman*")
+(add-to-list 'ibuffer-never-show-predicates "^\\*Helm Swoop")
 (add-to-list 'ibuffer-never-show-predicates "^\\*Messages")
 (add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
 (add-to-list 'ibuffer-never-show-predicates "^\\*Help")

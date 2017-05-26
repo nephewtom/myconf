@@ -5,8 +5,6 @@
 
 ;; --- Emacs windows stuff ---
 ;; Do I actually use this?
-(global-set-key [C-next] 'windmove-right)
-(global-set-key [C-prior] 'windmove-left)
 (global-set-key [C-S-iso-lefttab] 'windmove-up)
 
 (require 'buffer-move)

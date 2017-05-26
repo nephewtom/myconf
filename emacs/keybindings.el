@@ -1,7 +1,7 @@
 (require 'iso-transl) ;; Make dead keys work
 
 ;; NOTE: Do not bind C-y & M-w to anything.
-;; NOTE: That way I keep their original meanings.
+;; NOTE: That way I keep their original function, in case I need it...
 ;; NOTE: M-w (kill-ring-save)
 ;; NOTE: C-y (yank) or (cua-paste)
 
@@ -16,7 +16,7 @@
 (global-set-key (kbd "M-n") 'scroll-up-command)
 
 
-;; --- Basic line operations
+;; --- Line operations
 (global-set-key (kbd "M-j") 'move-end-of-line-newline-and-indent) ;; general.el
 (global-set-key (kbd "M-h") 'join-line) 
 ;; I used to set it to C-j... in order to be similar to vi J key
@@ -45,16 +45,20 @@
 (global-set-key (kbd "<f12>") 'bookmark-jump)
 
 
-;; --- Buffers & windows
+;; --- Buffers
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-o") 'switch-to-previous-buffer)
 
+;; --- Windows
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'split-window-below)
 (global-set-key (kbd "M-3") 'split-window-right)
 (global-set-key (kbd "M-0") 'delete-window)
+
+(global-set-key [C-next] 'windmove-right)
+(global-set-key [C-prior] 'windmove-left)
 
 
 ;; --- Font-size & split-pane size
@@ -98,3 +102,4 @@
 (global-set-key (kbd "C-;") 'company-files)
 
 (global-set-key (kbd "C-x g") 'magit-status)
+

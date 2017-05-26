@@ -37,4 +37,3 @@
 (add-to-list 'ibuffer-never-show-predicates "^\\*magit-process")
 (add-to-list 'ibuffer-never-show-predicates "^\\*magit-diff")
 (add-to-list 'ibuffer-never-show-predicates "^\\*magit-log")
-

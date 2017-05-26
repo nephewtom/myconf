@@ -23,11 +23,16 @@
 ;; join-line function is a defalias of delete-indentation.
 
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
-(global-set-key (kbd "M-;") 'delete-horizontal-space)
+(global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
+(global-set-key (kbd "M-s s") 'delete-horizontal-space)
 ;; Same position as US keyboard layout (M-\) [US keyboard has \, Spanish ç]
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 ;; In that SO question says to use delete-indentation function
 ;; Tomi, what is the difference between both?
+
+;; --- Paren operations
+(global-set-key "%" 'match-paren) ;; Like vim
+(global-set-key (kbd "C-M-j") 'down-list) ;; As C-M-u does backward-up-list
 
 
 ;; --- FX keys

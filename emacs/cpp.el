@@ -1,5 +1,10 @@
 ;; C/C++ Config
-;; From: https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
+;; TODO: rtags & projectile
+;; https://github.com/Andersbakken/rtags
+;; http://batsov.com/projectile/
+
+;; Some here are from:
+;; https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
 (require 'aggressive-indent) ;; Aggresive indentation
 (aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
 
@@ -15,9 +20,11 @@
 (add-hook 'c-mode-common-hook 'hideshowvis-minor-mode)
 
 
-(require 'google-c-style) ;; TODO: Not tested
+;; TODO: Not tested
+(require 'google-c-style)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
 
 ;; (Conditional) C/C++ Keybinds
 (add-hook 'c-mode-common-hook
@@ -26,6 +33,7 @@
           (lambda () (local-set-key (kbd "C-x C-o") 'ff-find-other-file)))
 ;; (add-hook 'c-mode-common-hook
 ;;           (lambda () (local-set-key (kbd "<M-y>") 'company-complete)))
+
 
 ;; ggtags
 (require 'ggtags)
@@ -37,5 +45,36 @@
 (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
 
 
-;; F12 - compile
+;; F12 - recompile
 (global-set-key (kbd "<f12>") 'recompile)
+
+
+;; More stuff like this in: https://www.emacswiki.org/emacs/IndentingC
+(c-add-style "microsoft"
+              '("stroustrup"
+                (c-offsets-alist
+                 (innamespace . -)
+                 (inline-open . 0)
+                 (inher-cont . c-lineup-multi-inher)
+                 (arglist-cont-nonempty . +)
+                 (template-args-cont . +))))
+;; (setq c-default-style "microsoft")
+
+
+(defun c-reformat-buffer()
+    (interactive)
+    (save-buffer)
+    (setq sh-indent-command (concat
+                             "indent -st -bad --blank-lines-after-procedures "
+                             "-br -i4 -l79 -ncs -npcs -nut -npsl -fca "
+                             "-lc79 -fc1 -cli4 -bap -sob -ci4 -nlp "
+                             buffer-file-name))
+    (mark-whole-buffer)
+    (universal-argument)
+    (shell-command-on-region
+     (point-min)
+     (point-max)
+     sh-indent-command
+     (buffer-name))
+    (save-buffer))
+;; (define-key c-mode-base-map [f7] 'c-reformat-buffer)

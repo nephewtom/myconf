@@ -14,3 +14,23 @@
 * Move between tabs: Alt+Arrows
 * Close tab: Ctrl+F4
 * Apropos action/shortcut: Ctrl+Shift+A
+* Steve Yegge post: https://steve-yegge.blogspot.com.es/2017/05/why-kotlin-is-better-than-whatever-dumb.html
+  #+BEGIN_EXAMPLE
+    "IntelliJ doesn't like it when you type fast. Its completions can't keep up and you wind up with half-identifiers everywhere."
+
+    As the Emacs config guru that you are, I'm half-surprised to see you didn't tick that feature off of IntelliJ's config.
+
+    Preferences -> Editor -> General -> Code Completion -> Autopopup
+
+    Or, quicker: C-S-a, then type "autopopup", Enter
+
+    BTW it was so nice to read you again :)
+
+    6:07 AM, MAY 18, 2017
+    Blogger Daniel Jomphe said...
+    Simpler to remember:
+
+    C-S-a
+    then type: code completion
+    Enter
+  #+END_EXAMPLE

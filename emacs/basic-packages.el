@@ -10,9 +10,9 @@
 ;; TODO: Autoload preferred
 
 ;; TODO: Check startup profilers:
+;; https://oremacs.com/2015/02/24/emacs-speed-test/
 ;; https://github.com/jschaf/esup
 ;; https://github.com/dholm/benchmark-init-el
-
 
 (load "~/myconf/emacs/magit.el")
 (load "~/myconf/emacs/helm.el")
@@ -24,5 +24,7 @@
 
 (load "~/myconf/emacs/markdown.el")
 (load "~/myconf/emacs/org-mode.el")
+
+(load "~/myconf/emacs/edit-with-emacs.el")
 
 ;;; init-basic-packages.el ends here

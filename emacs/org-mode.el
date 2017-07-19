@@ -6,7 +6,8 @@
                            (define-key org-mode-map (kbd "M-h") nil)
                            (define-key org-mode-map (kbd "M-n") 'org-forward-heading-same-level)
                            (define-key org-mode-map (kbd "M-p") 'org-backward-heading-same-level)
-                           (define-key org-mode-map (kbd "\C-ca") 'org-agenda)
+                           ;; (define-key org-mode-map (kbd "\C-ca") 'org-agenda)
+                           (define-key org-mode-map (kbd "C-c e") 'org-edit-special)
                            ))
 
 (setq org-todo-keyword-faces

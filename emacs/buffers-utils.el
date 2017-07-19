@@ -15,11 +15,27 @@
 (toggle-uniquify-buffer-names) ;; Different buffer name for same name files
 
 ;; Ibuffer
-(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
+;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
+
+;;
+;; https://emacs.stackexchange.com/questions/2177/how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers/2179?noredirect=1#comment52199_2179
+(defun my-ibuffer-stale-p (&optional noconfirm)
+  ;; let's reuse the variable that's used for 'ibuffer-auto-mode
+  (frame-or-buffer-changed-p 'ibuffer-auto-buffers-changed))
+
+(defun my-ibuffer-auto-revert-setup ()
+  (set (make-local-variable 'buffer-stale-function)
+       'my-ibuffer-stale-p)
+  (set (make-local-variable 'auto-revert-verbose) nil)
+  (auto-revert-mode 1))
+
+(add-hook 'ibuffer-mode-hook 'my-ibuffer-auto-revert-setup)
+
 
 ;; --- Buffers & Ibuffer stuff ---
 ;; Remove from Ibuffers the buffers that match these regexp
 (require 'ibuf-ext)
+(add-to-list 'ibuffer-never-show-predicates " .*")
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm ag")
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm mini")
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm find")

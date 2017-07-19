@@ -9,7 +9,7 @@
 (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
 ;; Following key is already binded to 'a'
 (define-key dired-mode-map (kbd "f") 'dired-find-alternate-file)
-(define-key dired-mode-map (kbd "M-p") 'cua-scroll-down)
+(define-key dired-mode-map (kbd "M-p") 'backward-paragraph)
 ;; Auto-refresh dired on file change
 (add-hook 'dired-mode-hook 'auto-revert-mode)
 (setq dired-auto-revert-buffer t)

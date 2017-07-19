@@ -12,8 +12,8 @@
 
 
 ;; --- Scroll up & down
-(global-set-key (kbd "M-p") 'scroll-down-command)
-(global-set-key (kbd "M-n") 'scroll-up-command)
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
 
 
 ;; --- Line operations

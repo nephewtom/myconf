@@ -1,5 +1,5 @@
 #+STARTUP: content
-* TODO Learn to use magit with Reddit comments & a video from creator 
+* TODO Learn to use magit with Reddit comments & a video from creator :noexport:
   https://www.reddit.com/r/emacs/comments/2n9tj8/anyone_care_to_share_their_magit_workflow/
   https://vimeo.com/2871241
   https://magit.vc/manual/magit/Ediffing.html
@@ -88,15 +88,26 @@
   http://stackoverflow.com/questions/2389361/undo-a-git-merge-that-hasnt-been-pushed-yet
 
 ** Delete file from repo: *git rm file1.txt*
-   http://stackoverflow.com/questions/2047465/how-can-i-delete-a-file-from-git-repo
    git rm file1.txt
    git commit -m "remove file1.txt"
+
    But if you want to remove the file only from the Git repository and not remove it from the filesystem, use:
-
    git rm --cached file1.txt
-   And to push changes to remote repo
 
+   And to push changes to remote repo:
    git push origin branch_name  
+   http://stackoverflow.com/questions/2047465/how-can-i-delete-a-file-from-git-repo
+
+** Delete directory from repo
+   Both git and local:
+   git rm -r myFolder
+   git commit -m "Remove myFolder directory"
+   git push origin <your-git-branch>
+
+   Remove from git but not from local:
+   git rm -r --cached myFolder
+
+   https://stackoverflow.com/questions/6313126/how-to-remove-a-directory-from-git-repository
 
 
 * Workflow/Theory

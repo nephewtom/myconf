@@ -1,3 +1,18 @@
+* grep & lgrep
+**  Doing the default grep command on a Linux host: M-x grep
+   Passing -n: show line numbers, -H: show file name, -r: recursive
+   -e is the regexp pattern. "*onetaste*" does NOT work. Use .*
+  #+BEGIN_EXAMPLE
+-*- mode: grep; default-directory: "~/Dropbox/" -*-
+Grep started at Sun Jul 16 09:27:33
+
+grep -nH -r -e onetaste
+tom-method/method.org:102:  WTF: https://onetaste.us/what-is-om
+
+Grep finished (matches found) at Sun Jul 16 09:27:48
+  #+END_EXAMPLE
+** lgrep prompts with menus instead of using the switches.
+
 * tramp and sudo
   http://stackoverflow.com/questions/2177687/open-file-via-ssh-and-sudo-with-emacs
   https://emacs.stackexchange.com/questions/21752/setting-up-shortcut-using-tramp-default-proxies-alist

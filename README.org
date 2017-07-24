@@ -3,11 +3,11 @@
 #+STARTUP:	content
 
 * myconf
-This repo stores my configuration settings for bash & GNU Emacs under Linux and Mac OS X.
+  This repo stores my configuration settings for bash & GNU Emacs under Linux and Mac OS X.
 
-In order to set bash environment and aliases, it is necessary to source the corresponding script.</br>
-On Ubuntu 14.04:
-
+  In order to set bash environment and aliases, it is necessary to source the corresponding script.\\
+  On Ubuntu 14.04:
+  #+BEGIN_EXAMPLE
     user@ubuntu:~$ tail -3 .bashrc
     # --- my conf
     . ~/myconf/common_env
@@ -17,9 +17,10 @@ On Ubuntu 14.04:
     user@ubuntu:~$ cat .bash_aliases
     . ~/myconf/common_alias
     . ~/myconf/linux_alias
+  #+END_EXAMPLE
 
-On Mac OS X:
-
+  On Mac OS X:
+  #+BEGIN_EXAMPLE
     iMac:~ tomas$ cat .bash_profile
     export PATH=${PATH}:~/bin
     . ~/myconf/common_env
@@ -27,11 +28,13 @@ On Mac OS X:
     . ~/myconf/persistent_history
     . ~/myconf/common_alias
     . ~/myconf/mac_alias
+  
+  #+END_EXAMPLE
 
-On Windows: TODO 
+  On Windows: TODO 
 
-To load emacs `init.el` file, create a symbolic link like:
+  To load emacs `init.el` file, create a symbolic link like:
 
-    user@hostname:~/.emacs.d$ ln -s ~/myconf/init.el init.el
+  : user@hostname:~/.emacs.d$ ln -s ~/myconf/init.el init.el
 
-TODO: I might change its name to **onmyset**, as it has a [funny meaning.](http://es.urbandictionary.com/define.php?term=On+My+Set)
+  TODO: I might change its name to **onmyset**, as it has a [[http://es.urbandictionary.com/define.php?term=On+My+Set][funny meaning]]

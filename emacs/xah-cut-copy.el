@@ -35,7 +35,10 @@ Version 2016-06-18"
             (backward-char))
           ;; (push-mark (point) "NOMSG" "ACTIVATE")
           (kill-append "\n" nil)
-          (kill-append (buffer-substring-no-properties (line-beginning-position) (+ (line-end-position) 1)) nil)
+          (kill-append (buffer-substring-no-properties (line-beginning-position) (line-end-position)) nil)
+
+          ;; For some reason Tom wanted to copy one for char... endline? 
+          ;;(kill-append (buffer-substring-no-properties (line-beginning-position) (+ (line-end-position) 1)) nil)
           (message "Line copy appended"))
       (progn
         (kill-ring-save -p1 -p2)

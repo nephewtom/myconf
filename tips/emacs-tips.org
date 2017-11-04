@@ -13,6 +13,7 @@
    Search for: use find
    Search for "use find" in files (default all): *.org
    In directory: /home/etomort/
+
 ** M-x grep : Executes default grep command on a Linux host
    *Examples:*
    : grep -nH -e use *
@@ -33,7 +34,6 @@
    -r: recursive
 
 ** M-x lgrep : Does the same as rgrep but NOT recursive
-
 
 * tramp and sudo 
   http://stackoverflow.com/questions/2177687/open-file-via-ssh-and-sudo-with-emacs\\

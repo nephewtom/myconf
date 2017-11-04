@@ -35,7 +35,7 @@
 ;; --- Buffers & Ibuffer stuff ---
 ;; Remove from Ibuffers the buffers that match these regexp
 (require 'ibuf-ext)
-(add-to-list 'ibuffer-never-show-predicates " .*")
+(add-to-list 'ibuffer-never-show-predicates " .*") ; What does this mean?
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm ag")
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm mini")
 (add-to-list 'ibuffer-never-show-predicates "^\\*helm find")

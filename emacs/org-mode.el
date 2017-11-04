@@ -4,8 +4,8 @@
 (add-hook 'org-mode-hook (lambda ()
                            (define-key org-mode-map (kbd "C-<tab>") nil)
                            (define-key org-mode-map (kbd "M-h") nil)
-                           (define-key org-mode-map (kbd "M-n") 'org-forward-heading-same-level)
-                           (define-key org-mode-map (kbd "M-p") 'org-backward-heading-same-level)
+                           (define-key org-mode-map (kbd "C-<down>") 'org-forward-heading-same-level)
+                           (define-key org-mode-map (kbd "C-<up>") 'org-backward-heading-same-level)
                            ;; (define-key org-mode-map (kbd "\C-ca") 'org-agenda)
                            (define-key org-mode-map (kbd "C-c e") 'org-edit-special)
                            ))
@@ -39,6 +39,16 @@
 (eval-after-load "org"
   '(require 'ox-gfm nil t))
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
+
+
+(defun my/fix-inline-images ()
+  (when org-inline-image-overlays
+    (org-redisplay-inline-images)))
+
+(add-hook 'org-babel-after-execute-hook 'my/fix-inline-images)
 
 ;; TODO: To export the current org-file to markdown,
 ;; TODO: and then export that one to HTML and preview it in browser.

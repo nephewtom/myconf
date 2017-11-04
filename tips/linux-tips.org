@@ -1,3 +1,51 @@
+* ip command
+  Essential: http://packetpushers.net/linux-ip-command-ostensive-definition/
+  https://www.tecmint.com/ip-command-examples/
+  http://baturin.org/docs/iproute2/
+
+* Bash renaming:
+** Using rename command:
+   : rename 's/test-this/REPLACESTRING/g' *
+   will rename
+   : test-this.01.ext
+   : test-this.02.ext 
+   to
+   : REPLACESTRING.01.ext
+   : REPLACESTRING.02.ext
+
+   From: https://stackoverflow.com/questions/20657432/bash-rename-multiple-files-but-only-rename-part-of-the-filename
+
+** Using wildcards with mv command 
+   From: https://ubuntuforums.org/showthread.php?t=1164748
+  #+BEGIN_EXAMPLE
+  in BASH scripting
+
+$file is the abbreviated form of variable reference
+${file} is the full formal way
+${file%string} is a way of saying "$file" but leave string off of the end
+${file#string} is a way of saying "$file" but leave string off of the beginning
+
+the % and # become much more powerful when you realize that string can contain wildcards:
+${file%.*} is like "take off the extension"
+
+if you double up on % or # it makes the wildcard "greedy":
+if $file is "my.archive.tar.gz",
+${file%.*} will shorten it to "my.archive.tar"
+${file%%.*} will shorten it to "my"
+${file#*.} will shorten it to "archive.tar.gz"
+${file##*.} will shorten it to "gz"
+
+It is important to remember that shells are text-processing powerhouses -
+numbers not so much.
+  #+END_EXAMPLE
+
+* Sed simple replace string
+  sed -i -e 's/old/new/g' hello.txt
+  -i option is used to edit in place on the file hello.txt.
+  -e option indicates the expression/command to run, in this case s/.
+
+  https://unix.stackexchange.com/questions/159367/using-sed-to-find-and-replace
+
 * Know the creation time of a file/directory:
   http://unix.stackexchange.com/questions/24441/get-file-created-creation-time
   http://unix.stackexchange.com/questions/50177/birth-is-empty-on-ext4/50184#50184
@@ -30,9 +78,7 @@
       selinux = "system_u:object_r:home_root_t:s0\000" (33)
     EXTENTS:
     (0): 17834037
-    [root@iop-smip-sm2m-nfs core]# 
-
-  
+    [root@iop-smip-sm2m-nfs core]#   
   #+END_SRC
 
 * Measure size of directories
@@ -68,3 +114,27 @@
      : yum whatprovides
      
    http://stackoverflow.com/questions/1133495/how-do-i-find-which-rpm-package-supplies-a-file-im-looking-for
+
+* Pidgin chats
+  #+BEGIN_EXAMPLE
+  cd ~/.purple/logs/sipe/tomas.orti.martin@ericsson.com%2cericsson%5cetomort/
+  los directorios tienen los nombres con los que se ha chateado
+  y los de varios, llevan el sufijo #1, #2, etc...
+  Si me apuras, casi mejor que el de Skype, pq se puede hacer grep, awk, sed, etc...
+  #+END_EXAMPLE
+
+* Grep Recursive with file wildcard
+  https://www.cyberciti.biz/faq/unix-linux-grep-include-file-pattern-recursive-example/
+  These examples worked for me providing a wildcard for files:
+  : grep -rHn --include="*.org" "use find" /home/etomort/myconf
+  : grep -rHn --include="*.org" -e "use find" /home/etomort/myconf
+  According to the man page:
+  : grep [OPTIONS] PATTERN [FILE...]
+  : grep [OPTIONS] [-e PATTERN | -f FILE] [FILE...]
+  : I think FILE can be just a filename or directory name or *
+  So these ones did not work (get nothing):
+  : grep -rHn -e "use find" *.org
+  : grep -rHn "use find" *.org
+  These ones get matches but do not filter by file wildcard:
+  : grep -rHn -e "use find" *  # Executed from /home/etomort/myconf
+  : grep -rHn -e "use find" /home/etomort/myconf/

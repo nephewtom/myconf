@@ -46,12 +46,6 @@
   (newline)
   (indent-according-to-mode))
 
-
-;; --- Package initialize
-(setq package-enable-at-startup nil)
-(package-initialize)
-
-
 ;; --- Scroll bar ---
 (scroll-bar-mode t)
 

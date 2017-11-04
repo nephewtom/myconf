@@ -1,3 +1,7 @@
+;; See: https://emacs.stackexchange.com/a/5888/6957
+(setq package-enable-at-startup nil)
+(package-initialize)
+
 (load "~/myconf/emacs/general.el")
 (load "~/myconf/emacs/buffers-utils.el")
 (load "~/myconf/emacs/calendar.el")
@@ -10,18 +14,4 @@
 (load "~/myconf/emacs/compilation.el")
 (load "~/myconf/emacs/elisp.el")
 
-(package-initialize)
-
-;; It allows you to move the current line using M-up / M-down
-;; If a region is marked, it will move the region instead.
-(require 'move-text)
-(move-text-default-bindings)
-
-(load "~/myconf/emacs/smart-line.el")
-
-;; not working if only loading this basic.el file
-;; probably need the require package & refresh
-(load "~/myconf/emacs/company.el")
-
 ;;; basic.el ends here
-

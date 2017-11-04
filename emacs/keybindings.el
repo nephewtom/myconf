@@ -107,4 +107,5 @@
 (global-set-key (kbd "C-;") 'company-files)
 
 (global-set-key (kbd "C-x g") 'magit-status)
-
+(global-set-key (kbd "C-x C-g") 'magit-status)
+(global-set-key (kbd "M-z") 'recenter-top-bottom)

@@ -7,7 +7,6 @@
 (require 'helm)
 (require 'helm-config)
 (helm-mode 1)
-(helm-autoresize-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-x b") 'helm-mini)
@@ -20,13 +19,13 @@
 
 (setq helm-split-window-in-side-p nil)
 
-
-
-
 (define-key helm-map (kbd "M-n")  'helm-next-page)
 (define-key helm-map (kbd "M-p")  'helm-previous-page)
 (define-key helm-map (kbd "C-v")  'helm-yank-text-at-point)
 (define-key helm-map (kbd "C-<up>")  'previous-history-element)
 (define-key helm-map (kbd "C-<down>")  'next-history-element)
 
+(helm-autoresize-mode 1)
+;;(setq helm-display-header-line nil) ;; t by default
+;;(set-face-attribute 'helm-source-header t :height 10.0)
 

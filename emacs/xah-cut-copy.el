@@ -2,8 +2,9 @@
 ;; Check http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
 (defun xah-cut-line-or-region ()
   "Cut current line, or text selection.
-When `universal-argument' is called first,
-cut whole buffer (respects `narrow-to-region').
+When `universal-argument' is called first, cut whole buffer (respects `narrow-to-region').
+
+URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
 Version 2015-06-10"
   (interactive)
   (if current-prefix-arg
@@ -14,37 +15,44 @@ Version 2015-06-10"
                (kill-region (region-beginning) (region-end) t)
              (kill-region (line-beginning-position) (line-beginning-position 2))))))
 
+
 (defun xah-copy-line-or-region ()
   "Copy current line, or text selection.
 When called repeatedly, append copy subsequent lines.
-When `universal-argument' is called first,
-copy whole buffer (respects `narrow-to-region').
-Version 2016-06-18"
-  (interactive)
-  (let (-p1 -p2)
-    (if current-prefix-arg
-        (setq -p1 (point-min) -p2 (point-max))
-      (if (use-region-p)
-          (setq -p1 (region-beginning) -p2 (region-end))
-        (setq -p1 (line-beginning-position) -p2 (+ (line-end-position) 1))))
-    (if (eq last-command this-command)
-        (progn
-          (progn ; hack. exit if there's no more next line
-            (end-of-line)
-            (forward-char)
-            (backward-char))
-          ;; (push-mark (point) "NOMSG" "ACTIVATE")
-          (kill-append "\n" nil)
-          (kill-append (buffer-substring-no-properties (line-beginning-position) (line-end-position)) nil)
+When `universal-argument' is called first, copy whole buffer (respects `narrow-to-region').
 
-          ;; For some reason Tom wanted to copy one for char... endline? 
-          ;;(kill-append (buffer-substring-no-properties (line-beginning-position) (+ (line-end-position) 1)) nil)
-          (message "Line copy appended"))
+URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
+Version 2017-07-08"
+  (interactive)
+    (if current-prefix-arg
       (progn
-        (kill-ring-save -p1 -p2)
-        (if current-prefix-arg
-            (message "Buffer text copied")
-          (message "Text copied"))))
+        (kill-ring-save (point-min) (point-max))
+        (message "All visible buffer text copied"))
+      (if (use-region-p)
+        (progn
+          (kill-ring-save (region-beginning) (region-end))
+          (message "Active region copied"))
+    (if (eq last-command this-command)
+          (if (eobp)
+              (progn (message "empty line at end of buffer." ))
+            (progn
+              (kill-append "\n" nil)
+              (kill-append
+               (buffer-substring-no-properties (line-beginning-position) (line-end-position))
+               nil)
+              (message "Line copy appended")
+        (progn
+            (end-of-line)
+                (forward-char))))
+        (if (eobp)
+            (if (eq (char-before) 10 )
+                (progn (message "empty line at end of buffer." ))
+              (progn
+                (kill-ring-save (line-beginning-position) (line-end-position))
+                (end-of-line)
+                (message "line copied")))
+      (progn
+            (kill-ring-save (line-beginning-position) (line-end-position))
     (end-of-line)
     (forward-char)
-    ))
+            (message "line copied")))))))

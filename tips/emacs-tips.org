@@ -1,23 +1,45 @@
-* grep & lgrep
-**  Doing the default grep command on a Linux host: M-x grep
-   Passing -n: show line numbers, -H: show file name, -r: recursive
-   -e is the regexp pattern. "*onetaste*" does NOT work. Use .*
-  #+BEGIN_EXAMPLE
--*- mode: grep; default-directory: "~/Dropbox/" -*-
-Grep started at Sun Jul 16 09:27:33
+* Paste on C-s with C-y
+  Use C-y to paste from the clipboard to minibuffer after C-s (isearch-forward-regexp)
 
-grep -nH -r -e onetaste
-tom-method/method.org:102:  WTF: https://onetaste.us/what-is-om
+* ~find-name-dired~ & ~find-dired~ & ~find-grep-dired~
+  Uses Unix *find* command on filesystem.
+  + ~find-name-dired~ prompts for the wildcard (Recommended).
+  + ~find-dired~ prompts for the *find* command format.
+  + ~find-grep-dired~ prompts for a regexp for *grep*.
+    Though it returns the files that match, but not the *grep* matches.
 
-Grep finished (matches found) at Sun Jul 16 09:27:48
-  #+END_EXAMPLE
-** lgrep prompts with menus instead of using the switches.
+* ~rgrep~ & ~grep~ & ~lgrep~
+** M-x rgrep : Prompts with menus instead of using the switches.
+   Search for: use find
+   Search for "use find" in files (default all): *.org
+   In directory: /home/etomort/
+** M-x grep : Executes default grep command on a Linux host
+   *Examples:*
+   : grep -nH -e use *
+   : grep -nH -r -e "use find" *.org
+   : grep -nH -r -e "words.*use" *.txt my_file
 
-* tramp and sudo
-  http://stackoverflow.com/questions/2177687/open-file-via-ssh-and-sudo-with-emacs
-  https://emacs.stackexchange.com/questions/21752/setting-up-shortcut-using-tramp-default-proxies-alist
-  /ssh:sysadmin@iop-core|sudo:iop-core:/root
-  C-x C-f /you@remotehost|sudo:remotehost:/path/to/file
+   *Format*: grep -nH -e <exp> <files>
+   - Where <exp> can be a word: use
+   - Use quotation marks for several words: "use find"
+   - A more complex pattern with .* as wildcard: "words.*use"
+
+   *IMPORTANT*: do not forget <files>
+   Use expresions with wildcards or filenames
+   
+   *Typical switches*:
+   -n: show line numbers
+   -H: show file name
+   -r: recursive
+
+** M-x lgrep : Does the same as rgrep but NOT recursive
+
+
+* tramp and sudo 
+  http://stackoverflow.com/questions/2177687/open-file-via-ssh-and-sudo-with-emacs\\
+  https://emacs.stackexchange.com/questions/21752/setting-up-shortcut-using-tramp-default-proxies-alist\\
+  /ssh:sysadmin@iop-core|sudo:iop-core:/root  \\
+  C-x C-f /you@remotehost|sudo:remotehost:/path/to/file  
 
 * zip/unzip files
   From: http://stackoverflow.com/questions/1431351/how-do-i-uncompress-unzip-within-emacs
@@ -29,32 +51,35 @@ Grep finished (matches found) at Sun Jul 16 09:27:48
   To extract an entire archive from dired you can mark a file and run *& unzip*, just as you would in a shell.
 
 * Match brackets
-  https://www.gnu.org/savannah-checkouts/gnu/emacs/manual/html_node/emacs/Moving-by-Parens.html
+  https://www.gnu.org/savannah-checkouts/gnu/emacs/manual/html_node/emacs/Moving-by-Parens.html \\
   http://stackoverflow.com/questions/261522/what-is-the-command-to-match-brackets-in-emacs
 
 * Get rid of *reference to free variable*
-  http://stackoverflow.com/a/12432468/316232
+  http://stackoverflow.com/a/12432468/316232 \\ 
   http://stackoverflow.com/questions/12432093/get-rid-of-reference-to-free-variable-byte-compilation-warnings
-
+  
 * Org mode to RTF
-  https://www.google.es/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=org-mode%20to%20rtf
+  https://www.google.es/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=org-mode%20to%20rtf \\
   http://blog.binchen.org/posts/how-to-take-screen-shot-for-business-people-efficiently-in-emacs.html
 
 * Gnus email client
-  Hi everyone. If you've grown tired of Thunderbird as email client (I
-  truly have) you may want to try out Gnus in Emacs. I've written a wiki 
-  applicable to GNU Emacs 24.3.1 (probably to other versions as well) on 
+  #+BEGIN_EXAMPLE
+  Hi everyone.
+  If you've grown tired of Thunderbird as email client (I truly have)
+  you may want to try out Gnus in Emacs. I've written a wiki applicable
+  to GNU Emacs 24.3.1 (probably to other versions as well) on 
   how to configure Gnus at work, please visit:
-  https://wiki.lmera.ericsson.se/wiki/ELX/HOWTOS/Gnus 
-  Good luck!
 
-* Eclim: https://github.com/emacs-eclim/emacs-eclim
+  https://wiki.lmera.ericsson.se/wiki/ELX/HOWTOS/Gnus 
+  
+  Good luck!
+  #+END_EXAMPLE
 
 * Remove  characters from a file
   1. Go to the beginning of the document
   2. Type: M-x replace-string RET C-q C-m RET RET
 
-* Replace character with newline:
   1. Go to the beginning of the document
   2. Type: M-x replace-string RET <char> RET C-q C-j RET
   http://stackoverflow.com/questions/613022/how-to-replace-a-character-with-a-newline-in-emacs
+

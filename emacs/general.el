@@ -34,7 +34,6 @@
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 (delete-selection-mode 1) ;; Allows to delete without kill-ring & inserting over selection.
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
-(setq ediff-split-window-function 'split-window-horizontally)
 (setq split-width-threshold nil) ;; Split window vertically by default
 ;; https://stackoverflow.com/questions/7997590/how-to-change-the-default-split-screen-direction
 

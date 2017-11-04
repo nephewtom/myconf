@@ -13,5 +13,6 @@
 (load "~/myconf/emacs/term.el")
 (load "~/myconf/emacs/compilation.el")
 (load "~/myconf/emacs/elisp.el")
+(load "~/myconf/emacs/ediff.el")
 
 ;;; basic.el ends here

@@ -7,7 +7,6 @@
  '(custom-safe-themes
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "4e262566c3d57706c70e403d440146a5440de056dfaeb3062f004da1711d83fc" default)))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain) t)
  '(flycheck-clang-language-standard nil)
  '(httpd-port 8081)
  '(initial-frame-alist (quote ((fullscreen . maximized))))

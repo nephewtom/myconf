@@ -1,21 +1,14 @@
+;; loader.el starts here
+
 ;; TODO: Check /use-package/ module...
-
 ;; TODO: Autoload preferred
-
 ;; TODO: Check startup profilers:
 ;; https://oremacs.com/2015/02/24/emacs-speed-test/
 ;; https://github.com/jschaf/esup
 ;; https://github.com/dholm/benchmark-init-el
 
-;;; It allows you to move the current line using M-up / M-down
-;; If a region is marked, it will move the region instead.
-(require 'move-text)
-(move-text-default-bindings)
-
+(server-start) ;; emacs server
 (load "~/myconf/emacs/smart-line.el")
-
-;; not working if only loading this basic.el file
-;; probably need the require package & refresh
 (load "~/myconf/emacs/company.el")
 (company-mode)
 
@@ -27,4 +20,4 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-
+;; loader.el ends here

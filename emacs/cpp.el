@@ -3,6 +3,11 @@
 ;; https://github.com/Andersbakken/rtags
 ;; http://batsov.com/projectile/
 
+
+;; TODO/TO_CHECK
+;; http://oremacs.com/2017/03/28/emacs-cpp-ide/
+
+
 ;; Some here are from:
 ;; https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
 (require 'aggressive-indent) ;; Aggresive indentation

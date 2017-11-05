@@ -1,3 +1,5 @@
+;;; packages.el starts here
+
 (load "~/myconf/emacs/magit.el")
 (load "~/myconf/emacs/helm.el")
 (load "~/myconf/emacs/dired.el")
@@ -11,3 +13,5 @@
 
 (load "~/myconf/emacs/edit-with-emacs.el")
 (load "~/myconf/emacs/python.el")
+
+;;; packages.el ends here

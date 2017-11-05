@@ -2,7 +2,7 @@
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
 (scroll-bar-mode t)
-(setq default-directory "~/myconf/emacs")
+(setq default-directory "~/myconf/emacs/")
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
 

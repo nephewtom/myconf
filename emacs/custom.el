@@ -27,8 +27,7 @@
       ("WAITING" . "yellow")
       ("DONE" . "green")
       ("CANCELED" . "black")))))
- '(scheme-program-name "petite" t)
- '(vc-follow-symlinks t))
+ '(scheme-program-name "petite" t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

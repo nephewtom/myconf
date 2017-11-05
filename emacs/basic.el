@@ -6,7 +6,7 @@
 
 (load "~/myconf/emacs/general.el")
 (load "~/myconf/emacs/column-and-line-numbers.el")
-(load "~/myconf/emacs/paren.el")
+(load "~/myconf/emacs/paren-indent.el")
 (load "~/myconf/emacs/movement.el")
 (load "~/myconf/emacs/buffers-utils.el")
 (load "~/myconf/emacs/calendar.el")
@@ -19,5 +19,11 @@
 (load "~/myconf/emacs/compilation.el")
 (load "~/myconf/emacs/elisp.el")
 (load "~/myconf/emacs/ediff.el")
+(load "~/myconf/emacs/smart-line.el")
+(load "~/myconf/emacs/company.el")
+(company-mode)
+
+(defvar basic-conf t
+  "t if my personal basic Elisp configuration was loaded")
 
 ;;; basic.el ends here

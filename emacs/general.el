@@ -7,7 +7,7 @@
                                                       (buffer-file-name) "%b"))))
 
 ;; --- Miscellaneous
-(setq set-mark-command-repeat-pop t) ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Mark-Ring.html
+(setq set-mark-command-repeat-pop t) ;; https://emacs.stackexchange.com/a/2818/6957
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 (delete-selection-mode 1) ;; Allows to delete without kill-ring & inserting over selection.
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame

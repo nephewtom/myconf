@@ -3,8 +3,6 @@
 (if (not (boundp 'basic-conf))
     (load "~/myconf/emacs/basic.el"))
 
-(server-start) ;; emacs server
-
 ;; TODO: Check /use-package/ module...
 ;; TODO: Autoload preferred
 ;; TODO: Check startup profilers:
@@ -19,22 +17,20 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(load "~/myconf/emacs/magit.el")
-(load "~/myconf/emacs/helm.el")
 (load "~/myconf/emacs/dired.el")
-
+(load "~/myconf/emacs/xah-lookup.el")
+(load "~/myconf/emacs/edit-with-emacs.el")
 (load "~/myconf/emacs/nxml.el")
 (load "~/myconf/emacs/hideshow.el")
-(load "~/myconf/emacs/xah-lookup.el")
-
 (load "~/myconf/emacs/markdown.el")
-(load "~/myconf/emacs/org-mode.el")
-
-(load "~/myconf/emacs/edit-with-emacs.el")
+(load "~/myconf/emacs/helm.el")
+(load "~/myconf/emacs/magit.el")
 (load "~/myconf/emacs/python.el")
+(load "~/myconf/emacs/org-mode.el")
 
 (setq custom-file "~/myconf/emacs/custom.el")
 (load custom-file)
 (put 'scroll-left 'disabled nil)
 
+(server-start) ;; emacs server
 ;;; init.el ends here

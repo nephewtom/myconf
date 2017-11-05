@@ -1,17 +1,19 @@
 ;;; init.el starts here
 
+;; Try to speed up start-up
+(setq-default gc-cons-threshold (* 100 1024 1024))
+(let ((file-name-handler-alist nil)) "~/myconf/emacs/init.el")
+
+;; Follow git symlinks
+(setq vc-follow-symlinks t)
+
+;; This comes first
 (if (not (boundp 'basic-conf))
     (load "~/myconf/emacs/basic.el"))
 
-;; TODO: Check /use-package/ module...
-;; TODO: Autoload preferred
-;; TODO: Check startup profilers:
-;; https://oremacs.com/2015/02/24/emacs-speed-test/
-;; https://github.com/jschaf/esup
-;; https://github.com/dholm/benchmark-init-el
 
-(require 'package)
 ;; --- Packages ELPA, MELPA, Marmalade ---
+(require 'package)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (when (not package-archive-contents)
@@ -33,4 +35,5 @@
 (put 'scroll-left 'disabled nil)
 
 (server-start) ;; emacs server
+
 ;;; init.el ends here

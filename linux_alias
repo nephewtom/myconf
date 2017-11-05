@@ -1,4 +1,3 @@
-alias emacs='env XMODIFIERS= emacs'
 alias e='emacsclient -n'
 
 alias emacsq='emacs -mm -Q -l ~/myconf/emacs/basic.el &'

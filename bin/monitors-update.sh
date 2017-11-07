@@ -1,20 +1,29 @@
 #!/bin/bash
 # -------------------------------------------------
 #  Get monitors configuration from monitor.xml and apply it for current user session.
+#  In case of multiple definitions in monitor.xml only first one is used.
 #
 #  See http://bernaerts.dyndns.org/linux/74-ubuntu/309-ubuntu-dual-display-monitor-position-lost
+#  for instructions
+#
+#  Parameters :
+#    $1 : waiting time in sec. before forcing configuration (optional)
+#
+#  Revision history :
+#    19/04/2014, V1.0 - Creation by N. Bernaerts
+#    10/07/2014, V1.1 - Wait 5 seconds for X to fully initialize
+#    01/09/2014, V1.2 - Correct NULL file bug (thanks to Ivan Harmady) and handle rotation
+#    07/10/2014, V1.3 - Add monitors size and rate handling (idea from jescalante)
+#    08/10/2014, V1.4 - Handle primary display parameter
+#    08/12/2014, V1.5 - Waiting time in seconds becomes a parameter
 # -------------------------------------------------
 
 # monitor.xml path
+MONITOR_XML="$HOME/myconf/bin/monitors.xml"
 #MONITOR_XML="$HOME/.config/monitors.xml"
-MONITOR_XML="$HOME/bin/monitors.xml"
-
-echo "Info from" $MONITOR_XML
-echo "--------------------------------------------"
 
 # get number of declared monitors
 NUM=$(xmllint --xpath 'count(//monitors/configuration['1']/output)' $MONITOR_XML)
-echo "NUM:"$NUM
 
 # loop thru declared monitors to create the command line parameters
 for (( i=1; i<=$NUM; i++)); do
@@ -29,24 +38,14 @@ for (( i=1; i<=$NUM; i++)); do
   PRIMARY=$(xmllint --xpath '//monitors/configuration['1']/output['$i']/primary/text()' $MONITOR_XML 2>/dev/null)
 
   # if position is defined for current monitor, add its position and orientation to command line parameters
-  if [ -n "$POS_X" ]; then
-      PARAM_ARR=("${PARAM_ARR[@]}" "--output" "$NAME" "--pos" "${POS_X}x${POS_Y}" "--mode" "${WIDTH}x${HEIGHT}" "--rate" "$RATE" "--rotate" "$ROTATE")
-      echo "name:$NAME | pos_x:$POS_X, pos_y:$POS_Y | width:$WIDTH, height:$HEIGHT rate:$RATE | primary:$PRIMARY"
-  fi
-
+  [ -n "$POS_X" ] && PARAM_ARR=("${PARAM_ARR[@]}" "--output" "$NAME" "--pos" "${POS_X}x${POS_Y}" "--fbmm" "${WIDTH}x${HEIGHT}" "--rate" "$RATE" "--rotate" "$ROTATE")
+ 
   # if monitor is defined as primary, adds it to command line parameters
-  # [ "$PRIMARY" = "yes" ] && PARAM_ARR=("${PARAM_ARR[@]}" "--primary")
+  [ "$PRIMARY" = "yes" ] && PARAM_ARR=("${PARAM_ARR[@]}" "--primary")
 done
 
-echo -e "\nExecuting xrandr to fix monitors and resolutions:"
-echo -n "xrandr "
-for i in "${PARAM_ARR[@]}"; do
-    echo -n "$i "
-done
-echo; echo
+# if needed, wait for some seconds (for X to finish initialisation)
+[ -n "$1" ] && sleep $1
 
+# position all monitors
 xrandr "${PARAM_ARR[@]}"
-
-echo "This is what I used in the past"
-echo "xrandr --output VGA1 --pos 1680x0 --mode 1280x1024 --rate 75"
-echo "xrandr --output HDMI2 --pos 0x0 --mode 1680x1050 --rate 60 --rotate normal --primary"

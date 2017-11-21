@@ -1,0 +1,68 @@
+#!/bin/bash
+
+CINNPATH=$HOME/.cinnamon/
+
+if [ -z $1 ]; then
+    echo "Usage: " $(basename $0) "-o <save/load/reset> [-f <filename>]"
+    echo ""
+    echo "Save, load or reset Cinnamon settings."
+    echo "If file is not provided, save/load use settings.ini."
+    echo "The file settings are stored under:" $CINNPATH
+    exit 0
+fi
+
+while :
+do
+    case "$1" in
+        -f) FILE=$2
+            if [ -z "$FILE" ]; then
+                echo "# Filename: -f <filename> must be provided"
+                exit -1
+            fi
+            shift 2
+            ;;
+
+        -o) OP=$2
+            if [ -z "$OP" ]; then
+                echo "# Operation: -o <save/load/reset> must be provided"
+                exit -1
+            fi
+            shift 2
+            ;;
+        --) # End of all options
+	    shift
+	    break;
+	    ;;
+        *) # No more options
+            break
+            ;;
+    esac
+done
+
+if [ "$OP" = "reset" ]; then
+    echo "Resetting Cinnamon settings..."
+    dconf reset -f /org/cinnamon/
+    exit 0
+fi
+
+if [ -z "$FILE" ]; then
+    FILE=settings.ini
+fi
+FILE=$CINNPATH$FILE
+echo "* Using file:" $FILE
+
+if [ "$OP" = "save" ]; then
+    echo "* Dumping settings to" $FILE
+    dconf dump /org/cinnamon/ > $FILE
+elif [ "$OP" = "load" ]; then
+    echo "* Resetting Cinnamon settings..."
+    dconf reset -f /org/cinnamon/
+    echo "* Loading settings from" $FILE
+    dconf load /org/cinnamon/ < $FILE
+else
+    echo "# Error: invalid operation:" $OP
+fi
+
+# This made Dropbox panel ico come to life
+# dropbox stop && dbus-launch dropbox start
+

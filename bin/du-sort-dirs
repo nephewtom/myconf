@@ -1,0 +1,1 @@
+du -hsx * | sort -h | tail -30

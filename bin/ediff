@@ -1,0 +1,13 @@
+#!/bin/bash
+if ! [ $# -eq 2 ]; then
+    echo "Two files are needed to diff them."
+    exit -1
+fi
+
+if [ ! -f $1 ] || [ ! -f $2 ]; then
+    echo "Files must exist..."
+    exit -1
+fi
+echo "emacsclient --eval '(toggle-frame-maximized) (ediff-files "$1" "$2")'"
+$HOME/emacs/lib-src/emacsclient --eval '(toggle-frame-maximized) (ediff-files ""$1"" ""$2"")'
+echo "Does not seem to work..."

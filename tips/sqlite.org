@@ -1,0 +1,6 @@
+* Start by:
+  https://sqlite.org/cli.html
+
+* rlwrap
+  https://superuser.com/a/999132/192003
+  ~/.rlwrap/sqlite3_completions

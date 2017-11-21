@@ -3,7 +3,4 @@ export HISTTIMEFORMAT="%d/%m/%y %T "
 export ALTERNATE_EDITOR=emacs EDITOR=emacsclient VISUAL=emacsclient
 export NO_AT_BRIDGE=1
 
-setxkbmap -layout us -option ctrl:nocaps
-setxkbmap -layout es -option ctrl:nocaps
-
-xsetwacom --set 21 touch off
+#xsetwacom --set 21 touch off

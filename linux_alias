@@ -1,8 +1,8 @@
 alias e='emacsclient -n'
 
-alias emacsq='emacs -mm -Q -l ~/myconf/emacs/basic.el &'
-alias emacsc='emacs -mm -Q -l ~/myconf/emacs/init-cpp.el &'
-alias gnus='emacs -mm -Q -l ~/myconf/emacs/gnus.el &'
+alias emacsq='$Emacs -mm -Q -l ~/myconf/emacs/basic.el &'
+alias emacsc='$Emacs -mm -Q -l ~/myconf/emacs/init-cpp.el &'
+alias gnus='$Emacs -mm -Q -l ~/myconf/emacs/gnus.el &'
 
 alias ctrlc='xclip -selection c'
 alias ctrlv='xclip -selection c -o'

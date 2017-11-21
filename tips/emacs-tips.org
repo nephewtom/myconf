@@ -83,3 +83,6 @@
   2. Type: M-x replace-string RET <char> RET C-q C-j RET
   http://stackoverflow.com/questions/613022/how-to-replace-a-character-with-a-newline-in-emacs
 
+* Copy full path to file on dired:
+  In dired, on a file type: 0 w 
+  https://emacs.stackexchange.com/questions/17599/current-path-in-dired-or-dired-to-clipboard

@@ -13,15 +13,20 @@
 (load "~/myconf/emacs/cond-mac-linux-win.el")
 (load "~/myconf/emacs/duplicate-line.el")
 (load "~/myconf/emacs/xah-cut-copy.el")
-(load "~/myconf/emacs/keybindings.el")
 (load "~/myconf/emacs/defalias.el")
 (load "~/myconf/emacs/term.el")
 (load "~/myconf/emacs/compilation.el")
-(load "~/myconf/emacs/elisp.el")
-(load "~/myconf/emacs/ediff.el")
-(load "~/myconf/emacs/smart-line.el")
+(load "~/myconf/emacs/sudo.el")
+
 (load "~/myconf/emacs/company.el")
 (company-mode)
+
+(load "~/myconf/emacs/elisp.el")
+(load "~/myconf/emacs/ediff.el")
+(load "~/myconf/emacs/dired.el")
+(load "~/myconf/emacs/smart-line.el")
+
+(load "~/myconf/emacs/keybindings.el")
 
 (defvar basic-conf t
   "t if my personal basic Elisp configuration was loaded")

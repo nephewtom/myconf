@@ -16,3 +16,5 @@
 (defalias 'lb 'list-buffers)
 (defalias 'eb 'eval-buffer)
 (defalias 'er 'eval-region)
+(defalias 'difbuf 'ediff-buffers)
+(defalias 'diffil 'ediff-files)

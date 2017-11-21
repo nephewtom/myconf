@@ -19,7 +19,6 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(load "~/myconf/emacs/dired.el")
 (load "~/myconf/emacs/xah-lookup.el")
 (load "~/myconf/emacs/edit-with-emacs.el")
 (load "~/myconf/emacs/nxml.el")

@@ -17,6 +17,9 @@
  '(livedown:port 1337)
  '(org-agenda-files (quote ("~/smip/SMIP-GOING.org")))
  '(org-startup-truncated nil)
+ ;; '(package-selected-packages
+ ;;   (quote
+ ;;    (peep-dired dired-toggle-sudo zenburn-theme yaml-mode yafolding xah-lookup xah-fly-keys xah-elisp-mode wgrep web-beautify w3 use-package typing transpose-frame tabbar sx switch-window sublimity strace-mode stem sqlplus sql-indent spotify speed-type smart-mode-line-powerline-theme skewer-mode scss-mode rtags rainbow-mode racket-mode pyenv-mode py-autopep8 puppet-mode psvn projectile processing-snippets processing-mode phpunit paredit pandoc-mode org2blog org-pandoc openwith omnisharp ob-mongo neotree move-text monokai-theme mediawiki material-theme markdown-toc magit love-minor-mode log4j-mode load-theme-buffer-local json-mode jedi jdee iedit hl-defined highlight-chars hideshowvis helm-w3m helm-swoop helm-spotify helm-smex helm-etags-plus helm-descbinds helm-css-scss helm-company groovy-mode groovy-imports google-this google-maps google-c-style god-mode gnuplot-mode gmail-message-mode ggtags fold-dwim flymake-json flycheck-irony flycheck-color-mode-line flx fill-column-indicator figlet exec-path-from-shell evil etags-select esup ergoemacs-mode emoji-display emoji-cheat-sheet-plus elpy elisp-slime-nav ein eimp edit-server dsvn doremi-frm doremi-cmd direx dired+ diff-hl counsel company-php company-irony company-emoji company-emacs-eclim company-c-headers color-theme-monokai color-theme-emacs-revert-theme color-theme-eclipse color-theme-buffer-local cmake-mode cmake-ide cider buffer-move better-defaults bash-completion base16-theme awk-it auto-complete-nxml auto-complete-clang auto-complete-c-headers auctex aggressive-indent)))
  '(safe-local-variable-values
    (quote
     ((company-clang-arguments "-I/home/etomort/tomas/Corange/include" "-I/home/etomort/tomas/Corange/include/assets")

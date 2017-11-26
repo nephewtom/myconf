@@ -7,8 +7,7 @@
 (defalias 'hoccur 'helm-occur)
 (defalias 'hrec 'helm-recentf)
 
-;; Try helm-swoop & swiper more...
-
+;; TRY helm-swoop & swiper more...
 
 (defalias 'qr 'query-replace)
 (defalias 'qrr 'query-replace-regexp)
@@ -18,3 +17,5 @@
 (defalias 'er 'eval-region)
 (defalias 'difbuf 'ediff-buffers)
 (defalias 'diffil 'ediff-files)
+
+(defalias 'odired 'open-in-dired)

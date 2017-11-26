@@ -49,5 +49,3 @@
 
 (add-hook 'ediff-before-setup-hook #'my-store-pre-ediff-winconfig)
 (add-hook 'ediff-quit-hook #'my-restore-pre-ediff-winconfig)
-
-

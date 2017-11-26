@@ -21,3 +21,5 @@
   dump = cat-file -p
 [color]
 	ui = auto
+[difftool]
+	prompt = false

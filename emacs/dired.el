@@ -15,6 +15,7 @@
 (define-key dired-mode-map (kbd "M-p") 'backward-paragraph)
 (define-key dired-mode-map "e" 'ora-ediff-files)
 (define-key dired-mode-map "F" 'find-name-dired)
+(define-key dired-mode-map "P" 'peep-dired)
 
 ;; Auto-refresh dired on file change
 (add-hook 'dired-mode-hook 'auto-revert-mode)

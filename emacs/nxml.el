@@ -20,7 +20,7 @@
 
 
 (require 'auto-complete-nxml)
-(setq auto-complete-nxml-popup-help-key "C-ñ") ;; TODO: Change this key-binding
+;;(setq auto-complete-nxml-popup-help-key "C-") ;; TODO: Change this key-binding
 (setq auto-complete-nxml-toggle-automatic-key "C-c C-t")
 
 ;; From http://blog.bookworm.at/2007/03/pretty-print-xml-with-emacs.html

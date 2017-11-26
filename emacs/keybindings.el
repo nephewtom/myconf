@@ -47,7 +47,8 @@
 (global-set-key (kbd "<f8>") 'switch-to-previous-buffer) ;; buffer-utils.el
 (global-set-key (kbd "<f9>") 'hc-toggle-highlight-tabs)
 (global-set-key (kbd "<f11>") 'indent-buffer) ;; buffer-utils.el
-(global-set-key (kbd "<f12>") 'bookmark-jump)
+;;(global-set-key (kbd "<f12>") 'bookmark-jump)
+;;(global-set-key (kbd "<f12>") 'recompile)
 
 
 ;; --- Buffers

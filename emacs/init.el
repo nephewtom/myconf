@@ -19,6 +19,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+(load "~/myconf/emacs/smart-line.el")
 (load "~/myconf/emacs/xah-lookup.el")
 (load "~/myconf/emacs/edit-with-emacs.el")
 (load "~/myconf/emacs/nxml.el")
@@ -34,5 +35,5 @@
 (put 'scroll-left 'disabled nil)
 
 (server-start) ;; emacs server
-
+(message "Emacs ready with init.el !")
 ;;; init.el ends here

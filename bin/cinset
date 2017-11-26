@@ -1,6 +1,7 @@
 #!/bin/bash
 
-CINNPATH=$HOME/.cinnamon/
+CINNPATH=$HOME/.cinnamon
+FILE=settings.ini
 
 if [ -z $1 ]; then
     echo "Usage: " $(basename $0) "-o <save/load/reset> [-f <filename>]"
@@ -19,6 +20,7 @@ do
                 echo "# Filename: -f <filename> must be provided"
                 exit -1
             fi
+            echo "Got FILE:" $FILE
             shift 2
             ;;
 
@@ -40,25 +42,30 @@ do
 done
 
 if [ "$OP" = "reset" ]; then
-    echo "Resetting Cinnamon settings..."
+    echo "* Resetting Cinnamon settings..."
+    sleep 0.1
     dconf reset -f /org/cinnamon/
     exit 0
 fi
 
-if [ -z "$FILE" ]; then
-    FILE=settings.ini
-fi
-FILE=$CINNPATH$FILE
-echo "* Using file:" $FILE
+FILEPATH=$CINNPATH/$FILE
+echo "Got FILEPATH:" $FILEPATH
 
 if [ "$OP" = "save" ]; then
-    echo "* Dumping settings to" $FILE
-    dconf dump /org/cinnamon/ > $FILE
+    echo "* Dumping settings to" $FILEPATH
+    dconf dump /org/cinnamon/ > $FILEPATH
 elif [ "$OP" = "load" ]; then
+    if [ ! -f "$FILEPATH" ]; then
+        echo "# Error: does not exist file:" $FILEPATH
+        exit -1
+    fi
+
     echo "* Resetting Cinnamon settings..."
+    sleep 0.1
     dconf reset -f /org/cinnamon/
-    echo "* Loading settings from" $FILE
-    dconf load /org/cinnamon/ < $FILE
+
+    echo "* Loading settings from" $FILEPATH
+    dconf load /org/cinnamon/ < $FILEPATH
 else
     echo "# Error: invalid operation:" $OP
 fi

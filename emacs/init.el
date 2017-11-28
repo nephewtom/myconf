@@ -58,7 +58,7 @@
 (load custom-file)
 (put 'scroll-left 'disabled nil)
 
-(load "~/myconf/emacs/use/spaceline.el")
+;;(load "~/myconf/emacs/use/spaceline.el")
 
 (server-start) ;; emacs server
 (message "Emacs ready with use.el !")

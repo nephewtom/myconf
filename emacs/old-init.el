@@ -35,5 +35,5 @@
 (put 'scroll-left 'disabled nil)
 
 (server-start) ;; emacs server
-(message "Emacs ready with init.el !")
+(message "Emacs ready with old-init.el !")
 ;;; init.el ends here

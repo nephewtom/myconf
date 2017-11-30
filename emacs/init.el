@@ -32,33 +32,33 @@
 (load "~/myconf/emacs/sudo.el")
 (load "~/myconf/emacs/ediff.el")
 (load "~/myconf/emacs/defalias.el")
-(load "~/myconf/emacs/keybindings.el") ;; has (require 'iso-transl)
 
-(load "~/myconf/emacs/dired.el")
-
-(load "~/myconf/emacs/use/term.el")
-(load "~/myconf/emacs/use/buffers-utils.el")
+(load "~/myconf/emacs/use/dired.el")
+(load "~/myconf/emacs/use/helm.el")
 (load "~/myconf/emacs/use/movement.el")
+(load "~/myconf/emacs/use/buffers-utils.el")
 (load "~/myconf/emacs/use/elisp.el")
 (load "~/myconf/emacs/use/flycheck.el")
 (load "~/myconf/emacs/use/company.el")
 (load "~/myconf/emacs/use/xah-lookup.el")
-(load "~/myconf/emacs/use/edit-with-emacs.el")
+(load "~/myconf/emacs/use/magit.el")
+
+(load "~/myconf/emacs/use/term.el")
+(load "~/myconf/emacs/use/org-mode.el")
 (load "~/myconf/emacs/use/nxml.el")
 (load "~/myconf/emacs/use/hideshow.el")
+(load "~/myconf/emacs/use/edit-with-emacs.el")
 (load "~/myconf/emacs/use/markdown.el")
-(load "~/myconf/emacs/use/helm.el")
-(load "~/myconf/emacs/use/magit.el")
 (load "~/myconf/emacs/use/python.el")
-(load "~/myconf/emacs/use/org-mode.el")
 
-;;(load "~/myconf/emacs/use/smart-line.el")
+(load "~/myconf/emacs/keybindings.el") ;; has (require 'iso-transl)
 
 (setq custom-file "~/myconf/emacs/custom.el")
 (load custom-file)
 (put 'scroll-left 'disabled nil)
 
+;;(load "~/myconf/emacs/use/smart-line.el")
 ;;(load "~/myconf/emacs/use/spaceline.el")
 
 (server-start) ;; emacs server
-(message "Emacs ready with use.el !")
+(message "Emacs ready with init.el !")

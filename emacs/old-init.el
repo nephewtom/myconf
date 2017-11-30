@@ -19,21 +19,21 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(load "~/myconf/emacs/smart-line.el")
-(load "~/myconf/emacs/xah-lookup.el")
-(load "~/myconf/emacs/edit-with-emacs.el")
-(load "~/myconf/emacs/nxml.el")
-(load "~/myconf/emacs/hideshow.el")
-(load "~/myconf/emacs/markdown.el")
-(load "~/myconf/emacs/helm.el")
-(load "~/myconf/emacs/magit.el")
-(load "~/myconf/emacs/python.el")
-(load "~/myconf/emacs/org-mode.el")
+;;(load "~/myconf/emacs/smart-line.el")
+(load "~/myconf/emacs/old/xah-lookup.el")
+(load "~/myconf/emacs/old/edit-with-emacs.el")
+(load "~/myconf/emacs/old/nxml.el")
+(load "~/myconf/emacs/old/hideshow.el")
+(load "~/myconf/emacs/old/markdown.el")
+(load "~/myconf/emacs/old/helm.el")
+(load "~/myconf/emacs/old/magit.el")
+(load "~/myconf/emacs/old/python.el")
+(load "~/myconf/emacs/old/org-mode.el")
 
 (setq custom-file "~/myconf/emacs/custom.el")
 (load custom-file)
 (put 'scroll-left 'disabled nil)
 
-(server-start) ;; emacs server
+;;(server-start) ;; emacs server
 (message "Emacs ready with old-init.el !")
-;;; init.el ends here
+;;; old-init.el ends here

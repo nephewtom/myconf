@@ -14,15 +14,24 @@
 (define-key hs-minor-mode-map (kbd "C-c @ C-M-h") nil)
 (define-key hs-minor-mode-map (kbd "C-c @ C-M-s") nil)
 (define-key hs-minor-mode-map (kbd "C-c @ C-c") nil)
+
 (define-key hs-minor-mode-map (kbd "C-c <left>") 'hs-hide-block)
 (define-key hs-minor-mode-map (kbd "C-c h") 'hs-hide-block)
+;;(define-key hs-minor-mode-map (kbd "M-]") 'hs-hide-block)
+
 (define-key hs-minor-mode-map (kbd "C-c <right>") 'hs-show-block)
 (define-key hs-minor-mode-map (kbd "C-c s") 'hs-show-block)
+;;(define-key hs-minor-mode-map (kbd "M-[") 'hs-show-block)
+
 (define-key hs-minor-mode-map (kbd "C-c <up>") 'hs-hide-all)
 (define-key hs-minor-mode-map (kbd "C-c M-h") 'hs-hide-all)
+
 (define-key hs-minor-mode-map (kbd "C-c <down>") 'hs-show-all)
 (define-key hs-minor-mode-map (kbd "C-c M-s") 'hs-show-all)
+
 (define-key hs-minor-mode-map (kbd "C-c C-c") 'hs-toggle-hiding)
+
+;; Yafolding shows a triangule at the left... Cool!
 
 ;; TODO: Check yafolding mode. It looks very simple and easy to use.
 ;; TODO: It has very easy key-bindings, though C-RET collide with cua-set-rectangle-mark

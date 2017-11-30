@@ -27,9 +27,23 @@
 (defun open-in-dired ()
   "Show current buffer on dired."
   (interactive)
-  (if (buffer-file-name)
-      (dired-jump (buffer-file-name))
-    (message "This buffer is not a file in the filesystem.")))
+  (if (equal major-mode 'ibuffer-mode)
+      (ibuffer-visit-buffer-in-dired)
+    (if (buffer-file-name)
+        (dired-jump (buffer-file-name))
+      (message "This buffer is not a file in the filesystem."))))
+
+(defun ibuffer-visit-buffer-in-dired (&optional noselect)
+  "Visit the buffer on this line in dired."
+  (interactive)
+  (let ((buf (ibuffer-current-buffer t)))
+    (bury-buffer (current-buffer))
+    (dired-jump t (buffer-file-name buf))
+    (message (buffer-file-name buf))))
+
+
+
+
 
 (setq find-args "")
 (defun find-dired-by-date (dir args)

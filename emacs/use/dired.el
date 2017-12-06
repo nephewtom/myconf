@@ -2,34 +2,55 @@
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
 
-(use-package dired+
-  :ensure t
+(use-package dired
   :bind (:map dired-mode-map
-              ("j" . dired-find-file)
               ("f" . dired-find-alternate-file)
-              ("M-p" . backward-paragraph)     
-              ("e" . ora-ediff-files)                
-              ("F" . find-name-dired)                
-              ("P" . peep-dired))
+              ("M-p" . backward-paragraph)
+              ("F" . find-name-dired)
+              ("j" . dired-find-file)
+              ("e" . ora-ediff-files)
+              ("P" . peep-dired)
+              )
   :config
-  (setq diredp-hide-details-initially-flag nil)
+  (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
+  (put 'dired-find-alternate-file 'disabled nil)
   (setq dired-listing-switches "-lkt")
-  (add-hook 'dired-mode-hook 'auto-revert-mode)
+
   ;; Auto-refresh dired on file change
   (setq dired-auto-revert-buffer t)
-  (put 'dired-find-alternate-file 'disabled nil)
-  (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file ".."))))
+
+  (setq diredp-hide-details-initially-flag nil)
+  (add-hook 'dired-mode-hook 'auto-revert-mode)
+  (require 'dired-x)
+  (require 'dired+)
+  (require 'bind-key)
+  (unbind-key "C-o" dired-mode-map)
+  )
 
 (use-package peep-dired
   :ensure t)
 
-;; Esta funcions usa dired-jump para abrir en dired el buffer actual
+
+;; Esta función usa dired-jump para abrir en dired el buffer actual
+;; O a través de ibuffer
 (defun open-in-dired ()
   "Show current buffer on dired."
   (interactive)
-  (if (buffer-file-name)
-      (dired-jump (buffer-file-name))
-    (message "This buffer is not a file in the filesystem.")))
+  (if (equal major-mode 'ibuffer-mode)
+      (ibuffer-visit-buffer-in-dired)
+    (if (buffer-file-name)
+        (dired-jump (buffer-file-name))
+      (message "This buffer is not a file in the filesystem."))))
+
+(defun ibuffer-visit-buffer-in-dired (&optional noselect)
+  "Visit the buffer on this line in dired."
+  (interactive)
+  (let ((buf (ibuffer-current-buffer t)))
+    (bury-buffer (current-buffer))
+    (dired-jump t (buffer-file-name buf))
+    (message (buffer-file-name buf))))
+
+
 
 (setq find-args "")
 (defun find-dired-by-date (dir args)

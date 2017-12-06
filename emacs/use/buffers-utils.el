@@ -1,5 +1,3 @@
-(global-auto-revert-mode t) ;; automatically revert buffer when file changes
-
 (defun switch-to-previous-buffer ()
   "Swap to previous buffer."
   (interactive)
@@ -11,14 +9,21 @@
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 
+(global-auto-revert-mode t) ;; automatically revert buffer when file changes
 
-(toggle-uniquify-buffer-names) ;; Different buffer name for same name files
+;; --- Uniquify 
+(require 'uniquify)
+;;(setq uniquify-buffer-name-style 'forward)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
+(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
+;;(toggle-uniquify-buffer-names) ;; Different buffer name for same name files
 
-;; Ibuffer
+
+;; --- Ibuffer ----
 ;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
-
-;;
 ;; https://emacs.stackexchange.com/questions/2177/how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers/2179?noredirect=1#comment52199_2179
+
 (defun my-ibuffer-stale-p (&optional noconfirm)
   ;; let's reuse the variable that's used for 'ibuffer-auto-mode
   (frame-or-buffer-changed-p 'ibuffer-auto-buffers-changed))
@@ -32,16 +37,40 @@
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-auto-revert-setup)
 
 
-;; --- Buffers & Ibuffer stuff ---
-;; Remove from Ibuffers the buffers that match these regexp
+(setq ibuffer-saved-filter-groups
+      '(("home"
+	 ("myconf" (or (filename . "myconf")
+		       (filename . "emacs-config")))
+         ("SMIP" (filename . "smip"))
+	 ("Org" (or (mode . org-mode)
+		    (filename . "OrgMode")))
+         ("playground" (filename . "playground"))
+         ("/usr/include/" (filename . "/usr/include/"))
+         ("SDL" (filename . "tomas/SDL/"))
+         )))
+
+(add-hook 'ibuffer-mode-hook
+	  '(lambda ()
+	     (ibuffer-switch-to-saved-filter-groups "home")))
+
+(setq ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil)
+
+
+;; --- Ibuffer extension ---
 (use-package ibuf-ext
-;  :ensure t
   :config 
-  ;; This eliminates annoying *Minibuf-, *Echo Area, etc., but also *magit: buffers
+  ;; Following lines eliminates annoying *Minibuf-, *Echo Area, etc., but also *magit: buffers
   ;; (add-to-list 'ibuffer-never-show-predicates " .*")
+
+  ;; Remove the buffers that match these regexp
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Minibuf-.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Echo Area.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Custom.*")
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*Python.*")
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*DOC.*")
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*temp.*")
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*edit.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*autoload.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*spool.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*code-conver.*")

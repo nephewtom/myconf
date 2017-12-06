@@ -4,6 +4,7 @@
 
 ;; https://stackoverflow.com/questions/9990370/how-to-disable-hl-line-feature-in-specified-mode
 (global-hl-line-mode t) ;; highlight current line
+;;(global-hl-line-mode 0) ;; highlight current line
 (make-variable-buffer-local 'global-hl-line-mode)
 
 (set-face-background hl-line-face "#FFCA00") ;; orangewish color

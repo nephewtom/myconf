@@ -6,6 +6,12 @@
 (setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
                                                       (buffer-file-name) "%b"))))
 
+(setq initial-frame-alist
+      '((background-color . "honeydew")))
+
+(setq default-frame-alist
+      '((background-color . "honeydew")))
+
 ;; --- Miscellaneous
 (setq set-mark-command-repeat-pop t) ;; https://emacs.stackexchange.com/a/2818/6957
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs

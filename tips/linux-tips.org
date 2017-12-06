@@ -138,3 +138,9 @@ numbers not so much.
   These ones get matches but do not filter by file wildcard:
   : grep -rHn -e "use find" *  # Executed from /home/etomort/myconf
   : grep -rHn -e "use find" /home/etomort/myconf/
+* find . -exec grep {} \; vs +
+  https://unix.stackexchange.com/a/12904/30951
+  - find will execute grep and will substitute {} with the filename(s) found.
+  - The difference between ; and + is that with ; a single grep command for each file is executed.
+  - Whereas with + as many files as possible are given as parameters to grep at once.
+  #+END_EXAMPLE

@@ -1,17 +1,81 @@
 ;; C/C++ Config
-;; TODO: rtags & projectile
-;; https://github.com/Andersbakken/rtags
-;; http://batsov.com/projectile/
+
+;; *** Keybinding ***
+;; [M-.]   xref-find-definitions (needs TAGS) : find definition at point.
+;; [M-,]   xref-pop-marker-stack : pop back after finding definition.
+;; [M-o]   ff-find-other-file : switch-toggle from .h to .cpp, or jumps to file in #include ones.
+;; [M-y]   company-complete : complete at point.
+;; [C-;]   company-files : complete filesystem files at point.
+;; [C-o] helm-imenu : list functions, member functions, attributes, etc... on current file.
+;; [C-M-h] helm-cscope-find-calling-this-function : 
+;;         fa-show : shows function signature
 
 
-;; TODO/TO_CHECK
-;; http://oremacs.com/2017/03/28/emacs-cpp-ide/
+
+;; --- Another solution to jump to definition
+;; https://github.com/jacktasia/dumb-jump
+(use-package dumb-jump
+  :bind (:map dumb-jump-mode-map
+              ("M-." . dumb-jump-go)
+              ("M-," . dumb-jump-back)
+              ;; ("M-g i" . dumb-jump-go-prompt)
+              ;; ("M-g x" . dumb-jump-go-prefer-external)
+              ;; ("M-g z" . dumb-jump-go-prefer-external-other-window)
+              )
+  :config
+  (setq dumb-jump-selector 'ivy)
+  ;;(setq dumb-jump-selector 'helm)
+  :ensure
+  )
+
+;; --- Useful Alias
+(defun make ()
+  (interactive)
+  (compile "make"))
+
+(defun mclean ()
+  (interactive)
+  (compile "make clean; make"))
+
+(defun ctags ()
+  (interactive)
+  (compile "ctags -R -e --c-kinds=cdefglmnpstuvx ."))
+
+(defun pacman ()
+  (interactive)
+  (compile "cd ~/tomas/SDL/pacman/game/; ./pacman"))
 
 
-;; Some here are from:
+(defun run ()
+  (interactive)
+  (setq program (concat "./" (file-name-sans-extension (buffer-name))))
+  (if (file-exists-p program)
+      (compile program)
+    (message "%s does not exist" program)))
+
+(defun run ()
+  (interactive)
+  (run-program))
+
+(defun mr ()
+  (interactive)
+  (setq program (concat "./" (file-name-sans-extension (buffer-name))))
+  (compile (concat "make;" program)))
+
+
+
+;;(define-key c++-mode-map (kbd "C-M-h") nil) ;; unbind from select function
+(use-package cc-mode
+  :config
+  (unbind-key "C-M-h" c++-mode-map)
+  (dumb-jump-mode)
+  )
+
+
 ;; https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
 (require 'aggressive-indent) ;; Aggresive indentation
 (aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
+(which-function-mode)
 
 (semantic-mode 1)            ;; CEDET holdover
 (global-ede-mode 1)          ;; CEDET holdover
@@ -19,60 +83,42 @@
 (setq c-basic-offset 4)      ;; 4-space indent
 (add-hook 'c-mode-common-hook 'company-mode)
 (add-hook 'c-mode-common-hook 'flycheck-mode)
-(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)
+;;(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)
 (add-hook 'c-mode-common-hook 'linum-mode)
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (add-hook 'c-mode-common-hook 'hideshowvis-minor-mode)
 
-
-;; TODO: Not tested
-(require 'google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
-
-
 ;; (Conditional) C/C++ Keybinds
 (add-hook 'c-mode-common-hook
-          (lambda () (local-set-key (kbd "C-c j") 'find-tag)))
-(add-hook 'c-mode-common-hook
-          (lambda () (local-set-key (kbd "C-x C-o") 'ff-find-other-file)))
-;; (add-hook 'c-mode-common-hook
-;;           (lambda () (local-set-key (kbd "<M-y>") 'company-complete)))
+          (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
 
 
-;; ggtags
-(require 'ggtags)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-              (ggtags-mode 1))))
+;; --- Function args
+;; fa-show will show the function signature
+(require 'function-args)
 
-(define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+(fa-config-default)
+(set-default 'semantic-case-fold t)
+(define-key function-args-mode-map (kbd "M-o") nil) ;; unbind from default
+(define-key function-args-mode-map (kbd "M-n") nil) ;; unbind from default
+(define-key function-args-mode-map (kbd "M-u") nil) ;; unbind from default
+(define-key function-args-mode-map (kbd "M-j") nil) ;; unbind from default
+(define-key function-args-mode-map (kbd "M-h") nil) ;; unbind from default
 
 
-;; F12 - recompile
-(global-set-key (kbd "<f12>") 'recompile)
 
 
-;; More stuff like this in: https://www.emacswiki.org/emacs/IndentingC
-(c-add-style "microsoft"
-              '("stroustrup"
-                (c-offsets-alist
-                 (innamespace . -)
-                 (inline-open . 0)
-                 (inher-cont . c-lineup-multi-inher)
-                 (arglist-cont-nonempty . +)
-                 (template-args-cont . +))))
-;; (setq c-default-style "microsoft")
+;; --- Indent tool
 
+;; indent --standard-output --blank-lines-after-declarations --blank-lines-after-procedures --braces-on-if-line --indent-level2 --line-length120 --no-space-after-casts --no-space-after-function-call-names --no-tabs --dont-break-procedure-type --format-all-comments --comment-line-length120 --case-indentation2 --blank-lines-after-procedures --swallow-optional-blank-lines --dont-line-up-parentheses
 
 (defun c-reformat-buffer()
   (interactive)
   (save-buffer)
   (setq sh-indent-command (concat
                            "indent -st -bad --blank-lines-after-procedures "
-                           "-br -i4 -l79 -ncs -npcs -nut -npsl -fca "
-                           "-lc79 -fc1 -cli4 -bap -sob -ci4 -nlp "
+                           "-br -i2 -l120 -ncs -npcs -nut -npsl -fca "
+                           "-lc120 -fc1 -cli2 -bap -sob -ci4 -nlp "
                            buffer-file-name))
   (mark-whole-buffer)
   (universal-argument)
@@ -85,10 +131,33 @@
 ;; (define-key c-mode-base-map [f7] 'c-reformat-buffer)
 
 
-;; Astlye
+
+;; --- Astlye tool
 (defun astyle-this-buffer (pmin pmax)
   (interactive "r")
   (shell-command-on-region pmin pmax
                            "astyle" ;; add options here...
                            (current-buffer) t 
                            (get-buffer-create "*Astyle Errors*") t))
+
+
+
+;; --- Styles
+;; More stuff like this in: https://www.emacswiki.org/emacs/IndentingC
+(c-add-style "microsoft"
+             '("stroustrup"
+               (c-offsets-alist
+                (innamespace . -)
+                (inline-open . 0)
+                (inher-cont . c-lineup-multi-inher)
+                (arglist-cont-nonempty . +)
+                (template-args-cont . +))))
+;; (setq c-default-style "microsoft")
+
+
+
+;; --- TO CHECK: rtags & projectile
+;; https://github.com/Andersbakken/rtags
+;; http://batsov.com/projectile/
+;; http://oremacs.com/2017/03/28/emacs-cpp-ide/
+

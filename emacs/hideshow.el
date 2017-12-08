@@ -20,7 +20,11 @@
               ("C-c M-h" . hs-hide-all)
               ("C-c <down>" . hs-show-all)
               ("C-c M-s" . hs-show-all)
-              ("C-c C-c" . hs-toggle-hiding)))
+              ("C-c C-c" . hs-toggle-hiding))
+  :config
+  (hideshowvis-minor-mode)
+  (hideshowvis-symbols)
+  )
 
 ;; optional key bindings, easier than hs defaults
 (define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)

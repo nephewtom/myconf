@@ -39,7 +39,7 @@
   (if (equal major-mode 'ibuffer-mode)
       (ibuffer-visit-buffer-in-dired)
     (if (buffer-file-name)
-        (dired-jump (buffer-file-name))
+        (dired-jump nil (buffer-file-name))
       (message "This buffer is not a file in the filesystem."))))
 
 (defun ibuffer-visit-buffer-in-dired (&optional noselect)
@@ -47,7 +47,7 @@
   (interactive)
   (let ((buf (ibuffer-current-buffer t)))
     (bury-buffer (current-buffer))
-    (dired-jump t (buffer-file-name buf))
+    (dired-jump nil (buffer-file-name buf))
     (message (buffer-file-name buf))))
 
 

@@ -36,8 +36,11 @@
   "Switch to terminal. Launch if nonexistent."
   (interactive)
   (if (get-buffer "*terminal*")
-      (switch-to-buffer "*terminal*")
-    (term "/bin/bash"))
+      (progn (switch-to-buffer  "*terminal*")
+             (message "Switching to existing Terminal"))
+    
+    (progn  (term "/bin/bash")
+            (message "Starting first time Terminal")))
   (get-buffer-process "*terminal*"))
 
 (defalias 'tt 'terminal)

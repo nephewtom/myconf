@@ -30,8 +30,10 @@
   (defalias 'xlgoogle 'xah-lookup-google) ;; M-x xlg
   (defalias 'xlwikipedia 'xah-lookup-wikipedia) ;; M-x xlw
 
-  :bind (("<f1> 7" . browse-url-at-point)
+  :bind (
          :map help-map
+         ("7" . browse-url-at-point)
          ("8" . xah-lookup-google)
          ("9" . xah-lookup-word-definition)
-         ("0" . xah-lookup-linguee)))
+         ("0" . xah-lookup-linguee))
+  )

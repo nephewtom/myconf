@@ -10,6 +10,8 @@
          ("C-x C-f" . helm-find-files)
          ("C-x b" . helm-mini)
          ("C-x C-b" . helm-buffers-list)
+         ("C-o" . helm-imenu)
+         ("C-M-h" . helm-cscope-find-calling-this-function)
          :map helm-map
          ;; TODO: Understand what these keys are for...
          ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
@@ -20,7 +22,8 @@
          ("M-p" . helm-previous-page)
          ("C-v" . helm-yank-text-at-point)
          ("C-<up>" . previous-history-element)
-         ("C-<down>" . next-history-element))
+         ("C-<down>" . next-history-element)
+         )
   
   :config
   (helm-mode 1)

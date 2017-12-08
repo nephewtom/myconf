@@ -54,7 +54,7 @@
 ;; --- Buffers
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
-(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
+;;(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
 
 ;; --- Windows
 (global-set-key [C-tab] 'other-window)

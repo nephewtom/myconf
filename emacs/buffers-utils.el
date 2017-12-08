@@ -24,6 +24,11 @@
 ;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
 ;; https://emacs.stackexchange.com/questions/2177/how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers/2179?noredirect=1#comment52199_2179
 
+(use-package ibuffer
+  :config 
+  (define-key ibuffer-mode-map (kbd "C-o") nil) ;; unbind from default
+  )
+
 (defun my-ibuffer-stale-p (&optional noconfirm)
   ;; let's reuse the variable that's used for 'ibuffer-auto-mode
   (frame-or-buffer-changed-p 'ibuffer-auto-buffers-changed))

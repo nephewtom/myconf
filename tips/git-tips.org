@@ -62,10 +62,10 @@
 ** Delete local & remote branch: *git branch -d branch_name && git push origin --delete branch_name*
    http://stackoverflow.com/questions/2003505/how-to-delete-a-git-branch-both-locally-and-remotely
 ** Rename git branch locally and remotely
-  https://gist.github.com/lttlrck/9628955
-  git branch -m old_branch new_branch         # Rename branch locally    
-  git push origin :old_branch                 # Delete the old branch (colon does it)
-  git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote
+   https://gist.github.com/lttlrck/9628955
+   git branch -m old_branch new_branch         # Rename branch locally    
+   git push origin :old_branch                 # Delete the old branch (colon does it)
+   git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote
 
 ** Checkout remote branch: *git fetch && git checkout <branch-name>*
    http://stackoverflow.com/questions/1783405/how-to-check-out-a-remote-git-branch

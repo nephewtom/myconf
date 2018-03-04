@@ -61,6 +61,21 @@
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)
 
+;; Ibuffer formats like column width
+(setq ibuffer-formats 
+      '((mark modified read-only " "
+              (name 30 30 :left :elide) ; change: 30s were originally 18s
+              " "
+              (size 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " " filename-and-process)
+        (mark " "
+              (name 16 -1)
+              " " filename)))
+
+
+
 
 ;; --- Ibuffer extension ---
 (use-package ibuf-ext
@@ -74,8 +89,11 @@
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Custom.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Python.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*DOC.*")
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*SPP.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*temp.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*edit.*")
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*ediff-tmp.*")
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*emacs-query.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*autoload.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*spool.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*code-conver.*")
@@ -105,4 +123,4 @@
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*process")
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*diff")
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
-)
+  )

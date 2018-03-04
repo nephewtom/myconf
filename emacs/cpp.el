@@ -1,8 +1,7 @@
 ;; C/C++ Config
 
 ;; *** Keybinding ***
-;; [M-.]   xref-find-definitions (needs TAGS) : find definition at point.
-;; [M-,]   xref-pop-marker-stack : pop back after finding definition.
+
 ;; [M-o]   ff-find-other-file : switch-toggle from .h to .cpp, or jumps to file in #include ones.
 ;; [M-y]   company-complete : complete at point.
 ;; [C-;]   company-files : complete filesystem files at point.
@@ -10,10 +9,9 @@
 ;; [C-M-h] helm-cscope-find-calling-this-function : 
 ;;         fa-show : shows function signature
 
-
-
-;; --- Another solution to jump to definition
+;; --- Solution to "jump to definition", etc.
 ;; https://github.com/jacktasia/dumb-jump
+;; Put a .dumbjump with + or - (to include/exclude directories in the search)
 (use-package dumb-jump
   :bind (:map dumb-jump-mode-map
               ("M-." . dumb-jump-go)
@@ -24,9 +22,23 @@
               )
   :config
   (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-force-searcher 'ag)
   ;;(setq dumb-jump-selector 'helm)
   :ensure
   )
+
+;; Traditional TAGS
+;; [M-.]   xref-find-definitions : find definition at point.
+;; [M-,]   xref-pop-marker-stack : pop back after finding definition.
+
+;; --- Testing Flycheck include path
+;; https://stackoverflow.com/questions/24097839/how-to-add-include-path-to-flycheck-c-c-clang
+;; (add-hook 'c++-mode-hook
+;;           (lambda () (setq flycheck-clang-include-path
+;;                            (list (expand-file-name "~/tomas/SDL/sdl-imgui/imgui/")))))
+
+
+
 
 ;; --- Useful Alias
 (defun make ()
@@ -45,22 +57,24 @@
   (interactive)
   (compile "cd ~/tomas/SDL/pacman/game/; ./pacman"))
 
-
 (defun run ()
   (interactive)
   (setq program (concat "./" (file-name-sans-extension (buffer-name))))
+  (setq binprogram (concat "./bin/" (file-name-sans-extension (buffer-name))))
   (if (file-exists-p program)
       (compile program)
-    (message "%s does not exist" program)))
-
-(defun run ()
-  (interactive)
-  (run-program))
+    (if (file-exists-p binprogram)
+        (compile binprogram)
+      (message "%s does not exist" program))))
 
 (defun mr ()
   (interactive)
   (setq program (concat "./" (file-name-sans-extension (buffer-name))))
-  (compile (concat "make;" program)))
+  (setq binprogram (concat "./bin/" (file-name-sans-extension (buffer-name))))
+  (if (file-exists-p program)
+      (compile (concat "make;" program))
+    (if (file-exists-p binprogram)
+        (compile (concat "make;" binprogram)))))
 
 
 

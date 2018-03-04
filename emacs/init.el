@@ -66,3 +66,4 @@
 
 (server-start) ;; emacs server
 (message "Emacs ready with init.el !")
+(put 'narrow-to-region 'disabled nil)

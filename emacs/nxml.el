@@ -1,18 +1,18 @@
 ;; --- XML Stuff ---
-(use-package sgml
-;  :ensure t
-  :config
-  (setq sgml-basic-offset 4)
-  )
+;; (use-package sgml
+;; ;  :ensure t
+;;   :config
+;;   (setq sgml-basic-offset 4)
+;;   )
 
 (use-package nxml-mode
-;  :ensure t
+                                        ;  :ensure t
   :mode (("\\.xml$" . nxml-mode)
          ("\\.xsd$" . nxml-mode)
          ("\\.sch$" . nxml-mode)
          ("\\.rng$" . nxml-mode)
          ("\\.xslt$" . nxml-mode)
-;;         ("\\.svg$" . nxml-mode)
+         ;;         ("\\.svg$" . nxml-mode)
          ("\\.rss$" . nxml-mode)
          ("\\.wsdl$" . nxml-mode))
 

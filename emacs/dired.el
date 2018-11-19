@@ -25,11 +25,33 @@
   (require 'dired+)
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
+
+  (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "evince")
+                                       ("\\.doc\\'" "libreoffice")
+                                       ("\\.docx\\'" "libreoffice")
+                                       ("\\.ppt\\'" "libreoffice")
+                                       ("\\.pptx\\'" "libreoffice")
+                                       ("\\.xls\\'" "libreoffice")
+                                       ("\\.xlsx\\'" "libreoffice")
+                                       ("\\.jpg\\'" "pinta")
+                                       ("\\.png\\'" "pinta")
+                                       ("\\.java\\'" "idea")))
   )
+
+;; This does not seem to be loaded... Why?
+;; (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "evince")
+;;                                      ("\\.doc\\'" "libreoffice")
+;;                                      ("\\.docx\\'" "libreoffice")
+;;                                      ("\\.ppt\\'" "libreoffice")
+;;                                      ("\\.pptx\\'" "libreoffice")
+;;                                      ("\\.xls\\'" "libreoffice")
+;;                                      ("\\.xlsx\\'" "libreoffice")
+;;                                      ("\\.jpg\\'" "pinta")
+;;                                      ("\\.png\\'" "pinta")
+;;                                      ("\\.java\\'" "idea")))
 
 (use-package peep-dired
   :ensure t)
-
 
 ;; Esta función usa dired-jump para abrir en dired el buffer actual
 ;; O a través de ibuffer

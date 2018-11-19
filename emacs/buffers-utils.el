@@ -84,6 +84,7 @@
   ;; (add-to-list 'ibuffer-never-show-predicates " .*")
 
   ;; Remove the buffers that match these regexp
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*git-credential.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Minibuf-.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Echo Area.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Custom.*")

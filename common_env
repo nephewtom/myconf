@@ -1,10 +1,10 @@
-# common environment stuff for Linux & Mac OS X
+# # common environment stuff for Linux & Mac OS X
 
-function ediff() {
-    if [ "X${2}" = "X" ]; then
-	echo "USAGE: ediff <FILE 1> <FILE 2>"
-    else
-	# The --eval flag takes lisp code and evaluates it with EMACS
-	emacsclient -n --eval "(toggle-frame-maximized) (ediff-files \"$1\" \"$2\")"
-    fi
-}
+# function ediff() {
+#     if [ "X${2}" = "X" ]; then
+# 	echo "USAGE: ediff <FILE 1> <FILE 2>"
+#     else
+# 	# The --eval flag takes lisp code and evaluates it with EMACS
+# 	emacsclient -n --eval "(toggle-frame-maximized) (ediff-files \"$1\" \"$2\")"
+#     fi
+# }

@@ -1,13 +1,16 @@
 (use-package org
   :ensure
   :bind (("C-c l" . org-store-link)
+         ("C-c o" . org-open-at-point)
          :map org-mode-map
          ("C-<tab>" . nil)
          ("M-h" . nil)                                  
          ("C-<down>" . org-forward-heading-same-level) 
          ("C-<up>" . org-backward-heading-same-level)  
          ("\C-ca" . org-agenda)                     
-         ("C-c e" . org-edit-special))
+         ("C-c s" . org-edit-special)
+         :map org-src-mode-map
+         ("C-c s" . org-edit-src-exit))
   :config
   (setq org-todo-keyword-faces
         '(
@@ -19,7 +22,7 @@
           ("TRY" . (:foreground "purple" :weight bold))
           ("NOTE" . (:foreground "black" :weight bold))
           ("REVIEW" . (:foreground "purple" :weight bold))
-          ("PERMANENT" . (:foreground "red" :weight bold))
+          ("PERMANENT" . (:foreground "purple" :weight bold))
           ("CANCELLED" . (:foreground "black" :weight bold))
 
           ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
@@ -47,7 +50,13 @@
   (when org-inline-image-overlays
     (org-redisplay-inline-images)))
 
+;;(setq org-odt-category-map-alist
+;; '(("__Figure__" "Illustration" "value" "Figure" org-odt--enumerable-image-p)))
+
+
 (add-hook 'org-babel-after-execute-hook 'my/fix-inline-images)
+
+(defalias 'org-open-link 'org-open-at-point)
 
 ;; TODO: To export the current org-file to markdown,
 ;; TODO: and then export that one to HTML and preview it in browser.

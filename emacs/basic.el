@@ -13,9 +13,11 @@
 (load "~/myconf/emacs/xah-cut-copy.el")
 (load "~/myconf/emacs/compilation.el")
 (load "~/myconf/emacs/sudo.el")
-(load "~/myconf/emacs/ediff.el")
 (load "~/myconf/emacs/defalias.el")
 (load "~/myconf/emacs/old/dired.el")
+(load "~/myconf/emacs/dired.el")
+(load "~/myconf/emacs/ediff.el")
+
 
 (load "~/myconf/emacs/old/company.el")
 (company-mode)

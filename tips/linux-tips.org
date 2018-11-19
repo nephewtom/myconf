@@ -1,3 +1,7 @@
+* Check services on CentOS
+  : sudo chkconfig
+  : systemctl list-units --all
+
 * ip command
   Essential: http://packetpushers.net/linux-ip-command-ostensive-definition/
   https://www.tecmint.com/ip-command-examples/
@@ -144,3 +148,9 @@ numbers not so much.
   - The difference between ; and + is that with ; a single grep command for each file is executed.
   - Whereas with + as many files as possible are given as parameters to grep at once.
   #+END_EXAMPLE
+* Capture gif file with byzanz
+  byzanz-record --class="Slack" -d 5 -x 772 -y 443 -w 134 -h 106 -v xx.gif
+
+** To know the cursor position use:
+   xdotool getmouselocation
+   x:772 y:443 screen:0 window:77594629

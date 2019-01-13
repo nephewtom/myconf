@@ -54,7 +54,7 @@
 ;; --- Buffers
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
-;;(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
+(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
 
 ;; --- Windows
 (global-set-key [C-tab] 'other-window)
@@ -110,3 +110,12 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x C-g") 'magit-status)
 (global-set-key (kbd "M-z") 'recenter-top-bottom)
+
+(global-set-key (kbd "M-<f4>") 'kill-emacs)
+
+;; Paste with middle mouse button
+;; https://stackoverflow.com/a/13043670/316232
+
+(setq mouse-drag-copy-region t)
+(setq select-active-regions nil)
+(global-set-key [mouse-2] 'mouse-yank-at-click)

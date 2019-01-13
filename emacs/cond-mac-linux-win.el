@@ -11,9 +11,26 @@
       (interactive)
       (x-popup-menu (list '(0 0) (selected-frame))
                     (mouse-menu-bar-map))))
-
   (set-face-attribute 'default nil :height 200))
- ;; Ubuntu stuff
- (
-  (set-face-attribute 'default nil :height 140)
-  ))
+
+ ((string-equal system-type "windows-nt")
+  ;; Windows stuff
+  (set-face-attribute 'default nil :height 120)
+  ;; (setenv "PATH" (concat "%HOME%/scoop/apps/git/2.19.1.windows.1/usr/bin/;" (getenv "PATH")))
+  ;; (getenv "PATH")
+  ;; (add-to-list 'exec-path "C:/Users/etomort/scoop/apps/git/2.19.1.windows.1/usr/bin/")
+  (add-to-list 'exec-path "C:/Users/etomort/scoop/apps/cmder-full/current/vendor/git-for-windows/usr/bin/")
+  (setenv "PATH" (mapconcat #'identity exec-path path-separator))
+
+  (add-to-list 'exec-path "c:/Users/etomort/hunspell/bin/")
+  (setq ispell-program-name (locate-file "hunspell"
+                                         exec-path exec-suffixes 'file-executable-p))
+  (setq-default buffer-file-coding-system 'utf-8-unix)
+  (setq-default default-buffer-file-coding-system 'utf-8-unix)
+  (set-default-coding-systems 'utf-8-unix)
+  (prefer-coding-system 'utf-8-unix)
+  ) 
+
+ (;; Ubuntu stuff
+  (set-face-attribute 'default nil :height 140))
+ )

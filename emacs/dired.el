@@ -26,16 +26,41 @@
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
 
-  (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "evince")
-                                       ("\\.doc\\'" "libreoffice")
-                                       ("\\.docx\\'" "libreoffice")
-                                       ("\\.ppt\\'" "libreoffice")
-                                       ("\\.pptx\\'" "libreoffice")
-                                       ("\\.xls\\'" "libreoffice")
-                                       ("\\.xlsx\\'" "libreoffice")
-                                       ("\\.jpg\\'" "pinta")
-                                       ("\\.png\\'" "pinta")
-                                       ("\\.java\\'" "idea")))
+
+  (cond
+   ((string-equal system-type "darwin")
+    ;; Mac stuff
+    )
+
+   ((string-equal system-type "windows-nt")
+    ;; Windows stuff
+    (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "AcroRd32.exe")
+                                         ("\\.doc\\'" "WINWORD.EXE")
+                                         ("\\.docx\\'" "WINWORD")
+                                         ("\\.ppt\\'" "POWERPNT.EXE")
+                                         ("\\.pptx\\'" "POWERPNT.EXE")
+                                         ("\\.xls\\'" "EXCEL.EXE")
+                                         ("\\.xlsx\\'" "EXCEL.EXE")
+                                         ("\\.jpg\\'" "mspaint.exe")
+                                         ("\\.png\\'" "mspaint.exe")
+                                         ("\\.java\\'" "idea")))
+    ) 
+   (;; Ubuntu stuff
+    (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "evince")
+                                         ("\\.doc\\'" "libreoffice")
+                                         ("\\.docx\\'" "libreoffice")
+                                         ("\\.ppt\\'" "libreoffice")
+                                         ("\\.pptx\\'" "libreoffice")
+                                         ("\\.xls\\'" "libreoffice")
+                                         ("\\.xlsx\\'" "libreoffice")
+                                         ("\\.jpg\\'" "pinta")
+                                         ("\\.png\\'" "pinta")
+                                         ("\\.java\\'" "idea")))
+    )
+   )
+
+
+
   )
 
 ;; This does not seem to be loaded... Why?

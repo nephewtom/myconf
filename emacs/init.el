@@ -56,6 +56,8 @@
 (load "~/myconf/emacs/cpp.el")
 
 (load "~/myconf/emacs/keybindings.el") ;; has (require 'iso-transl)
+(load "~/myconf/emacs/cua.el")
+
 
 (setq custom-file "~/myconf/emacs/custom.el")
 (load custom-file)

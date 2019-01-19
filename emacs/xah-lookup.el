@@ -38,3 +38,4 @@
          ("0" . xah-lookup-linguee))
   )
 (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
+(global-set-key (kbd "C-h 6") 'browse-url-of-buffer)

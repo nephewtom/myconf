@@ -77,3 +77,14 @@
 ;;   "Export to XHTML using `markdown-export' and browse the resulting file."
 ;;   (interactive)
 ;;   (browse-url-of-file (markdown-export)))
+
+(defun org-toggle-link-display ()
+  "Toggle the literal or descriptive display of links."
+  (interactive)
+  (if org-descriptive-links
+      (progn (org-remove-from-invisibility-spec '(org-link))
+         (org-restart-font-lock)
+         (setq org-descriptive-links nil))
+    (progn (add-to-invisibility-spec '(org-link))
+       (org-restart-font-lock)
+       (setq org-descriptive-links t))))

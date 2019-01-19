@@ -57,8 +57,8 @@
                    (aref v 1) (aref v 2)))
        (format "cd '%s'\n" current-dir)))))
 
-(define-key dired-mode-map (kbd "C-t") 'dired-open-term)
-(define-key dired-mode-map (kbd "t") 'dired-open-term)
+;;(define-key dired-mode-map (kbd "C-t") 'dired-open-term)
+;;(define-key dired-mode-map (kbd "t") 'dired-open-term)
 
 (defun named-term (name)
   (interactive "sName: ")

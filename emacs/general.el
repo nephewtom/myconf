@@ -19,3 +19,7 @@
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
 (setq split-width-threshold nil) ;; Split window vertically by default
 ;; https://stackoverflow.com/questions/7997590/how-to-change-the-default-split-screen-direction
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(defalias 'recf 'recentf-open-files)

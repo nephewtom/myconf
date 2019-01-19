@@ -10,6 +10,7 @@
               ("j" . dired-find-file)
               ("e" . ora-ediff-files)
               ("P" . peep-dired)
+              ("<M-return>" . dired-w32-browser)
               )
   :config
   (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))

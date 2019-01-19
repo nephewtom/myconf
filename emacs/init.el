@@ -53,7 +53,7 @@
 (load "~/myconf/emacs/edit-with-emacs.el")
 (load "~/myconf/emacs/markdown.el")
 (load "~/myconf/emacs/python.el")
-(load "~/myconf/emacs/cpp.el")
+;;(load "~/myconf/emacs/cpp.el")
 
 (load "~/myconf/emacs/keybindings.el") ;; has (require 'iso-transl)
 (load "~/myconf/emacs/cua.el")

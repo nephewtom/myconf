@@ -1,0 +1,8 @@
+# Not sure if I need the stuff in ~/myconf/bin
+export PATH=$PATH:$HOME/myconf/bin
+
+export HISTTIMEFORMAT="%d/%m/%y %T "
+
+# In WSL I am using native Emacs for Windows
+export ALTERNATE_EDITOR=emacs.exe EDITOR=emacsclientw.exe VISUAL=emacsclientw.exe
+

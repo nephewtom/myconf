@@ -16,10 +16,7 @@
  ((string-equal system-type "windows-nt")
   ;; Windows stuff
   (set-face-attribute 'default nil :height 120)
-  ;; (setenv "PATH" (concat "%HOME%/scoop/apps/git/2.19.1.windows.1/usr/bin/;" (getenv "PATH")))
-  ;; (getenv "PATH")
-  ;; (add-to-list 'exec-path "C:/Users/etomort/scoop/apps/git/2.19.1.windows.1/usr/bin/")
-  (add-to-list 'exec-path "C:/Users/etomort/scoop/apps/cmder-full/current/vendor/git-for-windows/usr/bin/")
+  (add-to-list 'exec-path "c:/Users/etomort/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 
   (add-to-list 'exec-path "c:/Users/etomort/hunspell/bin/")

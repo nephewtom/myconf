@@ -1,0 +1,6 @@
+# These are for WSL
+
+alias nator='terminator -u -m &'
+alias wm='winmergeu.exe'
+alias e.='explorer.exe'
+alias rg='rg.exe'

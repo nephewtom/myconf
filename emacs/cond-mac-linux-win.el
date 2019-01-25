@@ -3,6 +3,7 @@
 (cond
  ((string-equal system-type "darwin")
   ;; Mac stuff
+  (message "System: Mac")
   (setq mac-option-modifier 'command)
   (setq mac-command-modifier 'meta)
   (global-set-key (kbd "M-w") 'kill-this-buffer) ;; this works on Mac too
@@ -15,6 +16,7 @@
 
  ((string-equal system-type "windows-nt")
   ;; Windows stuff
+  (message "System: Windows")
   (set-face-attribute 'default nil :height 120)
   (add-to-list 'exec-path "c:/Users/etomort/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
@@ -28,6 +30,7 @@
   (prefer-coding-system 'utf-8-unix)
   ) 
 
- (;; Ubuntu stuff
+ (;; Linux stuff
+  (message "System: Linux")
   (set-face-attribute 'default nil :height 140))
  )

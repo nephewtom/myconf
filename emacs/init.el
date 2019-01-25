@@ -63,6 +63,8 @@
 (load custom-file)
 (put 'scroll-left 'disabled nil)
 
+
+;;(load "~/myconf/emacs/rg.el")
 ;;(load "~/myconf/emacs/smart-line.el")
 ;;(load "~/myconf/emacs/spaceline.el")
 
@@ -70,3 +72,7 @@
 (message "Emacs ready with init.el !")
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
+;; Problem when hitting Alt+Tab on Windows
+;;(global-set-key (kbd "<Scroll_Lock>") '(lambda () (interactive) nil ))
+(global-set-key (kbd "<Scroll_Lock>") 'ignore)

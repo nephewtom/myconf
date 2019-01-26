@@ -1,8 +1,12 @@
 alias e='emacsclient -n'
 
-alias emacsq='$Emacs -mm -Q -l ~/myconf/emacs/basic.el &'
-alias emacsc='$Emacs -mm -Q -l ~/myconf/emacs/init-cpp.el &'
-alias gnus='$Emacs -mm -Q -l ~/myconf/emacs/gnus.el &'
+# Old ELX alias
+alias eq='emacs -Q -visit ~/myconf/emacs/debug-emacs.el &'
+alias ebasic='emacs -Q -l ~/myconf/emacs/basic.el &'
+alias gnus='emacs -Q -l ~/myconf/emacs/gnus.el &'
+
+
+# Review to remove
 
 alias ctrlc='xclip -selection c'
 alias ctrlv='xclip -selection c -o'

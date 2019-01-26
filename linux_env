@@ -1,6 +1,8 @@
 export PATH=$PATH:$HOME/myconf/bin
 export HISTTIMEFORMAT="%d/%m/%y %T "
-export ALTERNATE_EDITOR=emacs EDITOR=emacsclient VISUAL=emacsclient
-export NO_AT_BRIDGE=1
 
-#xsetwacom --set 21 touch off
+export ALTERNATE_EDITOR=emacs EDITOR=emacsclient VISUAL=emacsclient
+# In WSL if using native Emacs for Windows
+# export ALTERNATE_EDITOR=emacs.exe EDITOR=emacsclientw.exe VISUAL=emacsclientw.exe
+
+export NO_AT_BRIDGE=1

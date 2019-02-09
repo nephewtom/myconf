@@ -64,3 +64,7 @@
   (interactive "sName: ")
   (ansi-term "/bin/bash" name))
 
+(defun my-bash-on-windows-shell ()
+  (interactive)
+  (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
+    (shell)))

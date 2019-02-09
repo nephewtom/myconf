@@ -7,8 +7,8 @@ if [ -z "$1" ]; then
     echo "No init file provided, taking" $INIT_FILE
 else
     INIT_FILE=$1
-    echo "Emacs init file"
 fi
+echo "Profiling init file:" $INIT_FILE
 
 emacs -Q -l $PROFILE_FILE \
           --eval "(setq profile-dotemacs-file \

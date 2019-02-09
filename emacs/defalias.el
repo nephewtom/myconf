@@ -19,3 +19,6 @@
 (defalias 'diffil 'ediff-files)
 
 (defalias 'odired 'open-in-dired)
+
+(defalias 'open-in-chrome 'browse-url-of-file)
+(defalias 'oichrome 'browse-url-of-file)

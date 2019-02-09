@@ -27,7 +27,7 @@
   )
 
 ;; optional key bindings, easier than hs defaults
-(define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+;;(define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
 ;; Yafolding shows a triangule at the left... Cool!
 

@@ -3,8 +3,10 @@
   :config
   (elpy-enable)
   ;; What about these two if I use virtualenv ?
-  (elpy-use-ipython "ipython3")
-  (setq elpy-rpc-python-command "python3")
+  (setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i --simple-prompt")
+
+  (setq elpy-rpc-python-command "python3")  
   (setq elpy-rpc-backend "jedi") ;; Do I have to setq this?
 
   (when (require 'flycheck nil t)

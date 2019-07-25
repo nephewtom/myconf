@@ -51,7 +51,7 @@
 (load "~/myconf/emacs/nxml.el")
 (load "~/myconf/emacs/hideshow.el")
 (load "~/myconf/emacs/edit-with-emacs.el")
-(load "~/myconf/emacs/markdown.el")
+;;(load "~/myconf/emacs/markdown.el")
 (load "~/myconf/emacs/python.el")
 ;;(load "~/myconf/emacs/cpp.el")
 
@@ -59,8 +59,8 @@
 (load "~/myconf/emacs/cua.el")
 
 
-(setq custom-file "~/myconf/emacs/custom.el")
-(load custom-file)
+;;(setq custom-file "~/myconf/emacs/custom.el")
+;;(load custom-file) 
 (put 'scroll-left 'disabled nil)
 
 

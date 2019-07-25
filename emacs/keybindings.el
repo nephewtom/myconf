@@ -39,34 +39,45 @@
 (global-set-key (kbd "<f2>") 'xah-cut-line-or-region) ; cut
 (global-set-key (kbd "<f3>") 'xah-copy-line-or-region) ; copy
 (global-set-key (kbd "<f4>") 'yank) ; paste
+
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
-;; TODO: When switch-to-previous-buffer (f6), minibuffer shows 'Mark set',
-;; and sometimes need to hit F6 twice... 
-(global-set-key (kbd "<f7>") 'ibuffer)
-(global-set-key (kbd "<f8>") 'switch-to-previous-buffer) ;; buffer-utils.el
-(global-set-key (kbd "<f9>") 'hc-toggle-highlight-tabs)
-(global-set-key (kbd "<f11>") 'indent-buffer) ;; buffer-utils.el
-;;(global-set-key (kbd "<f12>") 'bookmark-jump)
-;;(global-set-key (kbd "<f12>") 'recompile)
+(global-set-key (kbd "<f7>") 'hc-toggle-highlight-tabs)
+(global-set-key (kbd "<f8>") 'ibuffer)
+
+;; TODO: When switch-to-previous-buffer , minibuffer shows 'Mark set',
+;; and sometimes need to hit the key twice... 
+;;(global-set-key (kbd "<fXX>") 'switch-to-previous-buffer) ;; buffer-utils.el
+(global-set-key (kbd "<f9>") 'indent-buffer) ;; buffer-utils.el
+(global-set-key (kbd "<f10>") 'kmacro-start-macro)
+(global-set-key (kbd "<f11>") 'kmacro-end-and-call-macro)
+(global-set-key (kbd "<f12>") 'recompile)
 
 
 ;; --- Buffers
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
-(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
+;(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
+
 
 ;; --- Windows
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
-(global-set-key (kbd "M-2") 'split-window-below)
-(global-set-key (kbd "M-3") 'split-window-right)
+(global-set-key (kbd "M-3") 'split-window-below)
+(global-set-key (kbd "M-2") 'split-window-right)
 (global-set-key (kbd "M-0") 'delete-window)
 
 (global-set-key [C-next] 'windmove-right)
 (global-set-key [C-prior] 'windmove-left)
 
-
+;; TODO: change by use-package
+(require 'buffer-move)
+(defun win-swap () "Swap windows using buffer-move.el" (interactive)
+       (if (null (windmove-find-other-window 'right))
+           (buf-move-left)
+         (buf-move-right)))
+(global-set-key (kbd "C-2") 'win-swap)
+`
 ;; --- Font-size & split-pane size
 (global-set-key (kbd "C-=") 'text-scale-adjust)
 
@@ -113,9 +124,16 @@
 
 (global-set-key (kbd "M-<f4>") 'kill-emacs)
 
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; --- Differenciate C-i & TAB
+;; https://stackoverflow.com/q/1792326/316232
+(setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
+;; (global-set-key (kbd "C-i") (lambda () (interactive) (message "C-i")))
+(global-set-key (kbd "<tab>") 'indent-for-tab-command)
+
 ;; Paste with middle mouse button
 ;; https://stackoverflow.com/a/13043670/316232
-
 (setq mouse-drag-copy-region t)
 (setq select-active-regions nil)
 (global-set-key [mouse-2] 'mouse-yank-at-click)

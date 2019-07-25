@@ -4,6 +4,7 @@
          ("C-c o" . org-open-at-point)
          :map org-mode-map
          ("C-<tab>" . nil)
+         ("C-i" . nil)
          ("M-h" . nil)                                  
          ("C-<down>" . org-forward-heading-same-level) 
          ("C-<up>" . org-backward-heading-same-level)  
@@ -36,6 +37,8 @@
                              (?B . (:background "#A366FF" :foreground "black" :box '(:line-width 2 :style released-button)))
                              (?C . (:background "#00CCFF" :foreground "black" :box '(:line-width 2 :style released-button)))))
 
+  (setq org-startup-truncated nil)
+  
   (eval-after-load "org"
     '(require 'ox-md nil t))
   (eval-after-load "org"

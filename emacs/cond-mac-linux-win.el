@@ -1,8 +1,6 @@
-;; --- Font size & Mac OS X stuff ---
-
 (cond
+ ;; --- Mac OS X stuff ---
  ((string-equal system-type "darwin")
-  ;; Mac stuff
   (message "System: Mac")
   (setq mac-option-modifier 'command)
   (setq mac-command-modifier 'meta)
@@ -14,8 +12,8 @@
                     (mouse-menu-bar-map))))
   (set-face-attribute 'default nil :height 200))
 
+  ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
-  ;; Windows stuff
   (message "System: Windows")
   (set-face-attribute 'default nil :height 120)
   (add-to-list 'exec-path "c:/Users/etomort/scoop/apps/git/current/usr/bin")
@@ -28,9 +26,20 @@
   (setq-default default-buffer-file-coding-system 'utf-8-unix)
   (set-default-coding-systems 'utf-8-unix)
   (prefer-coding-system 'utf-8-unix)
-  ) 
+  )
+ 
+ ;; --- Linux stuff ---
+ ((message "System: Linux")
+  (set-face-attribute 'default nil :height 140)
 
- (;; Linux stuff
-  (message "System: Linux")
-  (set-face-attribute 'default nil :height 140))
+  ;; --- Persistent sessions
+  ;; https://github.com/thierryvolpiatto/psession
+  ;; https://github.com/emacs-helm/helm/issues/2028
+  (psession-mode 1)
+
+  ;; This makes Emacs on Windows unusable...
+  ;; So set it only on Linux
+  ;; https://github.com/emacs-helm/helm/issues/1976
+  (setq x-wait-for-event-timeout nil)
+  )
  )

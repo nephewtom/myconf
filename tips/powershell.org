@@ -1,0 +1,11 @@
+* Find file
+  Get-ChildItem -Path . -Filter cygpath.exe -Recurse -ErrorAction Ignore | % {$_.FullName}
+
+** Not to recurse in sym links
+   Get-ChildItem -Path . -Filter cygpath.exe -Recurse -ErrorAction Ignore | Where { !($_.Attributes -match "ReparsePoint") } | % {$_.FullName}
+   
+   no parece que funcione...
+
+
+* Time a command 
+  

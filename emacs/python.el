@@ -1,5 +1,8 @@
 (use-package python
   :mode ("\\.py\\'" . python-mode)
+  :bind (:map  python-mode-map
+         ("C->" . python-indent-shift-right)
+         ("C-<" . python-indent-shift-left))
   :config
   (elpy-enable)
   ;; What about these two if I use virtualenv ?
@@ -16,3 +19,5 @@
 ;; I think jedi uses autocomplete-mode (AC) and not company-mode
 ;;(add-hook 'python-mode-hook 'jedi:setu)
 ;;(setq jedi:complete-on-dot t)
+
+;; (setq elpy-rpc-python-command "python2")  

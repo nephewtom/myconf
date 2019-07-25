@@ -8,9 +8,11 @@
   :ensure t
   :bind (("M-x" . helm-M-x)
          ("C-x C-f" . helm-find-files)
+         ("C-o" . helm-find-files)
          ("C-x b" . helm-mini)
+         ("C-i" . helm-mini)
          ("C-x C-b" . helm-buffers-list)
-         ("C-o" . helm-imenu)
+         ;; ("C-o" . helm-imenu)
          ("C-M-h" . helm-cscope-find-calling-this-function)
          :map helm-map
          ;; TODO: Understand what these keys are for...
@@ -18,6 +20,7 @@
          ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
          ("M-x" . helm-select-action) ; list actions using M-x again
 
+         ("C-r" . helm-ff-file-name-history)
          ("M-n" . helm-next-page)
          ("M-p" . helm-previous-page)
          ("C-v" . helm-yank-text-at-point)
@@ -26,6 +29,7 @@
          )
   
   :config
+  (setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
   (helm-mode 1)
   (setq helm-split-window-in-side-p t)
   (setq helm-split-window-inside-p t)
@@ -35,7 +39,12 @@
   ;; :ensure t
   )
 
-
 ;;(setq helm-display-header-line nil) ;; t by default
 ;;(set-face-attribute 'helm-source-header t :height 10.0)
 
+;; https://github.com/emacs-helm/helm/issues/1976
+;;
+;;(setq x-wait-for-event-timeout 0.1)
+
+;; This makes Emacs on Windows unusable...
+;;(setq x-wait-for-event-timeout nil)

@@ -37,5 +37,13 @@
          ("9" . xah-lookup-word-definition)
          ("0" . xah-lookup-linguee))
   )
+
 (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
 (global-set-key (kbd "C-h 6") 'browse-url-of-buffer)
+
+;; TODO: I only want this on WSL
+;; https://emacs.stackexchange.com/questions/47782/is-there-a-way-emacs-can-infer-is-running-on-wsl-windows-subsystem-for-linux
+(defun browse-url-tom (url &optional new-window)
+  (shell-command
+   (concat "chrome.exe " url)))
+(setq browse-url-browser-function 'browse-url-tom)

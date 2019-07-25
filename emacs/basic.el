@@ -35,6 +35,7 @@
 ;; Problem when hitting Alt+Tab on Windows
 (global-set-key (kbd "<Scroll_Lock>") 'ignore)
 
+(color-theme-monokai)
 (message "Emacs ready with basic.el !")
 ;;; basic.el ends here
 

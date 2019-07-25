@@ -27,6 +27,8 @@
 (use-package ibuffer
   :config 
   (define-key ibuffer-mode-map (kbd "C-o") nil) ;; unbind from default
+  (define-key ibuffer-mode-map (kbd "C-i") nil) ;; unbind from default
+  (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-forward-filter-group) ;; unbind from default
   )
 
 (defun my-ibuffer-stale-p (&optional noconfirm)

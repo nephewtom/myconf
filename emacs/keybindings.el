@@ -123,14 +123,19 @@
 (global-set-key (kbd "M-z") 'recenter-top-bottom)
 
 (global-set-key (kbd "M-<f4>") 'kill-emacs)
-
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-set-key (kbd "<escape>") 'keyboard-quit)
 
 ;; --- Differenciate C-i & TAB
 ;; https://stackoverflow.com/q/1792326/316232
-(setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
-;; (global-set-key (kbd "C-i") (lambda () (interactive) (message "C-i")))
-(global-set-key (kbd "<tab>") 'indent-for-tab-command)
+
+;; (setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
+;; ;; (global-set-key (kbd "C-i") (lambda () (interactive) (message "C-i")))
+;; (global-set-key (kbd "<tab>") 'indent-for-tab-command)
+
+;; Translate the problematic keys to the function key Hyper:
+(keyboard-translate ?\C-i ?\H-i)
+;; (global-set-key (kbd "<tab>") 'indent-for-tab-command)
+(define-key help-mode-map (kbd "<tab>") 'forward-button) 
 
 ;; Paste with middle mouse button
 ;; https://stackoverflow.com/a/13043670/316232

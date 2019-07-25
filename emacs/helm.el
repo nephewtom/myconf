@@ -10,11 +10,11 @@
          ("C-x C-f" . helm-find-files)
          ("C-o" . helm-find-files)
          ("C-x b" . helm-mini)
-         ("C-i" . helm-mini)
          ("H-i" . helm-mini)
          ("C-x C-b" . helm-buffers-list)
          ;; ("C-o" . helm-imenu)
          ("C-M-h" . helm-cscope-find-calling-this-function)
+         
          :map helm-map
          ;; TODO: Understand what these keys are for...
          ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
@@ -26,9 +26,12 @@
          ("C-v" . helm-yank-text-at-point)
          ("C-<up>" . previous-history-element)
          ("C-<down>" . next-history-element)
+         ("<escape>" . keyboard-escape-quit)
+         
          :map helm-find-files-map
          ("C-r" . helm-ff-file-name-history)         
-         ("C-g" . helm-ff-run-grep)         
+         ;; ("C-g" . helm-ff-run-grep)         
+         ("<escape>" . keyboard-escape-quit)         
          )
   
   :config
@@ -51,3 +54,5 @@
 
 ;; This makes Emacs on Windows unusable...
 ;;(setq x-wait-for-event-timeout nil)
+
+

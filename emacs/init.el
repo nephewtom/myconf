@@ -466,11 +466,11 @@ buffer is not visiting a file."
          ("C-x C-f" . helm-find-files)
          ("C-o" . helm-find-files)
          ("C-x b" . helm-mini)
-         ("C-i" . helm-mini)
          ("H-i" . helm-mini)
          ("C-x C-b" . helm-buffers-list)
          ;; ("C-o" . helm-imenu)
          ("C-M-h" . helm-cscope-find-calling-this-function)
+         
          :map helm-map
          ;; TODO: Understand what these keys are for...
          ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
@@ -482,9 +482,12 @@ buffer is not visiting a file."
          ("C-v" . helm-yank-text-at-point)
          ("C-<up>" . previous-history-element)
          ("C-<down>" . next-history-element)
+         ("<escape>" . keyboard-escape-quit)
+         
          :map helm-find-files-map
          ("C-r" . helm-ff-file-name-history)         
-         ("C-g" . helm-ff-run-grep)         
+         ;; ("C-g" . helm-ff-run-grep)         
+         ("<escape>" . keyboard-escape-quit)         
          )
   
   :config
@@ -507,6 +510,8 @@ buffer is not visiting a file."
 
 ;; This makes Emacs on Windows unusable...
 ;;(setq x-wait-for-event-timeout nil)
+
+
 ;; --- Move end of line / Join line
 (defun move-end-of-line-newline-and-indent ()
   "Insert a newline, then indent according to major mode."
@@ -1219,7 +1224,6 @@ by using nxml's indentation rules."
 (global-set-key (kbd "M-z") 'recenter-top-bottom)
 
 (global-set-key (kbd "M-<f4>") 'kill-emacs)
-
 (global-set-key (kbd "<escape>") 'keyboard-quit)
 
 ;; --- Differenciate C-i & TAB
@@ -1231,7 +1235,7 @@ by using nxml's indentation rules."
 
 ;; Translate the problematic keys to the function key Hyper:
 (keyboard-translate ?\C-i ?\H-i)
-(global-set-key (kbd "<tab>") 'indent-for-tab-command)
+;; (global-set-key (kbd "<tab>") 'indent-for-tab-command)
 (define-key help-mode-map (kbd "<tab>") 'forward-button) 
 
 ;; Paste with middle mouse button

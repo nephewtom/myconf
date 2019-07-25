@@ -24,7 +24,6 @@
   (setq dumb-jump-selector 'ivy)
   (setq dumb-jump-force-searcher 'ag)
   ;;(setq dumb-jump-selector 'helm)
-  :ensure
   )
 
 ;; Traditional TAGS
@@ -95,10 +94,8 @@
 (global-ede-mode 1)          ;; CEDET holdover
 (setq c-default-style "bsd") ;; BSD/Allman brackets
 (setq c-basic-offset 4)      ;; 4-space indent
-(add-hook 'c-mode-common-hook 'company-mode)
-(add-hook 'c-mode-common-hook 'flycheck-mode)
 ;;(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)
-(add-hook 'c-mode-common-hook 'linum-mode)
+
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (add-hook 'c-mode-common-hook 'hideshowvis-minor-mode)
 
@@ -174,4 +171,3 @@
 ;; https://github.com/Andersbakken/rtags
 ;; http://batsov.com/projectile/
 ;; http://oremacs.com/2017/03/28/emacs-cpp-ide/
-

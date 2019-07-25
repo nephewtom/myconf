@@ -11,6 +11,7 @@
          ("C-o" . helm-find-files)
          ("C-x b" . helm-mini)
          ("C-i" . helm-mini)
+         ("H-i" . helm-mini)
          ("C-x C-b" . helm-buffers-list)
          ;; ("C-o" . helm-imenu)
          ("C-M-h" . helm-cscope-find-calling-this-function)
@@ -20,12 +21,14 @@
          ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
          ("M-x" . helm-select-action) ; list actions using M-x again
 
-         ("C-r" . helm-ff-file-name-history)
          ("M-n" . helm-next-page)
          ("M-p" . helm-previous-page)
          ("C-v" . helm-yank-text-at-point)
          ("C-<up>" . previous-history-element)
          ("C-<down>" . next-history-element)
+         :map helm-find-files-map
+         ("C-r" . helm-ff-file-name-history)         
+         ("C-g" . helm-ff-run-grep)         
          )
   
   :config

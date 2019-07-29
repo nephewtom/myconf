@@ -15,7 +15,7 @@
   ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
-  (set-face-attribute 'default nil :height 120)
+  (set-face-attribute 'default nil :family "Consolas" :height 140)
   (add-to-list 'exec-path "c:/Users/etomort/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 
@@ -30,7 +30,7 @@
  
  ;; --- Linux stuff ---
  ((message "System: Linux")
-  (set-face-attribute 'default nil :height 140)
+  (set-face-attribute 'default nil :family "Consolas" :height 140)
 
   ;; --- Persistent sessions
   ;; https://github.com/thierryvolpiatto/psession

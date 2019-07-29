@@ -113,7 +113,7 @@
   ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
-  (set-face-attribute 'default nil :height 120)
+  (set-face-attribute 'default nil :family "Consolas" :height 140)
   (add-to-list 'exec-path "c:/Users/etomort/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 
@@ -486,6 +486,7 @@ buffer is not visiting a file."
          
          :map helm-find-files-map
          ("C-r" . helm-ff-file-name-history)         
+         ("C-j" . helm-ff-file-name-history)         
          ;; ("C-g" . helm-ff-run-grep)         
          ("<escape>" . keyboard-escape-quit)         
          )
@@ -848,7 +849,6 @@ buffer is not visiting a file."
          ("C-c o" . org-open-at-point)
          :map org-mode-map
          ("C-<tab>" . nil)
-         ("C-i" . nil)
          ("M-h" . nil)                                  
          ("C-<down>" . org-forward-heading-same-level) 
          ("C-<up>" . org-backward-heading-same-level)  
@@ -1158,7 +1158,7 @@ by using nxml's indentation rules."
 ;; --- Buffers
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
-;(global-set-key (kbd "C-o") 'switch-to-previous-buffer)
+(global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 
 ;; --- Windows
@@ -1275,6 +1275,10 @@ by using nxml's indentation rules."
 (recentf-mode 1)
 (setq recentf-max-menu-items 10)
 (defalias 'recf 'recentf-open-files)
+
+;; --- Font-size & split-pane size
+;; For some reason this get disabled if I put it in keybinding.el
+(global-set-key (kbd "C-=") 'text-scale-adjust)
 
 ;; --- Custom variables
 

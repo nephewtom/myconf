@@ -22,6 +22,10 @@
 (setq recentf-max-menu-items 10)
 (defalias 'recf 'recentf-open-files)
 
+;; --- Font-size & split-pane size
+;; For some reason this get disabled if I put it in keybinding.el
+(global-set-key (kbd "C-=") 'text-scale-adjust)
+
 ;; --- Custom variables
 
 (custom-set-variables

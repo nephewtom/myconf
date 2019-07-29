@@ -29,8 +29,9 @@
 (menu-bar-mode -1) ;; removes tool-bar
 (scroll-bar-mode t)
 (setq default-directory "~/")
-(setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
-                                                      (buffer-file-name) "%b"))))
+(setq frame-title-format '("tom@" (:eval (format "%s" system-type))
+                           ": "(:eval (if (buffer-file-name)
+                                          (buffer-file-name) "%b"))))
 
 ;; (setq initial-frame-alist
 ;;       '((background-color . "honeydew")))
@@ -128,7 +129,7 @@
  
  ;; --- Linux stuff ---
  ((message "System: Linux")
-  (set-face-attribute 'default nil :height 140)
+  (set-face-attribute 'default nil :family "Consolas" :height 140)
 
   ;; --- Persistent sessions
   ;; https://github.com/thierryvolpiatto/psession

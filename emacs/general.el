@@ -4,8 +4,9 @@
 (menu-bar-mode -1) ;; removes tool-bar
 (scroll-bar-mode t)
 (setq default-directory "~/")
-(setq frame-title-format '("nephewtom" ": "(:eval (if (buffer-file-name)
-                                                      (buffer-file-name) "%b"))))
+(setq frame-title-format '("tom@" (:eval (format "%s" system-type))
+                           ": "(:eval (if (buffer-file-name)
+                                          (buffer-file-name) "%b"))))
 
 ;; (setq initial-frame-alist
 ;;       '((background-color . "honeydew")))

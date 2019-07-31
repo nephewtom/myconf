@@ -29,9 +29,10 @@
          ("<escape>" . keyboard-escape-quit)
          
          :map helm-find-files-map
-         ("C-r" . helm-ff-file-name-history)         
+         ("C-r" . helm-ff-file-name-history)
+         ("C-j" . helm-ff-run-find-sh-command)
          ;; ("C-g" . helm-ff-run-grep)         
-         ("<escape>" . keyboard-escape-quit)         
+         ("<escape>" . keyboard-escape-quit)
          )
   
   :config

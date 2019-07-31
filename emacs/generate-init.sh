@@ -2,7 +2,7 @@
 # This script will concatenate all the desired .el files into init.el
 
 FILES="init.begin.el
-general.el
+bars-and-title.el
 column-and-line-numbers.el
 paren-indent.el
 calendar.el
@@ -33,4 +33,5 @@ cua.el
 init.end.el"
 
 rm -f init.el 
-echo $FILES | sed 's/ /\n/g' | while read f; do echo $f; cat $f >> init.el; done 
+echo $FILES | sed 's/ /\n/g' | while read f; do echo "Adding "$f ; cat $f >> init.el; done 
+echo -e "\nNew init.el generated."

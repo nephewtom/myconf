@@ -1,4 +1,4 @@
-;; --- General
+;; --- Bars & title
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
 (menu-bar-mode -1) ;; removes tool-bar

@@ -23,7 +23,7 @@
   (require 'use-package))
 (require 'diminish)
 (require 'bind-key)
-;; --- General
+;; --- Bars & title
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
 (menu-bar-mode -1) ;; removes tool-bar
@@ -486,10 +486,10 @@ buffer is not visiting a file."
          ("<escape>" . keyboard-escape-quit)
          
          :map helm-find-files-map
-         ("C-r" . helm-ff-file-name-history)         
-         ("C-j" . helm-ff-file-name-history)         
+         ("C-r" . helm-ff-file-name-history)
+         ("C-j" . helm-ff-run-find-sh-command)
          ;; ("C-g" . helm-ff-run-grep)         
-         ("<escape>" . keyboard-escape-quit)         
+         ("<escape>" . keyboard-escape-quit)
          )
   
   :config
@@ -1288,11 +1288,8 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (lorem-ipsum flymd zenburn-theme yaml-mode yafolding xah-lookup wgrep web-beautify use-package typing transpose-frame tabbar sx switch-window strace-mode stem sqlplus sql-indent speed-type spaceline-all-the-icons smart-mode-line-powerline-theme scss-mode rpm-spec-mode rainbow-mode rainbow-delimiters racket-mode pyenv-mode py-autopep8 puppet-mode psession projectile processing-snippets processing-mode prettier-js peep-dired paredit pandoc-mode org2blog org-pandoc openwith nhexl-mode move-text monokai-theme micgoline mediawiki markdown-toc magit love-minor-mode log4j-mode load-theme-buffer-local lispy json-mode jedi impatient-mode hl-defined highlight-chars hideshowvis helm-swoop helm-smex helm-gtags helm-etags-plus helm-descbinds helm-css-scss helm-company groovy-mode groovy-imports google-this google-c-style gnuplot-mode ggtags function-args fold-dwim flymake-json flycheck-irony flycheck-color-mode-line flx fill-column-indicator exec-path-from-shell evil etags-select esup elpy elisp-slime-nav edit-server dumb-jump doremi-frm doremi-cmd direx dired-toggle-sudo dired+ diminish diff-hl counsel company-irony company-c-headers color-theme-monokai color-theme-emacs-revert-theme color-theme-eclipse color-theme-buffer-local cmake-mode cmake-ide buffer-move better-defaults bash-completion base16-theme awk-it auto-complete-nxml auto-complete-clang auto-complete-c-headers aggressive-indent))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
+
+ 
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.

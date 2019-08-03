@@ -6,6 +6,8 @@
 (global-hl-line-mode t) ;; highlight current line
 (make-variable-buffer-local 'global-hl-line-mode)
 
+(load-theme 'monokai t)
+
 ;; current line highlighted color
 (set-face-background hl-line-face "#404040")
 

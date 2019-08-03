@@ -43,4 +43,3 @@
  ;; If there is more than one, they won't work right.
  )
 
-(color-theme-monokai)

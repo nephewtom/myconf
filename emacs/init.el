@@ -1,5 +1,11 @@
-;; Provide timestamp to *Messages* logs
+];; Provide timestamp to *Messages* logs
 (load "~/myconf/emacs/log.el")
+
+;; Backup files: https://www.johndcook.com/blog/emacs_windows/#backup
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 ;; Try to speed up start-up
 (setq-default gc-cons-threshold (* 100 1024 1024))
@@ -8,21 +14,39 @@
 ;; Follow git symlinks
 (setq vc-follow-symlinks t)
 
+
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+; activate all the packages (in particular autoloads)
 (package-initialize)
 
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; list the packages you want
+(setq package-list '(use-package diminish edit-server buffer-move monokai-theme))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
+
+(use-package diminish
+  :ensure t)
+
+(use-package bind-key
+  :ensure t)
+
+; set the path for manually installed packages
+(add-to-list 'load-path "~/.emacs.d/packages")
+
 ;; --- Bars & title
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
@@ -60,11 +84,13 @@
 (global-hl-line-mode t) ;; highlight current line
 (make-variable-buffer-local 'global-hl-line-mode)
 
+(load-theme 'monokai t)
+
 ;; current line highlighted color
 (set-face-background hl-line-face "#404040")
 
 ;; region highlight color
-(set-face-attribute 'region nil :background "#848000") ;;
+(set-face-attribute 'region nil :background "#848000")
 
 ;; fringe color (between line numbers and buffer)
 (set-face-attribute 'fringe nil :background "#505050")
@@ -287,7 +313,6 @@ buffer is not visiting a file."
 ;; --- Dired ---
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
-
 (use-package dired
   :bind (:map dired-mode-map
               ("f" . dired-find-alternate-file)
@@ -660,9 +685,7 @@ buffer is not visiting a file."
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
   )
 ;; --- Elisp related
-(use-package hl-defined
-  :ensure t)
-
+(require 'hl-defined)
 (add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
 
 ;; http://emacsredux.com/blog/2014/06/18/quickly-find-emacs-lisp-sources/
@@ -1024,6 +1047,7 @@ by using nxml's indentation rules."
   (add-hook 'prog-mode-hook #'hs-minor-mode)
   (add-hook 'nxml-mode-hook 'hs-minor-mode)
   (add-hook 'html-mode-hook 'hs-minor-mode)
+  (require 'hideshowvis)
   :bind (:map hs-minor-mode-map
               ("C-c @ C-h" . nil)
               ("C-c @ C-s" . nil)
@@ -1288,11 +1312,12 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
- 
+ '(package-selected-packages
+   (quote
+    (xah-lookup use-package peep-dired move-text monokai-theme helm flycheck edit-server diminish company buffer-move auto-complete-nxml))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-(color-theme-monokai)

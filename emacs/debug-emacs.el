@@ -11,4 +11,3 @@
 ;; Disable all version control
 (setq vc-handled-backends nil)
 
-(color-theme-monokai)

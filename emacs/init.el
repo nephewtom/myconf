@@ -1,4 +1,5 @@
-];; Provide timestamp to *Messages* logs
+;; --- FILE:  init.begin.el
+;; Provide timestamp to *Messages* logs
 (load "~/myconf/emacs/log.el")
 
 ;; Backup files: https://www.johndcook.com/blog/emacs_windows/#backup
@@ -46,7 +47,7 @@
 
 ; set the path for manually installed packages
 (add-to-list 'load-path "~/.emacs.d/packages")
-
+;; --- FILE:  bars-and-title.el
 ;; --- Bars & title
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
@@ -76,6 +77,7 @@
 ;; since Emacs gets terribly slow
 ;; http://shallowsky.com/blog/linux/editors/no-emacs-version-control.html
 (setq vc-handled-backends nil)
+;; --- FILE:  column-and-line-numbers.el
 ;; --- Columns, line-numbers, etc.
 (column-number-mode t)
 (global-linum-mode t) ;; line numbers in all buffers
@@ -90,11 +92,12 @@
 (set-face-background hl-line-face "#404040")
 
 ;; region highlight color
-(set-face-attribute 'region nil :background "#848000")
+(set-face-attribute 'region nil :background "#848000") ;;
 
 ;; fringe color (between line numbers and buffer)
 (set-face-attribute 'fringe nil :background "#505050")
 
+;; --- FILE:  paren-indent.el
 ;; --- Paren stuff
 (show-paren-mode 1)
 (electric-pair-mode 1)
@@ -108,6 +111,7 @@
   (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
+;; --- FILE:  calendar.el
 (setq calendar-week-start-day 1)
 
 ;; Display week number
@@ -123,6 +127,7 @@
       (propertize "Wk"                  ; or e.g. "KW" in Germany
                   'font-lock-face 'font-lock-keyword-face))
 
+;; --- FILE:  cond-mac-linux-win.el
 (cond
  ;; --- Mac OS X stuff ---
  ((string-equal system-type "darwin")
@@ -168,6 +173,7 @@
   (setq x-wait-for-event-timeout nil)
   )
  )
+;; --- FILE:  duplicate-line.el
 ;; Duplicate line
 (defun duplicate-line (ARG)
   "Duplicate current line, ARG, leaving point in lower line."
@@ -204,6 +210,7 @@
   ;; put the point in the lowest line and return
   (next-line ARG))
 
+;; --- FILE:  xah-cut-copy.el
 ;; --- Cut, Copy, Paste from Xah Lee functions   ---
 ;; Check http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
 (defun xah-cut-line-or-region ()
@@ -262,6 +269,7 @@ Version 2017-07-08"
     (end-of-line)
     (forward-char)
             (message "line copied")))))))
+;; --- FILE:  compilation.el
 ;; Helper for compilation. Close the compilation window if there was no error at all.
 (defun compilation-exit-autoclose (status code msg)
   ;; If M-x compile exists with a 0
@@ -274,6 +282,7 @@ Version 2017-07-08"
   (cons msg code))
 ;; Specify my function (maybe I should have done a lambda function)
 (setq compilation-exit-message-function 'compilation-exit-autoclose)
+;; --- FILE:  sudo.el
 ;; From: http://emacsredux.com/blog/2013/04/21/edit-files-as-root/
 (defun sudo-edit (&optional arg)
   "Edit currently visited file as root.
@@ -286,6 +295,7 @@ buffer is not visiting a file."
       (find-file (concat "/sudo:root@localhost:"
                          (ido-read-file-name "Find file(as root): ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+;; --- FILE:  defalias.el
 ;; defalias for Fast M-x
 ;; http://ergoemacs.org/emacs/emacs_alias.html
 
@@ -310,9 +320,11 @@ buffer is not visiting a file."
 
 (defalias 'open-in-chrome 'browse-url-of-file)
 (defalias 'oichrome 'browse-url-of-file)
+;; --- FILE:  dired.el
 ;; --- Dired ---
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
+
 (use-package dired
   :bind (:map dired-mode-map
               ("f" . dired-find-alternate-file)
@@ -429,6 +441,7 @@ buffer is not visiting a file."
   (setq find-ls-option '("-exec ls -lSr {} + | cut -d ' ' -f5-" . "-lSr"))
   (find-dired dir args)
   (setq find-ls-option '("-ls" . "-dilsb")))
+;; --- FILE:  ediff.el
 ;; https://oremacs.com/2017/03/18/dired-ediff/
 ;; -*- lexical-binding: t -*-
 (defun ora-ediff-files ()
@@ -480,6 +493,7 @@ buffer is not visiting a file."
 
 (add-hook 'ediff-before-setup-hook #'my-store-pre-ediff-winconfig)
 (add-hook 'ediff-quit-hook #'my-restore-pre-ediff-winconfig)
+;; --- FILE:  helm.el
 ;; --- Helm ---
 ;; * helm-find: C-x c /
 ;; * To find from helm-find-files (C-x C-f), press: C-c /
@@ -539,6 +553,7 @@ buffer is not visiting a file."
 ;;(setq x-wait-for-event-timeout nil)
 
 
+;; --- FILE:  movement.el
 ;; --- Move end of line / Join line
 (defun move-end-of-line-newline-and-indent ()
   "Insert a newline, then indent according to major mode."
@@ -552,6 +567,7 @@ buffer is not visiting a file."
 (use-package move-text
   :ensure t
   :config (move-text-default-bindings))
+;; --- FILE:  buffers-utils.el
 (defun switch-to-previous-buffer ()
   "Swap to previous buffer."
   (interactive)
@@ -575,16 +591,22 @@ buffer is not visiting a file."
 
 
 ;; --- Ibuffer ----
-;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
-;; https://emacs.stackexchange.com/questions/2177/how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers/2179?noredirect=1#comment52199_2179
-
 (use-package ibuffer
   :config 
   (define-key ibuffer-mode-map (kbd "C-o") nil) ;; unbind from default
   (define-key ibuffer-mode-map (kbd "C-i") nil) ;; unbind from default
+  (define-key ibuffer-mode-map (kbd "M-h") 'toggle-ibuffer-groups) ;; unbind from default
   (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-forward-filter-group) ;; unbind from default
   )
 
+
+;; how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers
+;; Not using this one
+;; https://emacs.stackexchange.com/a/2178/6957
+;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
+
+;; Using this one
+;; https://emacs.stackexchange.com/a/2179/6957
 (defun my-ibuffer-stale-p (&optional noconfirm)
   ;; let's reuse the variable that's used for 'ibuffer-auto-mode
   (frame-or-buffer-changed-p 'ibuffer-auto-buffers-changed))
@@ -596,41 +618,6 @@ buffer is not visiting a file."
   (auto-revert-mode 1))
 
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-auto-revert-setup)
-
-
-(setq ibuffer-saved-filter-groups
-      '(("home"
-	 ("myconf" (or (filename . "myconf")
-		       (filename . "emacs-config")))
-         ("SMIP" (filename . "smip"))
-	 ("Org" (or (mode . org-mode)
-		    (filename . "OrgMode")))
-         ("playground" (filename . "playground"))
-         ("/usr/include/" (filename . "/usr/include/"))
-         ("SDL" (filename . "tomas/SDL/"))
-         )))
-
-(add-hook 'ibuffer-mode-hook
-	  '(lambda ()
-	     (ibuffer-switch-to-saved-filter-groups "home")))
-
-(setq ibuffer-expert t)
-(setq ibuffer-show-empty-filter-groups nil)
-
-;; Ibuffer formats like column width
-(setq ibuffer-formats 
-      '((mark modified read-only " "
-              (name 30 30 :left :elide) ; change: 30s were originally 18s
-              " "
-              (size 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
-              " " filename-and-process)
-        (mark " "
-              (name 16 -1)
-              " " filename)))
-
-
 
 
 ;; --- Ibuffer extension ---
@@ -684,8 +671,47 @@ buffer is not visiting a file."
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*diff")
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
   )
+
+;; From: http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
+
+
+(defun my-ibuffer-saved-groups ()
+  (setq ibuffer-saved-filter-groups
+        '(("home"
+           ("myconf" (or (filename . "myconf")
+                         (filename . "emacs-config")))
+           ("SMIP" (filename . "smip"))
+           ("Org" (or (mode . org-mode)
+                      (filename . "OrgMode")))
+           ("playground" (filename . "playground"))
+           ("/usr/include/" (filename . "/usr/include/"))
+           ("SDL" (filename . "tomas/SDL/"))
+           )))
+  (ibuffer-switch-to-saved-filter-groups "home" ))
+
+
+(add-hook 'ibuffer-mode-hook 'my-ibuffer-saved-groups)
+
+
+(setq ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil)
+
+;; Ibuffer formats like column width
+(setq ibuffer-formats 
+      '((mark modified read-only " "
+              (name 30 30 :left :elide) ; change: 30s were originally 18s
+              " "
+              (size 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " " filename-and-process)
+        (mark " "
+              (name 16 -1)
+              " " filename)))
+;; --- FILE:  elisp.el
 ;; --- Elisp related
 (require 'hl-defined)
+
 (add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
 
 ;; http://emacsredux.com/blog/2014/06/18/quickly-find-emacs-lisp-sources/
@@ -694,10 +720,12 @@ buffer is not visiting a file."
 (define-key 'help-command (kbd "C-k") 'find-function-on-key)
 (define-key 'help-command (kbd "C-v") 'find-variable)
 
+;; --- FILE:  flycheck.el
 (use-package flycheck
   :ensure t
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+;; --- FILE:  company.el
 ;; --- Company ---
 (use-package company
   :init
@@ -718,6 +746,7 @@ buffer is not visiting a file."
               :map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
+;; --- FILE:  xah-lookup.el
 ;; --- Extend xah-lookup with spanish & alias ---
 (use-package xah-lookup
   :ensure t
@@ -767,6 +796,7 @@ buffer is not visiting a file."
   (shell-command
    (concat "chrome.exe " url)))
 (setq browse-url-browser-function 'browse-url-tom)
+;; --- FILE:  magit.el
 
 ;; --- Git ---
 (use-package magit
@@ -797,6 +827,7 @@ buffer is not visiting a file."
 (defun magit-staging ()
   (interactive)
   (magit-mode-setup #'magit-staging-mode))
+;; --- FILE:  term.el
 ;; --- terminal stuff ---
 (use-package term
   :init
@@ -867,6 +898,7 @@ buffer is not visiting a file."
   (interactive)
   (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
     (shell)))
+;; --- FILE:  org-mode.el
 (use-package org
   :ensure
   :bind (("C-c l" . org-store-link)
@@ -959,6 +991,7 @@ buffer is not visiting a file."
     (progn (add-to-invisibility-spec '(org-link))
        (org-restart-font-lock)
        (setq org-descriptive-links t))))
+;; --- FILE:  nxml.el
 ;; --- XML Stuff ---
 ;; (use-package sgml
 ;; ;  :ensure t
@@ -1041,13 +1074,13 @@ by using nxml's indentation rules."
     (add-hook 'which-func-functions 'nxml-where t t)))
 
 (add-hook 'find-file-hook 'xml-find-file-hook t)
+;; --- FILE:  hideshow.el
 ;; --- Hideshow ---
 (use-package hideshow
   :init
   (add-hook 'prog-mode-hook #'hs-minor-mode)
   (add-hook 'nxml-mode-hook 'hs-minor-mode)
   (add-hook 'html-mode-hook 'hs-minor-mode)
-  (require 'hideshowvis)
   :bind (:map hs-minor-mode-map
               ("C-c @ C-h" . nil)
               ("C-c @ C-s" . nil)
@@ -1085,6 +1118,7 @@ by using nxml's indentation rules."
 ;;     (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
 ;;     (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
 ;;     map))
+;; --- FILE:  edit-with-emacs.el
 ;; --- Edit with Emacs ---
 
 ;; Stuff to edit content in web forms via "Edit with Emacs" Chrome plugin
@@ -1101,6 +1135,7 @@ by using nxml's indentation rules."
 
 ;; When using firefox plugin itsalltext with Emacs, finish editing on Emacs with C-x #
 ;; http://psung.blogspot.com.es/2009/05/using-itsalltext-with-emacsemacsclient.html
+;; --- FILE:  python.el
 (use-package python
   :mode ("\\.py\\'" . python-mode)
   :bind (:map  python-mode-map
@@ -1124,6 +1159,7 @@ by using nxml's indentation rules."
 ;;(setq jedi:complete-on-dot t)
 
 ;; (setq elpy-rpc-python-command "python2")  
+;; --- FILE:  keybindings.el
 (require 'iso-transl) ;; Make dead keys work
 
 ;; NOTE: Do not bind C-y & M-w to anything.
@@ -1268,6 +1304,7 @@ by using nxml's indentation rules."
 (setq mouse-drag-copy-region t)
 (setq select-active-regions nil)
 (global-set-key [mouse-2] 'mouse-yank-at-click)
+;; --- FILE:  cua.el
 (defun special-c-return-in-dired ()
   (interactive)
   (if (derived-mode-p 'dired-mode)
@@ -1277,6 +1314,7 @@ by using nxml's indentation rules."
 
 (define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
 
+;; --- FILE:  init.end.el
 
 ;;(setq custom-file "~/myconf/emacs/custom.el")
 ;;(load custom-file) 
@@ -1314,10 +1352,11 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (xah-lookup use-package peep-dired move-text monokai-theme helm flycheck edit-server diminish company buffer-move auto-complete-nxml))))
+    (lorem-ipsum flymd zenburn-theme yaml-mode yafolding xah-lookup wgrep web-beautify use-package typing transpose-frame tabbar sx switch-window strace-mode stem sqlplus sql-indent speed-type spaceline-all-the-icons smart-mode-line-powerline-theme scss-mode rpm-spec-mode rainbow-mode rainbow-delimiters racket-mode pyenv-mode py-autopep8 puppet-mode psession projectile processing-snippets processing-mode prettier-js peep-dired paredit pandoc-mode org2blog org-pandoc openwith nhexl-mode move-text monokai-theme micgoline mediawiki markdown-toc magit love-minor-mode log4j-mode load-theme-buffer-local lispy json-mode jedi impatient-mode hl-defined highlight-chars hideshowvis helm-swoop helm-smex helm-gtags helm-etags-plus helm-descbinds helm-css-scss helm-company groovy-mode groovy-imports google-this google-c-style gnuplot-mode ggtags function-args fold-dwim flymake-json flycheck-irony flycheck-color-mode-line flx fill-column-indicator exec-path-from-shell evil etags-select esup elpy elisp-slime-nav edit-server dumb-jump doremi-frm doremi-cmd direx dired-toggle-sudo dired+ diminish diff-hl counsel company-irony company-c-headers color-theme-monokai color-theme-emacs-revert-theme color-theme-eclipse color-theme-buffer-local cmake-mode cmake-ide buffer-move better-defaults bash-completion base16-theme awk-it auto-complete-nxml auto-complete-clang auto-complete-c-headers aggressive-indent))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+

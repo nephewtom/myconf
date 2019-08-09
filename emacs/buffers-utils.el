@@ -21,16 +21,22 @@
 
 
 ;; --- Ibuffer ----
-;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
-;; https://emacs.stackexchange.com/questions/2177/how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers/2179?noredirect=1#comment52199_2179
-
 (use-package ibuffer
   :config 
   (define-key ibuffer-mode-map (kbd "C-o") nil) ;; unbind from default
   (define-key ibuffer-mode-map (kbd "C-i") nil) ;; unbind from default
+  (define-key ibuffer-mode-map (kbd "M-h") 'toggle-ibuffer-groups) ;; unbind from default
   (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-forward-filter-group) ;; unbind from default
   )
 
+
+;; how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers
+;; Not using this one
+;; https://emacs.stackexchange.com/a/2178/6957
+;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
+
+;; Using this one
+;; https://emacs.stackexchange.com/a/2179/6957
 (defun my-ibuffer-stale-p (&optional noconfirm)
   ;; let's reuse the variable that's used for 'ibuffer-auto-mode
   (frame-or-buffer-changed-p 'ibuffer-auto-buffers-changed))
@@ -42,41 +48,6 @@
   (auto-revert-mode 1))
 
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-auto-revert-setup)
-
-
-(setq ibuffer-saved-filter-groups
-      '(("home"
-	 ("myconf" (or (filename . "myconf")
-		       (filename . "emacs-config")))
-         ("SMIP" (filename . "smip"))
-	 ("Org" (or (mode . org-mode)
-		    (filename . "OrgMode")))
-         ("playground" (filename . "playground"))
-         ("/usr/include/" (filename . "/usr/include/"))
-         ("SDL" (filename . "tomas/SDL/"))
-         )))
-
-(add-hook 'ibuffer-mode-hook
-	  '(lambda ()
-	     (ibuffer-switch-to-saved-filter-groups "home")))
-
-(setq ibuffer-expert t)
-(setq ibuffer-show-empty-filter-groups nil)
-
-;; Ibuffer formats like column width
-(setq ibuffer-formats 
-      '((mark modified read-only " "
-              (name 30 30 :left :elide) ; change: 30s were originally 18s
-              " "
-              (size 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
-              " " filename-and-process)
-        (mark " "
-              (name 16 -1)
-              " " filename)))
-
-
 
 
 ;; --- Ibuffer extension ---
@@ -130,3 +101,50 @@
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*diff")
   (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
   )
+
+;; From: http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
+
+
+(defun my-ibuffer-saved-groups ()
+  (setq ibuffer-saved-filter-groups
+        '(("home"
+           ("myconf" (or (filename . "myconf")
+                         (filename . "emacs-config")))
+           ("SMIP" (filename . "smip"))
+           ("Org" (or (mode . org-mode)
+                      (filename . "OrgMode")))
+           ("playground" (filename . "playground"))
+           ("/usr/include/" (filename . "/usr/include/"))
+           ("SDL" (filename . "tomas/SDL/"))
+           )
+          ("default")
+          ))
+  (ibuffer-switch-to-saved-filter-groups "home" ))
+
+
+(add-hook 'ibuffer-mode-hook 'my-ibuffer-saved-groups)
+
+
+(setq ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil)
+
+;; Ibuffer formats like column width
+(define-ibuffer-column vtime
+  (:name "Time" :inline t)
+  (string ?a ?b ?c ?d)
+  )
+
+(setq ibuffer-formats 
+      '((mark modified read-only " "
+              (name 30 30 :left :elide) ; change: 30s were originally 18s
+              " "
+              (vtime 4 4 :left)
+              " "
+              (size 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+
+              " " filename-and-process)
+        (mark " "
+              (name 16 -1)
+              " " filename)))

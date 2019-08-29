@@ -26,6 +26,18 @@
   
   (put 'xah-lookup-linguee 'xah-lookup-url  "http://www.linguee.es/espanol-ingles/search?source=auto&query=word02051")
   (put 'xah-lookup-linguee 'xah-lookup-browser-function xah-lookup-browser-function)
+
+  (defun xah-google-translate (&optional *word)
+    "Lookup definition of current *WORD or text selection in URL https://translate.google.com/?source=gtx_c#auto/es/"
+    (interactive)
+    (xah-lookup-word-on-internet
+     *word
+     (get 'xah-google-translate 'xah-lookup-url )
+     (get 'xah-google-translate 'xah-lookup-browser-function )))
+  
+  (put 'xah-google-translate 'xah-lookup-url  "https://translate.google.com/?source=gtx_c#auto/es/word02051")
+  (put 'xah-google-translate 'xah-lookup-browser-function xah-lookup-browser-function)
+
   
   (defalias 'xlgoogle 'xah-lookup-google) ;; M-x xlg
   (defalias 'xlwikipedia 'xah-lookup-wikipedia) ;; M-x xlw
@@ -35,7 +47,7 @@
          ("7" . browse-url-at-point)
          ("8" . xah-lookup-google)
          ("9" . xah-lookup-word-definition)
-         ("0" . xah-lookup-linguee))
+         ("0" . xah-google-translate))
   )
 
 (global-set-key (kbd "<f1> 7") 'browse-url-at-point)

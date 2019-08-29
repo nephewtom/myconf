@@ -21,6 +21,7 @@ elisp.el
 flycheck.el
 company.el
 xah-lookup.el
+google-translate.el
 magit.el
 term.el
 org-mode.el

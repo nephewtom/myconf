@@ -42,7 +42,7 @@
 
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
-(global-set-key (kbd "<f7>") 'hc-toggle-highlight-tabs)
+(global-set-key (kbd "<f7>") 'whitespace-mode)
 (global-set-key (kbd "<f8>") 'ibuffer)
 
 ;; TODO: When switch-to-previous-buffer , minibuffer shows 'Mark set',

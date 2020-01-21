@@ -320,6 +320,9 @@ buffer is not visiting a file."
 
 (defalias 'open-in-chrome 'browse-url-of-file)
 (defalias 'oichrome 'browse-url-of-file)
+
+(defun start-windows-explorer () (interactive) (shell-command "explorer.exe ."))
+(defalias 'wexp 'start-windows-explorer)
 ;; --- FILE:  dired.el
 ;; --- Dired ---
 ;; TODO: Sort dired by time date as default 
@@ -686,7 +689,9 @@ buffer is not visiting a file."
            ("playground" (filename . "playground"))
            ("/usr/include/" (filename . "/usr/include/"))
            ("SDL" (filename . "tomas/SDL/"))
-           )))
+           )
+          ("default")
+          ))
   (ibuffer-switch-to-saved-filter-groups "home" ))
 
 
@@ -697,13 +702,21 @@ buffer is not visiting a file."
 (setq ibuffer-show-empty-filter-groups nil)
 
 ;; Ibuffer formats like column width
+(define-ibuffer-column vtime
+  (:name "Time" :inline t)
+  (string ?a ?b ?c ?d)
+  )
+
 (setq ibuffer-formats 
       '((mark modified read-only " "
               (name 30 30 :left :elide) ; change: 30s were originally 18s
               " "
+              (vtime 4 4 :left)
+              " "
               (size 9 -1 :right)
               " "
               (mode 16 16 :left :elide)
+
               " " filename-and-process)
         (mark " "
               (name 16 -1)
@@ -1074,6 +1087,61 @@ by using nxml's indentation rules."
     (add-hook 'which-func-functions 'nxml-where t t)))
 
 (add-hook 'find-file-hook 'xml-find-file-hook t)
+;; --- FILE:  markdown.el
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\.md$" . markdown-mode)
+         ("\\.md.html$" . markdown-mode)
+         ("\\.text$" . markdown-mode)
+         ("\\.markdown$" . markdown-mode))
+
+  :bind ( ;;("C-M-m" . livedown:preview)
+         :map markdown-mode-map
+         ("C-c C-c t" . markdown-toc/generate-toc)
+         ("M-p" . nil)
+         ("M-n" . nil))
+
+  :config
+  (setq markdown-open-command "markdownmonster.exe")
+  ;;   (setq markdown-command "/home/etomort/myconf/bin/flavor.rb"))
+  ;;(setq markdown-command "markdown")
+)
+;; From: https://github.com/shime/emacs-livedown
+;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
+
+;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/
+;; (use-package livedown
+;;   ;;  :ensure t
+;;   )
+
+
+
+
+;; https://stackoverflow.com/questions/36183071/how-can-i-preview-markdown-in-emacs-in-real-time
+
+(defun markdown-html-no-title (buffer)
+  (princ (with-current-buffer buffer
+    (format "<!DOCTYPE html><html><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+  (current-buffer)))
+
+(defun markdown-html (buffer)
+  (princ (with-current-buffer buffer
+    (format "<!DOCTYPE html><html><title>Tom Cooking Markdown...</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+  (current-buffer)))
+
+;; Gives error...
+;;(imp-set-user-filter 'markdown-html)
+
+;; (setq imp-user-filter 'markdown-filter-for-impatient-mode)
+;; (cl-incf imp-last-state)
+;; (imp--notify-clients)
+
+(defun markdown-preview-browser ()
+  (interactive)
+  (impatient-mode 1)
+  (setq imp-user-filter #'markdown-html)
+  (cl-incf imp-last-state)
+  (imp--notify-clients))
 ;; --- FILE:  hideshow.el
 ;; --- Hideshow ---
 (use-package hideshow

@@ -22,3 +22,6 @@
 
 (defalias 'open-in-chrome 'browse-url-of-file)
 (defalias 'oichrome 'browse-url-of-file)
+
+(defun start-windows-explorer () (interactive) (shell-command "explorer.exe ."))
+(defalias 'wexp 'start-windows-explorer)

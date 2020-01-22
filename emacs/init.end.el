@@ -1,3 +1,8 @@
+;; TODO: Print date in scratch buffer
+;; (message (format-time-string "%H:%M:%S.%3N"))
+;; (setq myscratch (get-buffer "*scratch*"))
+;; (print (format-time-string "%H:%M:%S.%3N") myscratch)
+;; (print "rubbish"  myscratch)
 
 ;;(setq custom-file "~/myconf/emacs/custom.el")
 ;;(load custom-file) 

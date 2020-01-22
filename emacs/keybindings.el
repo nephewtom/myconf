@@ -22,6 +22,7 @@
 ;; I used to set it to C-j... in order to be similar to vi J key
 ;; join-line function is a defalias of delete-indentation.
 
+(global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
 (global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
 (global-set-key (kbd "M-s s") 'delete-horizontal-space)
@@ -42,7 +43,7 @@
 
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
-(global-set-key (kbd "<f7>") 'whitespace-mode)
+(global-set-key (kbd "<f7>") 'neotree-toggle)
 (global-set-key (kbd "<f8>") 'ibuffer)
 
 ;; TODO: When switch-to-previous-buffer , minibuffer shows 'Mark set',

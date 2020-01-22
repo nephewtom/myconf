@@ -13,6 +13,7 @@ compilation.el
 sudo.el
 defalias.el
 dired.el
+neotree.el
 ediff.el
 helm.el
 movement.el

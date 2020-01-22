@@ -444,6 +444,24 @@ buffer is not visiting a file."
   (setq find-ls-option '("-exec ls -lSr {} + | cut -d ' ' -f5-" . "-lSr"))
   (find-dired dir args)
   (setq find-ls-option '("-ls" . "-dilsb")))
+;; --- FILE:  neotree.el
+(use-package neotree
+  :ensure
+  :config
+  (setq neo-window-fixed-size nil)
+  ;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  )
+
+(defun neo-fit (&rest _args)
+    "Resize neotree window.
+https://github.com/jaypei/emacs-neotree/pull/110"
+    (interactive)
+    (neo-buffer--with-resizable-window
+     (let ((fit-window-to-buffer-horizontally t))
+       (fit-window-to-buffer))))
+
+(add-hook 'neo-change-root-hook #'neotree-resize-window)
+(add-hook 'neo-enter-hook #'neotree-resize-window)
 ;; --- FILE:  ediff.el
 ;; https://oremacs.com/2017/03/18/dired-ediff/
 ;; -*- lexical-binding: t -*-
@@ -788,6 +806,18 @@ buffer is not visiting a file."
   
   (put 'xah-lookup-linguee 'xah-lookup-url  "http://www.linguee.es/espanol-ingles/search?source=auto&query=word02051")
   (put 'xah-lookup-linguee 'xah-lookup-browser-function xah-lookup-browser-function)
+
+  (defun xah-google-translate (&optional *word)
+    "Lookup definition of current *WORD or text selection in URL https://translate.google.com/?source=gtx_c#auto/es/"
+    (interactive)
+    (xah-lookup-word-on-internet
+     *word
+     (get 'xah-google-translate 'xah-lookup-url )
+     (get 'xah-google-translate 'xah-lookup-browser-function )))
+  
+  (put 'xah-google-translate 'xah-lookup-url  "https://translate.google.com/?source=gtx_c#auto/es/word02051")
+  (put 'xah-google-translate 'xah-lookup-browser-function xah-lookup-browser-function)
+
   
   (defalias 'xlgoogle 'xah-lookup-google) ;; M-x xlg
   (defalias 'xlwikipedia 'xah-lookup-wikipedia) ;; M-x xlw
@@ -797,7 +827,7 @@ buffer is not visiting a file."
          ("7" . browse-url-at-point)
          ("8" . xah-lookup-google)
          ("9" . xah-lookup-word-definition)
-         ("0" . xah-lookup-linguee))
+         ("0" . xah-google-translate))
   )
 
 (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
@@ -809,6 +839,16 @@ buffer is not visiting a file."
   (shell-command
    (concat "chrome.exe " url)))
 (setq browse-url-browser-function 'browse-url-tom)
+;; --- FILE:  google-translate.el
+(use-package google-translate
+  :ensure t
+  :config
+  (setq google-translate-default-source-language "en")
+  (setq google-translate-default-target-language "es")
+  (global-set-key (kbd "C-<f12>") 'google-translate-at-point)
+  (global-set-key (kbd "C-<f11>") 'google-translate-at-point-reverse)
+  (require 'google-translate-default-ui)
+  )
 ;; --- FILE:  magit.el
 
 ;; --- Git ---
@@ -1103,16 +1143,9 @@ by using nxml's indentation rules."
 
   :config
   (setq markdown-open-command "markdownmonster.exe")
-  ;;   (setq markdown-command "/home/etomort/myconf/bin/flavor.rb"))
   ;;(setq markdown-command "markdown")
-)
-;; From: https://github.com/shime/emacs-livedown
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacs-livedown"))
+  )
 
-;; From: http://increasinglyfunctional.com/2014/12/18/github-flavored-markdown-previews-emacs/
-;; (use-package livedown
-;;   ;;  :ensure t
-;;   )
 
 
 
@@ -1121,13 +1154,13 @@ by using nxml's indentation rules."
 
 (defun markdown-html-no-title (buffer)
   (princ (with-current-buffer buffer
-    (format "<!DOCTYPE html><html><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
-  (current-buffer)))
+           (format "<!DOCTYPE html><html><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+         (current-buffer)))
 
 (defun markdown-html (buffer)
   (princ (with-current-buffer buffer
-    (format "<!DOCTYPE html><html><title>Tom Cooking Markdown...</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
-  (current-buffer)))
+           (format "<!DOCTYPE html><html><title>Tom Cooking Markdown...</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+         (current-buffer)))
 
 ;; Gives error...
 ;;(imp-set-user-filter 'markdown-html)
@@ -1252,6 +1285,7 @@ by using nxml's indentation rules."
 ;; I used to set it to C-j... in order to be similar to vi J key
 ;; join-line function is a defalias of delete-indentation.
 
+(global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
 (global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
 (global-set-key (kbd "M-s s") 'delete-horizontal-space)
@@ -1272,7 +1306,7 @@ by using nxml's indentation rules."
 
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
-(global-set-key (kbd "<f7>") 'hc-toggle-highlight-tabs)
+(global-set-key (kbd "<f7>") 'neotree-toggle)
 (global-set-key (kbd "<f8>") 'ibuffer)
 
 ;; TODO: When switch-to-previous-buffer , minibuffer shows 'Mark set',
@@ -1383,6 +1417,11 @@ by using nxml's indentation rules."
 (define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
 
 ;; --- FILE:  init.end.el
+;; TODO: Print date in scratch buffer
+;; (message (format-time-string "%H:%M:%S.%3N"))
+;; (setq myscratch (get-buffer "*scratch*"))
+;; (print (format-time-string "%H:%M:%S.%3N") myscratch)
+;; (print "rubbish"  myscratch)
 
 ;;(setq custom-file "~/myconf/emacs/custom.el")
 ;;(load custom-file) 

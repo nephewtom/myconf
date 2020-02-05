@@ -1,0 +1,6 @@
+* Disable COM Add-ins
+  1) Navigate the following menus: File | Options | Add-ins 
+
+  2) Manage: COM Add-ins -> click on [Go] button
+  
+  3) Enable/Disable the ones you want from the list.

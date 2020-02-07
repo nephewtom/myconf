@@ -4,6 +4,7 @@
   https://vimeo.com/2871241
   https://magit.vc/manual/magit/Ediffing.html
 
+  
 * Logging
 ** Log show filenames: *git log --name-only*
    http://stackoverflow.com/questions/1230084/how-to-have-git-log-show-filenames-like-svn-log-v

@@ -1,3 +1,6 @@
+* View file inside a jar 
+  : jar tvf <jar-file> | grep <string-of-filename>
+  : unzip -p <jar-file> <filename> | less
 * Check services on CentOS
   : sudo chkconfig
   : systemctl list-units --all

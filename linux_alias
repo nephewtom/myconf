@@ -1,6 +1,5 @@
+# Emacs related alias
 alias e='e.sh'
-
-# Old ELX alias
 alias eq='emacs -Q -visit ~/myconf/emacs/debug-emacs.el &'
 alias ebasic='emacs -Q -l ~/myconf/emacs/basic.el &'
 
@@ -16,10 +15,6 @@ alias s2e='sdcv -u "Spanish-English dictionary"'
 alias e2e='sdcv -u "Concise Oxford English Dictionary (En-En)"'
 
 alias meminfo='egrep --color "Mem|Cache|Swap" /proc/meminfo'
-
-alias pidgin-chats='cd ~/.purple/logs/sipe/tomas.orti.martin@ericsson.com%2cericsson%5cetomort/'
-
 alias sqlite='rlwrap -a -N -c -i sqlite3'
-
 alias dog='highlight -O ansi'
-alias maindev='cd ~/smip/iop/mc-core/maindev'
+

@@ -1,5 +1,5 @@
 # These are for WSL
 alias nator='terminator &'
 alias wm='winmergeu.exe'
-alias e.='explorer.exe'
+alias ex.='explorer.exe .'
 alias rg='rg.exe'

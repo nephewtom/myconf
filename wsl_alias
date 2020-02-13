@@ -2,4 +2,5 @@
 alias nator='terminator &'
 alias wm='winmergeu.exe'
 alias ex.='explorer.exe .'
+alias iv='iv.sh'
 alias rg='rg.exe'

@@ -4,3 +4,19 @@
   2) Manage: COM Add-ins -> click on [Go] button
   
   3) Enable/Disable the ones you want from the list.
+
+* iCloud and Outlook problems
+  https://callthatgirl.biz/tag/icloud-refresh-button-is-grayed-out/
+  #+BEGIN_EXAMPLE
+Outlook 2016 and iCloud Not Working
+Lisa Hendrickson | October 30, 2015 | 0 Comments
+If are you having problems with Outlook 2016 and iCloud not working, you are not alone friend. I have gotten calls from many folks who are finding their iCloud is now broken since they upgraded to Outlook 2016.
+
+I will say at this time it’s really undetermined what causes it to not work, could be a Windows update, Office update or iCloud update. Either way, here are some tips to try.
+
+Turn on or off the iCloud  in add-ins. If that fails, try logging out of iCloud and then log back in. Those are simple steps. If those fail, then you need to completely uninstall iCloud, reboot and reinstall. If those all fail, time to call me.
+
+If you are using iCloud to sync your calendar and contacts for business purposes, you can switch to Microsoft Exchange. Cost is $7.00 per month. Or you can use Outlook.com, which I consider to be a “free exchange server” without the extra bells and whistles. It does synch contacts and calendar nicely between all devices, except the Mac (as far as I know).
+
+If you need help, please contact me and I will do my best! Schedule time below. Thanks!  
+  #+END_EXAMPLE

@@ -16,9 +16,8 @@
   ;;(setq markdown-command "markdown")
   )
 
-
-
-
+;; IMP!: grip-mode is the way to go for Markdown preview
+;; Forget about impatient mode and flymd
 
 ;; https://stackoverflow.com/questions/36183071/how-can-i-preview-markdown-in-emacs-in-real-time
 

@@ -57,6 +57,7 @@
   ;; (add-to-list 'ibuffer-never-show-predicates " .*")
 
   ;; Remove the buffers that match these regexp
+  (add-to-list 'ibuffer-never-show-predicates " .*\\*grip-.*")
   (add-to-list 'ibuffer-never-show-predicates " .*NeoTree.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*lsp.*")
   (add-to-list 'ibuffer-never-show-predicates " .*\\*Metahelp*")

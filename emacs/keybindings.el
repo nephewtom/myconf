@@ -78,7 +78,8 @@
            (buf-move-left)
          (buf-move-right)))
 (global-set-key (kbd "C-2") 'win-swap)
-`
+(global-set-key (kbd "C-S-o") 'find-file-other-window)
+
 ;; --- Font-size & split-pane size
 (global-set-key (kbd "C-=") 'text-scale-adjust)
 

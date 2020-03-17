@@ -13,6 +13,7 @@
 (defalias 'qrr 'query-replace-regexp)
 
 (defalias 'lb 'list-buffers)
+(defalias 'lp 'list-processes)
 (defalias 'eb 'eval-buffer)
 (defalias 'er 'eval-region)
 (defalias 'difbuf 'ediff-buffers)

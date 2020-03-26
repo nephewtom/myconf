@@ -24,13 +24,12 @@
           ("REVIEW" . (:foreground "purple" :weight bold))
           ("PERMANENT" . (:foreground "purple" :weight bold))
           ("CANCELLED" . (:foreground "black" :weight bold))
-          ("WAITING" . (:foreground "orange" :weight bold))
 
           ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
           ))
 
   (setq org-todo-keywords
-        '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE")
+        '((sequence "TODO" "IN-PROGRESS" "ON-HOLD" "|" "DONE")
           (sequence "TRY" "NOTE" "REVIEW" "PERMANENT" "CANCELLED" "|" "WTF")))
 
   (setq org-priority-faces '((?A . (:background "#DD0000"  :foreground "black" :box '(:line-width 2 :style released-button)))

@@ -16,7 +16,7 @@
         '(
           ("TODO" . (:foreground "blue" :weight bold))
           ("IN-PROGRESS" . (:foreground "red" :weight bold))
-          ("WAITING" . (:foreground "orange" :weight bold))
+          ("ON-HOLD" . (:foreground "orange" :weight bold))
           ("DONE" . (:foreground "forest green" :weight bold))
 
           ("TRY" . (:foreground "purple" :weight bold))
@@ -24,6 +24,7 @@
           ("REVIEW" . (:foreground "purple" :weight bold))
           ("PERMANENT" . (:foreground "purple" :weight bold))
           ("CANCELLED" . (:foreground "black" :weight bold))
+          ("WAITING" . (:foreground "orange" :weight bold))
 
           ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
           ))

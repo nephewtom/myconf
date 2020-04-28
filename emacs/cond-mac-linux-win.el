@@ -35,7 +35,7 @@
   ;; --- Persistent sessions
   ;; https://github.com/thierryvolpiatto/psession
   ;; https://github.com/emacs-helm/helm/issues/2028
-  (psession-mode 1)
+;;  (psession-mode 1)
 
   ;; This makes Emacs on Windows unusable...
   ;; So set it only on Linux

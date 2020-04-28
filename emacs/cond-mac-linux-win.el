@@ -16,7 +16,7 @@
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
   (set-face-attribute 'default nil :family "Consolas" :height 140)
-  (add-to-list 'exec-path "c:/Users/etomort/scoop/apps/git/current/usr/bin")
+  (add-to-list 'exec-path "%HOME%/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 
   (add-to-list 'exec-path "c:/Users/etomort/hunspell/bin/")
@@ -26,6 +26,7 @@
   (setq-default default-buffer-file-coding-system 'utf-8-unix)
   (set-default-coding-systems 'utf-8-unix)
   (prefer-coding-system 'utf-8-unix)
+  (setq find-program "%HOME%/scoop/apps/git/current/usr/bin/find.exe")
   )
  
  ;; --- Linux stuff ---

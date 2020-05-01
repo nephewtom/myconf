@@ -7,9 +7,14 @@
 
 ;; --- Cua mode 
 (cua-mode t) ;; Ctrl+Z, Ctrl+X, Ctrl+C, Ctrl+V (Cmd+ in Mac OSX)
-(define-key isearch-mode-map (kbd "C-x") nil)
-;; Check: http://emacs.stackexchange.com/questions/22621/cutting-selection-with-cua-mode-bindings-after-searching/
 
+;; --- Search with C-f like MOST apps...
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(global-set-key (kbd "C-s") 'save-buffer) ;; Use C-s to save
+
+;; Check: http://emacs.stackexchange.com/questions/22621/cutting-selection-with-cua-mode-bindings-after-searching/
+(define-key isearch-mode-map (kbd "C-x") nil)
 
 ;; --- Scroll up & down
 (global-set-key (kbd "M-p") 'backward-paragraph)
@@ -61,11 +66,15 @@
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 
-;; --- Windows
+;; --- Windowsc
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-3") 'split-window-below)
-(global-set-key (kbd "M-2") 'split-window-right)
+
+(defun split-window-right-and-other-window () "Does that" (interactive)
+       (split-window-right)
+       (other-window 1))
+(global-set-key (kbd "M-2") 'split-window-right-and-other-window)
 (global-set-key (kbd "M-0") 'delete-window)
 
 (global-set-key [C-next] 'windmove-right)

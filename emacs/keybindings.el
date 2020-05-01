@@ -11,6 +11,8 @@
 ;; --- Search with C-f like MOST apps...
 (global-set-key (kbd "C-f") 'isearch-forward)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(define-key isearch-mode-map [down] 'isearch-repeat-forward)
+(define-key isearch-mode-map [up] 'isearch-repeat-backward)
 (global-set-key (kbd "C-s") 'save-buffer) ;; Use C-s to save
 
 ;; Check: http://emacs.stackexchange.com/questions/22621/cutting-selection-with-cua-mode-bindings-after-searching/

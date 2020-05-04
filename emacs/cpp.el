@@ -14,8 +14,8 @@
 ;;(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)
 
 ;; (Conditional) C/C++ Keybinds
-(add-hook 'c-mode-common-hook
-          (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
+;; (add-hook 'c-mode-common-hook
+;; (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
 
 ;; Stuff to run compiled programs from Emacs
 (cond

@@ -10,6 +10,7 @@
 
 ;; --- Search with C-f like MOST apps...
 (global-set-key (kbd "C-f") 'isearch-forward)
+(global-set-key (kbd "C-S-f") 'isearch-forward-symbol-at-point)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
 (define-key isearch-mode-map [down] 'isearch-repeat-forward)
 (define-key isearch-mode-map [up] 'isearch-repeat-backward)

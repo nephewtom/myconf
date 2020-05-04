@@ -1,1 +1,1 @@
-runemacs.exe -Q -l ~/myconf/emacs/basic.el
+runemacs.exe -Q -l ~/myconf/emacs/basic.el %*

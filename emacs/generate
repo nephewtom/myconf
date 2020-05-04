@@ -1,0 +1,3 @@
+./generate-basic.sh
+./generate-cpp.sh
+./generate-init.sh 

@@ -1,1 +1,1 @@
-runemacs.exe -Q -l ~/myconf/emacs/init-cpp.el
+runemacs.exe -Q -l ~/myconf/emacs/init-cpp.el %*

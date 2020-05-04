@@ -9,7 +9,6 @@ calendar.el
 cond-mac-linux-win.el
 duplicate-line.el
 xah-cut-copy.el
-compilation.el
 defalias.el
 dired.el
 helm.el
@@ -18,10 +17,12 @@ buffers-utils.el
 elisp.el
 flycheck.el
 company.el
+keybindings.el
 
 cpp.el
+compilation.el
 
-keybindings.el
+xah-lookup.el 
 cua.el
 init.end.el"
 

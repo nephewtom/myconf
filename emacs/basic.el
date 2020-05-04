@@ -111,6 +111,9 @@
   (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
+
+;; --- Wrap region: https://stackoverflow.com/a/2747142/316232
+(wrap-region-mode t)
 ;; --- FILE:  cond-mac-linux-win.el
 (cond
  ;; --- Mac OS X stuff ---
@@ -512,6 +515,7 @@ Version 2017-07-08"
            ("playground" (filename . "playground"))
            ("/usr/include/" (filename . "/usr/include/"))
            ("SDL" (filename . "tomas/SDL/"))
+           ("raylib" (filename . "raylib"))
            )
           ("default")
           ))
@@ -589,6 +593,7 @@ Version 2017-07-08"
 ;; join-line function is a defalias of delete-indentation.
 
 (global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "C-d") 'kill-whole-line)
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
 (global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
 (global-set-key (kbd "M-s s") 'delete-horizontal-space)
@@ -627,10 +632,11 @@ Version 2017-07-08"
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 
-;; --- Windowsc
+;; --- Windows
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-3") 'split-window-below)
+(global-set-key (kbd "M-o") 'find-file-other-window)
 
 (defun split-window-right-and-other-window () "Does that" (interactive)
        (split-window-right)

@@ -12,7 +12,7 @@
                     (mouse-menu-bar-map))))
   (set-face-attribute 'default nil :height 200))
 
-  ;; --- Windows stuff ---
+ ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
   (set-face-attribute 'default nil :family "Consolas" :height 140)
@@ -27,6 +27,7 @@
   (set-default-coding-systems 'utf-8-unix)
   (prefer-coding-system 'utf-8-unix)
   (setq find-program "%HOME%/scoop/apps/git/current/usr/bin/find.exe")
+  (setq compile-command "build.bat")
   )
  
  ;; --- Linux stuff ---
@@ -36,7 +37,7 @@
   ;; --- Persistent sessions
   ;; https://github.com/thierryvolpiatto/psession
   ;; https://github.com/emacs-helm/helm/issues/2028
-;;  (psession-mode 1)
+  ;;  (psession-mode 1)
 
   ;; This makes Emacs on Windows unusable...
   ;; So set it only on Linux

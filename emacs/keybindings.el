@@ -30,6 +30,7 @@
 ;; join-line function is a defalias of delete-indentation.
 
 (global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "C-d") 'kill-whole-line)
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
 (global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
 (global-set-key (kbd "M-s s") 'delete-horizontal-space)
@@ -68,10 +69,11 @@
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 
-;; --- Windowsc
+;; --- Windows
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-3") 'split-window-below)
+(global-set-key (kbd "M-o") 'find-file-other-window)
 
 (defun split-window-right-and-other-window () "Does that" (interactive)
        (split-window-right)

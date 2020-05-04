@@ -118,6 +118,7 @@
            ("playground" (filename . "playground"))
            ("/usr/include/" (filename . "/usr/include/"))
            ("SDL" (filename . "tomas/SDL/"))
+           ("raylib" (filename . "raylib"))
            )
           ("default")
           ))

@@ -19,6 +19,8 @@
 (defalias 'difbuf 'ediff-buffers)
 (defalias 'diffil 'ediff-files)
 
+(defalias 'trframe 'transpose-frame)
+
 (defalias 'odired 'open-in-dired)
 
 (defalias 'open-in-chrome 'browse-url-of-file)

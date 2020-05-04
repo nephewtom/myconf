@@ -26,6 +26,7 @@
   (require 'dired+)
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
+  (unbind-key "C-w" dired-mode-map)
 
 
   (cond

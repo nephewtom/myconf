@@ -44,6 +44,7 @@
 
   :bind (
          :map help-map
+         ("6" . browse-url-of-buffer)
          ("7" . browse-url-at-point)
          ("8" . xah-lookup-google)
          ("9" . xah-lookup-word-definition)
@@ -51,7 +52,7 @@
   )
 
 (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
-(global-set-key (kbd "C-h 6") 'browse-url-of-buffer)
+(global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
 
 ;; TODO: I only want this on WSL
 ;; https://emacs.stackexchange.com/questions/47782/is-there-a-way-emacs-can-infer-is-running-on-wsl-windows-subsystem-for-linux

@@ -1,7 +1,10 @@
 #!/bin/bash
 # This script will concatenate all the desired .el files into init.el
 
-FILES="init.begin.el
+echo "*** Generating DEFAULT configuration:"
+
+FILES="begin.el
+package.el
 bars-and-title.el
 column-and-line-numbers.el
 paren-indent.el
@@ -9,7 +12,6 @@ calendar.el
 cond-mac-linux-win.el
 duplicate-line.el
 xah-cut-copy.el
-compilation.el
 sudo.el
 defalias.el
 dired.el
@@ -31,9 +33,11 @@ markdown.el
 hideshow.el
 edit-with-emacs.el
 python.el
+cpp.el
 keybindings.el
+compilation.el
 cua.el
-init.end.el"
+end.el"
 
 rm -f init.el 
 echo $FILES | sed 's/ /\n/g' | while read f; do
@@ -41,4 +45,5 @@ echo $FILES | sed 's/ /\n/g' | while read f; do
     echo ";; --- FILE: " $f >> init.el;
     cat $f >> init.el;
 done 
-echo -e "\nNew init.el generated."
+echo "*** New init.el generated."
+echo 

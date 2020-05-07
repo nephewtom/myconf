@@ -1,7 +1,10 @@
 #!/bin/bash
 # This script will concatenate all the desired .el files into basic.el
 
-FILES="init.begin.el
+echo "*** Generating BASIC configuration:"
+
+FILES="begin.el
+package.el
 bars-and-title.el
 column-and-line-numbers.el
 paren-indent.el
@@ -15,7 +18,7 @@ elisp.el
 keybindings.el
 keybasic.el
 cua.el
-init.end.el"
+end.el"
 
 rm -f basic.el 
 echo $FILES | sed 's/ /\n/g' | while read f; do
@@ -23,4 +26,5 @@ echo $FILES | sed 's/ /\n/g' | while read f; do
     echo ";; --- FILE: " $f >> basic.el;
     cat $f >> basic.el;
 done 
-echo -e "\nNew basic.el generated."
+echo "*** New basic.el generated."
+echo

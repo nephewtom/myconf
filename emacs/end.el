@@ -25,6 +25,7 @@
 ;; --- Recent files stuff
 (recentf-mode 1)
 (setq recentf-max-menu-items 10)
+(defalias 'rf 'recentf-open-files)
 (defalias 'recf 'recentf-open-files)
 
 ;; --- Font-size & split-pane size

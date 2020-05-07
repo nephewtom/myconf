@@ -17,26 +17,3 @@
 ;; (add-hook 'c-mode-common-hook
 ;; (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
 
-;; Stuff to run compiled programs from Emacs
-(cond
- ((string-equal system-type "windows-nt")
-  (message "System: Windows")
-  (setq compile-command "build.bat")
-  (defun run-program () (interactive)
-         (async-shell-command "run.bat")
-         (when (get-buffer "*run*")
-           (kill-buffer "*run*"))
-         (when (get-buffer "*compilation*")
-           (kill-buffer "*compilation*"))
-         (switch-to-buffer (get-buffer "*Async Shell Command*"))
-         (rename-buffer "*run*")
-         (delete-window (get-buffer-window (get-buffer "*run*")))
-         (bury-buffer)
-         )
-  )
- 
- (message "System: Other")
- )
-
-(global-set-key (kbd "<f9>") 'run-program)
-

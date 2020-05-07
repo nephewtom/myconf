@@ -1,3 +1,56 @@
+(defun my-compilation-hook () 
+  "Make sure that the compile window is splitting vertically"
+  (progn
+    (if (not (get-buffer-window "*compilation*"))
+        (progn
+          (split-window-vertically)
+          ))))
+(add-hook 'compilation-mode-hook 'my-compilation-hook)
+
+
+;; Function for compiling 
+(defun my-compile ()
+  "Run compile and resize the compile window"
+  (interactive)
+  (progn
+    (call-interactively 'recompile)
+    (setq cur (selected-window))
+    (setq w (get-buffer-window "*compilation*"))
+    (select-window w)
+    (setq h (window-height w))
+    (shrink-window (- h 15))
+    (select-window cur)
+    ))
+(global-set-key (kbd "<f12>") 'my-compile)
+
+
+;; Funtion to run compiled programs
+(cond
+ ((string-equal system-type "windows-nt")
+  (message "System: Windows")
+  (setq compile-command "build.bat")
+  (defun run-program () (interactive)
+         (when (get-buffer "*run*")
+           (kill-buffer "*run*"))
+         
+         (delete-window (get-buffer-window (get-buffer "*compilation*")))
+         (when (get-buffer "*compilation*")
+           (kill-buffer "*compilation*"))
+         (add-to-list 'display-buffer-alist '("*Async Shell Command*" . (display-buffer-no-window . nil)) )
+         (async-shell-command "run.bat")
+         (switch-to-buffer (get-buffer "*Async Shell Command*"))
+         (rename-buffer "*run*")
+         (switch-to-previous-buffer)
+         )
+  )
+ 
+ (message "System: Other")
+ )
+
+(global-set-key (kbd "<f9>") 'run-program)
+
+
+;; NOT USED NOW
 ;; Helper for compilation. Close the compilation window if there was no error at all.
 (defun compilation-exit-autoclose (status code msg)
   ;; If M-x compile exists with a 0
@@ -11,31 +64,4 @@
 
 ;; Specify my function (maybe I should have done a lambda function)
 ;;(setq compilation-exit-message-function 'compilation-exit-autoclose)
-(setq compilation-exit-message-function nil)
 
-(defun my-compile ()
-  "Run compile and resize the compile window"
-  (interactive)
-  (progn
-    (call-interactively 'recompile)
-    (setq cur (selected-window))
-    (setq w (get-buffer-window "*compilation*"))
-    (select-window w)
-    (setq h (window-height w))
-    (shrink-window (- h 10))
-    (select-window cur)
-    )
-  )
-
-(defun my-compilation-hook () 
-  "Make sure that the compile window is splitting vertically"
-  (progn
-    (if (not (get-buffer-window "*compilation*"))
-        (progn
-          (split-window-vertically)
-          )
-      )
-    )
-  )
-(add-hook 'compilation-mode-hook 'my-compilation-hook)
-(global-set-key (kbd "<f12>") 'my-compile)

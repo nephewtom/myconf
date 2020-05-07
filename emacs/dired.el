@@ -1,6 +1,15 @@
 ;; --- Dired ---
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
+(defvar my-dired-listing-switches nil)
+(defvar my-dired-listing-switches-flag t)
+(defun toggle-hidden-dirs ()
+  (interactive)
+  (if my-dired-listing-switches-flag
+      (dired-sort-other "-lkta")
+    (dired-sort-other "-lkt"))
+  (setq my-dired-listing-switches-flag (not my-dired-listing-switches-flag))
+  (dired-sort-toggle))
 
 (use-package dired
   :bind (:map dired-mode-map
@@ -10,6 +19,7 @@
               ("j" . dired-find-file)
               ("e" . ora-ediff-files)
               ("P" . peep-dired)
+              ("h" . toggle-hidden-dirs)
               ("<M-return>" . dired-w32-browser)
               )
   :config

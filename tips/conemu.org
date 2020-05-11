@@ -1,0 +1,11 @@
+* Workaround for copying and scrolling very slow:
+  https://github.com/Maximus5/ConEmu/issues/1413
+#+BEGIN_EXAMPLE
+Hold shift down and single click the start of the text you want highlighted.
+Now, while still holding down shift, scroll down:
+- with PageDown or PageUp keys
+- or using the mouse scroll button (a bit more difficult)
+
+and single click the end of the text you want highlighted.
+The key is to not click and DRAG the mouse.
+#+END_EXAMPLE

@@ -17,3 +17,8 @@
                               (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-forward-filter-group)
                               )
                  )
+
+;; (load "~/.emacs.d/elpa/hl-defined-20170223.744/hl-defined-autoloads.el")
+;; (load "~/.emacs.d/elpa/wrap-region-20140117.720/wrap-region-autoloads.el")
+;; (load "~/.emacs.d/elpa/company-20190116.1133/company-autoloads.el")
+;; (load "~/.emacs.d/elpa/helm-20190213.609/helm-autoloads.el")

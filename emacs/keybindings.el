@@ -41,8 +41,10 @@
 ;; I used to set it to C-j... in order to be similar to vi J key
 ;; join-line function is a defalias of delete-indentation.
 
-(global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "M-<backspace>") 'backward-kill-word)
+(global-set-key (kbd "C-<backspace>") 'backward-kill-sexp)
 (global-set-key (kbd "C-d") 'kill-whole-line)
+(global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
 (global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
 (global-set-key (kbd "M-s s") 'delete-horizontal-space)
@@ -165,7 +167,8 @@
 ;; Translate the problematic keys to the function key Hyper:
 (keyboard-translate ?\C-i ?\H-i)
 ;; (global-set-key (kbd "<tab>") 'indent-for-tab-command)
-;;(define-key help-mode-map (kbd "<tab>") 'forward-button) 
+(global-set-key (kbd "M-i") 'switch-to-buffer-other-window)
+;;(define-key help-mode-map (kbd "<tab>") 'forward-button)
 
 ;; Paste with middle mouse button
 ;; https://stackoverflow.com/a/13043670/316232

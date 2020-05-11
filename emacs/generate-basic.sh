@@ -16,7 +16,7 @@ xah-cut-copy.el
 
 
 keybindings.el
-keybasic.el
+basic-special.el
 cua.el"
 
 rm -f basic.el 

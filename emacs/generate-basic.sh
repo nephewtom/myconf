@@ -22,7 +22,7 @@ cua.el"
 rm -f basic.el 
 echo $FILES | sed 's/ /\n/g' | while read f; do
     echo "Adding "$f ;
-    echo ";; --- FILE: " $f >> basic.el;
+    echo -e "\n;; *** FILE: " $f >> basic.el;
     cat $f >> basic.el;
 done 
 echo "*** New basic.el generated."

@@ -34,7 +34,7 @@
 ;; TODO: Check yafolding mode. It looks very simple and easy to use.
 ;; TODO: It has very easy key-bindings, though C-RET collide with cua-set-rectangle-mark
 ;; TODO: Check: https://github.com/zenozeng/yafolding.el
-;; *** Bindings from yafolding.el ***
+;; --- Bindings from yafolding.el ---
 ;; (defvar yafolding-mode-map
 ;;   (let ((map (make-sparse-keymap)))
 ;;     (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)

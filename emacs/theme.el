@@ -1,5 +1,9 @@
 (load-theme 'monokai t)
 
+;; https://stackoverflow.com/q/9990370/316232
+(global-hl-line-mode t) ;; highlight current line
+(make-variable-buffer-local 'global-hl-line-mode)
+
 ;; current line highlighted color
 (set-face-background hl-line-face "#404040")
 

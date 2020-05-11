@@ -43,7 +43,7 @@ end.el"
 rm -f init-cpp.el 
 echo $FILES | sed 's/ /\n/g' | while read f; do
     echo "Adding "$f ;
-    echo ";; --- FILE: " $f >> init-cpp.el;
+    echo -e "\n;; *** FILE: " $f >> init-cpp.el;
     cat $f >> init-cpp.el;
 done 
 echo "*** New init-cpp.el generated."

@@ -1,15 +1,11 @@
-(defun switch-to-previous-buffer ()
-  "Swap to previous buffer."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
+;; TODO: change by use-package
+(require 'buffer-move)
+(defun win-swap () "Swap windows using buffer-move.el" (interactive)
+       (if (null (windmove-find-other-window 'right))
+           (buf-move-left)
+         (buf-move-right)))
+(global-set-key (kbd "C-2") 'win-swap)
 
-(defun indent-buffer ()
-  "Select current buffer and indent it."
-  (interactive)
-  (save-excursion
-    (indent-region (point-min) (point-max) nil)))
-
-(global-auto-revert-mode t) ;; automatically revert buffer when file changes
 
 ;; --- Uniquify 
 (require 'uniquify)

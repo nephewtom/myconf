@@ -72,6 +72,20 @@
 
 
 ;; --- Buffers
+(defun switch-to-previous-buffer ()
+  "Swap to previous buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(defun indent-buffer ()
+  "Select current buffer and indent it."
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+
+(global-auto-revert-mode t) ;; automatically revert buffer when file changes
+
+
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
@@ -92,14 +106,6 @@
 (global-set-key [C-next] 'windmove-right)
 (global-set-key [C-prior] 'windmove-left)
 
-;; TODO: change by use-package
-(require 'buffer-move)
-(defun win-swap () "Swap windows using buffer-move.el" (interactive)
-       (if (null (windmove-find-other-window 'right))
-           (buf-move-left)
-         (buf-move-right)))
-(global-set-key (kbd "C-2") 'win-swap)
-(global-set-key (kbd "C-S-o") 'find-file-other-window)
 
 
 ;; --- Font-size & split-pane size
@@ -159,7 +165,7 @@
 ;; Translate the problematic keys to the function key Hyper:
 (keyboard-translate ?\C-i ?\H-i)
 ;; (global-set-key (kbd "<tab>") 'indent-for-tab-command)
-(define-key help-mode-map (kbd "<tab>") 'forward-button) 
+;;(define-key help-mode-map (kbd "<tab>") 'forward-button) 
 
 ;; Paste with middle mouse button
 ;; https://stackoverflow.com/a/13043670/316232

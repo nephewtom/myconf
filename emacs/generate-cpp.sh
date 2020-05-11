@@ -5,6 +5,7 @@ echo "*** Generating CPP configuration:"
 
 FILES="begin.el
 package.el
+theme.el
 bars-and-title.el
 column-and-line-numbers.el
 paren-indent.el

@@ -12,5 +12,3 @@
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
 
-;; --- Wrap region: https://stackoverflow.com/a/2747142/316232
-(wrap-region-mode t)

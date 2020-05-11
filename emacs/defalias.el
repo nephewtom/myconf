@@ -23,6 +23,8 @@
 
 (defalias 'trf 'transpose-frame)
 (defalias 'trframe 'transpose-frame)
+(defalias 'df 'delete-frame)
+(defalias 'nf 'new-frame)
 
 (defalias 'odired 'open-in-dired)
 

@@ -42,12 +42,12 @@
          (rename-buffer "*run*")
          (switch-to-previous-buffer)
          )
+  (global-set-key (kbd "<f9>") 'run-program)
   )
- 
- (message "System: Other")
+
+ ((message "System: Other"))
  )
 
-(global-set-key (kbd "<f9>") 'run-program)
 
 
 ;; NOT USED NOW

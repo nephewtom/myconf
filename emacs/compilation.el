@@ -29,12 +29,13 @@
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
   (setq compile-command "build.bat")
+
   (defun run-program () (interactive)
          (when (get-buffer "*run*")
            (kill-buffer "*run*"))
          
-         (delete-window (get-buffer-window (get-buffer "*compilation*")))
          (when (get-buffer "*compilation*")
+           (delete-window (get-buffer-window (get-buffer "*compilation*")))
            (kill-buffer "*compilation*"))
          (add-to-list 'display-buffer-alist '("*Async Shell Command*" . (display-buffer-no-window . nil)) )
          (async-shell-command "run.bat")
@@ -42,7 +43,19 @@
          (rename-buffer "*run*")
          (switch-to-previous-buffer)
          )
+  
+  (defun clean-program () (interactive)
+         (when (get-buffer "*clean*")
+           (kill-buffer "*clean*"))
+         (add-to-list 'display-buffer-alist '("*Async Shell Command*" . (display-buffer-no-window . nil)) )
+         (async-shell-command "clean.bat")         
+         (switch-to-buffer (get-buffer "*Async Shell Command*"))
+         (rename-buffer "*clean*")
+         (switch-to-previous-buffer)
+         )
+  
   (global-set-key (kbd "<f9>") 'run-program)
+  (global-set-key (kbd "<f11>") 'clean-program)
   )
 
  ((message "System: Other"))

@@ -21,6 +21,7 @@
               ("P" . peep-dired)
               ("h" . toggle-hidden-dirs)
               ("<M-return>" . dired-w32-browser)
+              ("M-i" . switch-to-buffer-other-window)
               )
   :config
   (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
@@ -37,6 +38,7 @@
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
   (unbind-key "C-w" dired-mode-map)
+  (unbind-key "M-i" dired-mode-map)
 
 
   (cond

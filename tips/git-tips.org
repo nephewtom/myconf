@@ -1,5 +1,5 @@
 #+STARTUP: content
-* TODO Learn to use magit with Reddit comments & a video from creator :noexport:
+* CANCELLED Learn to use magit with Reddit comments & a video from creator :noexport:
   https://www.reddit.com/r/emacs/comments/2n9tj8/anyone_care_to_share_their_magit_workflow/
   https://vimeo.com/2871241
   https://magit.vc/manual/magit/Ediffing.html
@@ -20,6 +20,8 @@
 
 
 * Diff
+** Diff a file between branches: *git diff branchA branchB -- myfile*
+   http://stackoverflow.com/questions/4099742/how-to-compare-files-from-two-different-branches
 ** Diff which files changes between branches: *git diff --name-status master..branchName*
   Only show filename:
   git diff --name-status master..branchName
@@ -27,9 +29,6 @@
   Show file differences:
   git diff master..branchName
   http://stackoverflow.com/questions/822811/showing-which-files-have-changed-between-two-revisions
-
-** Diff a file between branches: *git diff branchA branchB -- myfile*
-  http://stackoverflow.com/questions/4099742/how-to-compare-files-from-two-different-branches
 ** Show staged changes: *git diff --cached*
   http://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged
 
@@ -45,9 +44,12 @@
 
   git branch --unset-upstream
 
+** Difftool can be used for GUI tool: *git difftool branchA branchB myfile*
+   Configuring properly .gitconfig
+
 
 * Branching
-** Create a remote branch: *git checkout -b your_branch | git push -u origin your_branch*
+** Create a remote branch: *git checkout -b your_branch && git push -u origin your_branch*
   First, you must create your branch locally
 
   git checkout -b your_branch
@@ -136,3 +138,23 @@
      2) *git show-branch *master* will show you the commits in all of the branches whose names end in master
         (eg master and origin/master).
    http://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
+   
+** Cherry pick: *git cherry-pick <commitSha>*
+   Use first *git hist* to list the commits I want to cherry pick.
+   This can be used to get the first five commit Sha:
+   #+BEGIN_SRC shell
+$ git log --pretty=format:'%h' | head -5
+42de4805e5
+d8e30e7644
+ae64b9324e
+9151fb9777
+09352747ed   
+   #+END_SRC
+   Then use cherry-pick to the ones desired:
+   : git cherry-pick 42de4805e5
+   : git cherry-pick 9151fb9777
+** Tagging: *git tag <tag-name> && git push origin <tag-name>*
+   Example:
+   : git tag 8.2.2-1
+   : git push origin 8.2.2-1
+   : git tag -d 8.2.2-1

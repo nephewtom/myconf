@@ -141,11 +141,13 @@
       '((mark modified read-only " "
               (name 30 30 :left :elide) ; change: 30s were originally 18s
               " "
-              (vtime 4 4 :left)
+
+              ;; TODO
+              ;;              (vtime 4 4 :left)
+              ;;              " "
+              (mode 16 16 :left :elide)
               " "
               (size 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
 
               " " filename-and-process)
         (mark " "

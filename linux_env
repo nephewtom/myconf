@@ -6,3 +6,7 @@ export ALTERNATE_EDITOR=emacs EDITOR=emacsclient VISUAL=emacsclient
 # export ALTERNATE_EDITOR=emacs.exe EDITOR=emacsclientw.exe VISUAL=emacsclientw.exe
 
 export NO_AT_BRIDGE=1
+
+# enable XON/XOFF flow control
+# Then CTRL+S will give you a (i-search) (non reverse).
+stty -ixon

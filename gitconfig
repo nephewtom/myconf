@@ -24,16 +24,18 @@
   autocrlf = input
   editor = emacsclient
 
+; Haven't tested it...
 
 ; [merge]
-;   tool = winmerge
+;    tool = winmerge
 ; [mergetool "winmerge"]
+;   cmd = winmergeu.exe -e -u -dl \"$2\" -dr \"$3\" \"$(wslpath $LOCAL)\" \"$(wslpath $REMOTE)\" \"$(wslpath $MERGED)\"
 ;   cmd = winmergeu.exe -e -u -dl \"Base\" -dr \"Mine\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
-; [mergetool]
+;[mergetool]
 ;   prompt = false
 
 [diff]
-  tool = kdiff3
+  tool = winmerge
         
 [difftool "winmerge"]
   trustExitCode = true

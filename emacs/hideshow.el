@@ -22,6 +22,7 @@
               ("C-c M-s" . hs-show-all)
               ("C-c C-c" . hs-toggle-hiding))
   :config
+  (require 'hideshowvis)
   (hideshowvis-minor-mode)
   (hideshowvis-symbols)
   )

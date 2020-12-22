@@ -1,7 +1,8 @@
 (use-package cc-mode
   :config
   (unbind-key "C-M-h" c++-mode-map)
-  (setq c-default-style "stroustrup") ;; BSD/Allman brackets
+  (unbind-key "C-M-j" c++-mode-map)
+  (setq c-default-style "linux") ;; BSD/Allman brackets
   (setq c-basic-offset 4)      ;; 4-space indent
   )
 
@@ -17,3 +18,22 @@
 ;; (add-hook 'c-mode-common-hook
 ;; (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
 
+(defun delete-carrage-returns ()
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (while (search-forward "\r" nil :noerror)
+      (replace-match ""))))
+
+(defun astyle-this-buffer (pmin pmax)
+  (interactive "r")
+  (shell-command-on-region pmin pmax
+                           "astyle --style=mozilla -s4 -xB -k1"
+                           (current-buffer) t 
+                           (get-buffer-create "*Astyle Errors*") t)
+  (replace-string  )
+  (mark-whole-buffer)
+  (indent-buffer)
+  )
+
+(defalias 'ast 'astyle-this-buffer)

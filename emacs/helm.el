@@ -57,3 +57,4 @@
 ;;(setq x-wait-for-event-timeout nil)
 
 
+;;(global-set-key (kbd "C-t") 'helm-grep-do-git-grep)

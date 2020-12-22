@@ -13,6 +13,7 @@
 (global-set-key (kbd "C-f") 'isearch-forward)
 (global-set-key (kbd "C-S-f") 'isearch-forward-symbol-at-point)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-t") 'isearch-yank-word-or-char)
 (define-key isearch-mode-map [down] 'isearch-repeat-forward)
 (define-key isearch-mode-map [up] 'isearch-repeat-backward)
 (global-set-key (kbd "C-s") 'save-buffer) ;; Use C-s to save
@@ -70,7 +71,8 @@
 (global-set-key (kbd "<f8>") 'ibuffer)
 
 ;; F9 & F12 are defined in compilation.el
-(global-set-key (kbd "<f11>") 'indent-buffer) ;; buffer-utils.el
+(global-set-key (kbd "<f11>") 'indent-buffer)
+(global-set-key (kbd "C-<f12>") 'start-windows-explorer)
 
 
 ;; --- Buffers
@@ -142,6 +144,18 @@
 
 
 ;; --- Miscellaneous
+
+;; No me funciona... ya que no me deja meter por lo que quiero sustituir...
+(defun query-replace-symbol-at-point ()
+  "Start `query-replace-regexp' with symbol at point as default."
+  (interactive)
+  (let ((sym (symbol-at-point)))
+    (when sym
+      ;; (push (cons (format "\\_<%s\\_>" sym) "") query-replace-defaults)
+      (push (cons (format "%s" sym) "") query-replace-defaults)
+      (call-interactively #'query-replace))))
+
+
 (global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim
 (global-set-key (kbd "M-r") 'iedit-mode)

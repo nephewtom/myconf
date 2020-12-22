@@ -8,6 +8,8 @@
                            ": "(:eval (if (buffer-file-name)
                                           (buffer-file-name) "%b"))))
 
+(fringe-mode '(16 . 0)) ;; Make left fringe 16 pixels and no right fringe
+
 ;; (setq initial-frame-alist
 ;;       '((background-color . "honeydew")))
 

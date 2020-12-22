@@ -1,14 +1,44 @@
-* View file inside a jar 
-  : jar tvf <jar-file> | grep <string-of-filename>
-  : unzip -p <jar-file> <filename> | less
+* yum stuff
+  yum list installed | grep restzly-server
+  yum --showduplicates list available restzly-server
+* View complete command line of a process
+  cat /proc/<pid>/cmdline > kk
+  strings kk
+  
+* Sed simple replace string
+  sed -i -e 's/old/new/g' hello.txt
+  -i option is used to edit in place on the file hello.txt.
+  -e option indicates the expression/command to run, in this case s/.
+  https://unix.stackexchange.com/questions/159367/using-sed-to-find-and-replace
+* find . -exec grep {} \; vs +
+  https://unix.stackexchange.com/a/12904/30951
+  - find will execute grep and will substitute {} with the filename(s) found.
+  - The difference between ; and + is that with ; a single grep command for each file is executed.
+  - Whereas with + as many files as possible are given as parameters to grep at once.
+  #+END_EXAMPLE
+
+* Find what package a file belongs to in Linux
+** Ubuntu/Debian
+   - If the file is already present
+     : dpkg -S /usr/bin/ls
+
+   - If not present
+     : apt-file search /path/to/file
+     : apt-file search filename
+
+   https://superuser.com/questions/10997/find-what-package-a-file-belongs-to-in-ubuntu-debian
+
+** RedHat/Fedora/CentOS
+   - If the file is already present
+     : rpm -qf /bin/ls
+
+   - If not present
+     : yum whatprovides
+     
+   http://stackoverflow.com/questions/1133495/how-do-i-find-which-rpm-package-supplies-a-file-im-looking-for
 * Check services on CentOS
   : sudo chkconfig
   : systemctl list-units --all
-
-* ip command
-  Essential: http://packetpushers.net/linux-ip-command-ostensive-definition/
-  https://www.tecmint.com/ip-command-examples/
-  http://baturin.org/docs/iproute2/
 
 * Bash renaming:
 ** Using rename command:
@@ -45,14 +75,6 @@ ${file##*.} will shorten it to "gz"
 It is important to remember that shells are text-processing powerhouses -
 numbers not so much.
   #+END_EXAMPLE
-
-* Sed simple replace string
-  sed -i -e 's/old/new/g' hello.txt
-  -i option is used to edit in place on the file hello.txt.
-  -e option indicates the expression/command to run, in this case s/.
-
-  https://unix.stackexchange.com/questions/159367/using-sed-to-find-and-replace
-
 * Know the creation time of a file/directory:
   http://unix.stackexchange.com/questions/24441/get-file-created-creation-time
   http://unix.stackexchange.com/questions/50177/birth-is-empty-on-ext4/50184#50184
@@ -91,45 +113,10 @@ numbers not so much.
 * Measure size of directories
   du -csm * | sort -n # --block-size=1M
   du -h -d 1 | sort -n
-
-* rsync
-  #+BEGIN_EXAMPLE
-  23/11/15 14:21:13 | rsync -LvzP sogadm@10.95.183.190:/var/sog/pgngn/CRH1091367-R5A.zip .
-  27/04/16 19:37:16 | rsync vm-Windows7/ /media/etomort/WD_DISK/
-  27/04/16 19:37:44 | rsync -a  vm-Windows7/ /media/etomort/WD_DISK/
-  24/06/16 00:42:14 | rsync -v es_windows_7_professional_n_with_sp1_x64_dvd_u_677144.iso  manager@54.76.253.178:/home/manager/
-  24/06/16 20:24:50 | rsync -vhP --progress es_windows_7_professional_n_with_sp1_x64_dvd_u_677144.iso  manager@54.76.253.178:/home/manager/
-  12/08/16 14:50:03 | rsync -vhP --progress sysadmin@smip-sm2m-rpm:/var/www/html/smip/portal/R7/m2m-kermit-2.6.0_1267-759b83bf.noarch.rpm .  
-  #+END_EXAMPLE
-
-* Find what package a file belongs to in Linux
-** Ubuntu/Debian
-   - If the file is already present
-     : dpkg -S /usr/bin/ls
-
-   - If not present
-     : apt-file search /path/to/file
-     : apt-file search filename
-
-   https://superuser.com/questions/10997/find-what-package-a-file-belongs-to-in-ubuntu-debian
-
-** RedHat/Fedora/CentOS
-   - If the file is already present
-     : rpm -qf /bin/ls
-
-   - If not present
-     : yum whatprovides
-     
-   http://stackoverflow.com/questions/1133495/how-do-i-find-which-rpm-package-supplies-a-file-im-looking-for
-
-* Pidgin chats
-  #+BEGIN_EXAMPLE
-  cd ~/.purple/logs/sipe/tomas.orti.martin@ericsson.com%2cericsson%5cetomort/
-  los directorios tienen los nombres con los que se ha chateado
-  y los de varios, llevan el sufijo #1, #2, etc...
-  Si me apuras, casi mejor que el de Skype, pq se puede hacer grep, awk, sed, etc...
-  #+END_EXAMPLE
-
+* ip command
+  Essential: http://packetpushers.net/linux-ip-command-ostensive-definition/
+  https://www.tecmint.com/ip-command-examples/
+  http://baturin.org/docs/iproute2/
 * Grep Recursive with file wildcard
   https://www.cyberciti.biz/faq/unix-linux-grep-include-file-pattern-recursive-example/
   These examples worked for me providing a wildcard for files:
@@ -145,15 +132,28 @@ numbers not so much.
   These ones get matches but do not filter by file wildcard:
   : grep -rHn -e "use find" *  # Executed from /home/etomort/myconf
   : grep -rHn -e "use find" /home/etomort/myconf/
-* find . -exec grep {} \; vs +
-  https://unix.stackexchange.com/a/12904/30951
-  - find will execute grep and will substitute {} with the filename(s) found.
-  - The difference between ; and + is that with ; a single grep command for each file is executed.
-  - Whereas with + as many files as possible are given as parameters to grep at once.
-  #+END_EXAMPLE
+* View file inside a jar with unzip
+  : jar tvf <jar-file> | grep <string-of-filename>
+  : unzip -p <jar-file> <filename> | less
 * Capture gif file with byzanz
   byzanz-record --class="Slack" -d 5 -x 772 -y 443 -w 134 -h 106 -v xx.gif
 
 ** To know the cursor position use:
    xdotool getmouselocation
    x:772 y:443 screen:0 window:77594629
+* rsync
+  #+BEGIN_EXAMPLE
+  23/11/15 14:21:13 | rsync -LvzP sogadm@10.95.183.190:/var/sog/pgngn/CRH1091367-R5A.zip .
+  27/04/16 19:37:16 | rsync vm-Windows7/ /media/etomort/WD_DISK/
+  27/04/16 19:37:44 | rsync -a  vm-Windows7/ /media/etomort/WD_DISK/
+  24/06/16 00:42:14 | rsync -v es_windows_7_professional_n_with_sp1_x64_dvd_u_677144.iso  manager@54.76.253.178:/home/manager/
+  24/06/16 20:24:50 | rsync -vhP --progress es_windows_7_professional_n_with_sp1_x64_dvd_u_677144.iso  manager@54.76.253.178:/home/manager/
+  12/08/16 14:50:03 | rsync -vhP --progress sysadmin@smip-sm2m-rpm:/var/www/html/smip/portal/R7/m2m-kermit-2.6.0_1267-759b83bf.noarch.rpm .  
+  #+END_EXAMPLE
+* Pidgin chats
+  #+BEGIN_EXAMPLE
+  cd ~/.purple/logs/sipe/tomas.orti.martin@ericsson.com%2cericsson%5cetomort/
+  los directorios tienen los nombres con los que se ha chateado
+  y los de varios, llevan el sufijo #1, #2, etc...
+  Si me apuras, casi mejor que el de Skype, pq se puede hacer grep, awk, sed, etc...
+  #+END_EXAMPLE

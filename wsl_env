@@ -6,3 +6,6 @@ export HISTTIMEFORMAT="%d/%m/%y %T "
 # In WSL I am using native Emacs for Windows
 export ALTERNATE_EDITOR=emacs.exe EDITOR=emacsclientw.exe VISUAL=emacsclientw.exe
 
+# enable XON/XOFF flow control
+# Then CTRL+S will give you a (i-search) (non reverse).
+stty -ixon

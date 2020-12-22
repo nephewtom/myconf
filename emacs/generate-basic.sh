@@ -11,6 +11,7 @@ paren-indent.el
 cond-mac-linux-win.el
 duplicate-line.el
 xah-cut-copy.el
+defalias.el
 
 
 

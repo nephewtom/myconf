@@ -9,6 +9,8 @@
          ("C-<up>" . org-backward-heading-same-level)  
          ("\C-ca" . org-agenda)                     
          ("C-c s" . org-edit-special)
+         ("M-p" . backward-paragraph)
+         ("M-n" . forward-paragraph)
          :map org-src-mode-map
          ("C-c s" . org-edit-src-exit))
   :config

@@ -2,8 +2,8 @@
 # This file should be located in a directory found in env variable PATH
 
 if  grep -e Microsoft /proc/version &> /dev/null ; then
-    emacsclientw.exe -n $*
-    wmctrl -a tom@gnu
+    MYPATH=`wslpath -w $*`
+    emacsclientw.exe -n $MYPATH
 else
     emacsclient -n $*
     wmctrl -a tom@gnu

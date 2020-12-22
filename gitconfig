@@ -16,7 +16,7 @@
 [color]
   ui = auto
 [difftool]
-  prompt = true
+  prompt = false
 [credential]
   helper = store
 [core]
@@ -24,27 +24,38 @@
   autocrlf = input
   editor = emacsclient
 
+; Haven't tested it...
 
-
-
-
-
-
-
-
-[merge]
-  tool = winmerge
-[mergetool "winmerge"]
-  cmd = winmergeu.exe -e -u -dl \"Base\" -dr \"Mine\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
-[mergetool]
-  prompt = false
-
+; [merge]
+;    tool = winmerge
+; [mergetool "winmerge"]
+;   cmd = winmergeu.exe -e -u -dl \"$2\" -dr \"$3\" \"$(wslpath $LOCAL)\" \"$(wslpath $REMOTE)\" \"$(wslpath $MERGED)\"
+;   cmd = winmergeu.exe -e -u -dl \"Base\" -dr \"Mine\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+;[mergetool]
+;   prompt = false
 
 [diff]
   tool = winmerge
+        
 [difftool "winmerge"]
-  name = WinMerge
   trustExitCode = true
-  cmd = /mnt/c/Users/etomort/scoop/shims/winmergeu.exe -u -e "$(wslpath $LOCAL)" "$(wslpath $REMOTE)"
 
-;cmd = winmergeu.exe -e -u -x -wl -wr -dl \"base\" -dr \"mine\" \"$LOCAL\" \"$REMOTE\"
+  ;; For Windows
+  cmd = winmergeu.exe -e -u -dl \"First\" -dr \"Second\" \"$LOCAL\" \"$REMOTE\" 
+
+  ;; For WSL
+  ;; Set in .bashrc: export TMPDIR=/mnt/c/Users/etomort/AppData/Local/Temp 
+  cmd = winmergeu.exe -e -u -dl \"$2\" -dr \"$3\" \"$(wslpath $LOCAL)\" \"$(wslpath $REMOTE)\"
+
+[difftool "kdiff3"]
+  trustExitCode = true
+
+  ;; For Windows
+  cmd = kdiff3.exe \"$LOCAL\" \"$REMOTE\"
+
+  ;; For WSL
+  ;; Set in .bashrc: export TMPDIR=/mnt/c/Users/etomort/AppData/Local/Temp 
+  cmd = kdiff3.exe \"$(wslpath $LOCAL)\" \"$(wslpath $REMOTE)\" 
+  ;; WSL tricks from: https://www.sep.com/sep-blog/2017/06/07/20170607wsl-git-and-beyond-compare/
+
+

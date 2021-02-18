@@ -1,0 +1,9 @@
+ex.=explorer.exe .
+np=notepad.exe $*
+lt=ls -ltr
+dlt=dir /od /a-h
+wm=winmergeu.exe $*
+
+ogl=cd /d c:/Users/tomas/Desktop/OpenGL/LearnOpenGL
+playground=cd /d d:\playground
+playc=cd /d d:\playground\c_cpp

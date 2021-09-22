@@ -3,7 +3,7 @@ alias e='e.sh'
 alias eq='emacs -Q -visit ~/myconf/emacs/debug-emacs.el &'
 alias ebasic='emacs -Q -l ~/myconf/emacs/basic.el &'
 
-alias playground='cd ~/playground'
+alias play='cd ~/playground'
 
 # Review to remove
 

@@ -113,6 +113,10 @@
    https://stackoverflow.com/questions/6313126/how-to-remove-a-directory-from-git-repository
 
 
+* Stash
+** To give a custom name to the stash:  *git stash push -m "My stashed changes"*
+  
+   
 * Workflow/Theory
 ** When to *git pull*
    I would say, after stage the changes.
@@ -153,8 +157,16 @@ ae64b9324e
    Then use cherry-pick to the ones desired:
    : git cherry-pick 42de4805e5
    : git cherry-pick 9151fb9777
-** Tagging: *git tag <tag-name> && git push origin <tag-name>*
-   Example:
+
+** Create tag: *git tag <tag-name> && git push origin <tag-name>*
+   Tags locally
    : git tag 8.2.2-1
+   and push it to remote repository
    : git push origin 8.2.2-1
+
+** Delete tag:
+   Delete it locally
    : git tag -d 8.2.2-1
+   and delete it in remote repository:
+   : git push origin --delete 8.2.2-1
+   

@@ -31,7 +31,7 @@ term.el
 org-mode.el
 nxml.el
 markdown.el
-hideshow.el
+
 edit-with-emacs.el
 python.el
 cpp.el

@@ -22,7 +22,7 @@
 [core]
   filemode = false
   autocrlf = input
-  editor = emacsclient
+  editor = code
 
 ; Haven't tested it...
 

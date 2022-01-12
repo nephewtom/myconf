@@ -1,9 +1,13 @@
 ex.=explorer.exe .
+c=code $*
 np=notepad.exe $*
 lt=ls -ltr
 dlt=dir /od /a-h
 wm=winmergeu.exe $*
 
-ogl=cd /d c:/Users/tomas/Desktop/OpenGL/LearnOpenGL
-playground=cd /d d:\playground
+home=cd /d %home%
+myconf=cd /d %home%/myconf
+ogl=cd /d %home%/Desktop/OpenGL
+play=cd /d d:\playground
 playc=cd /d d:\playground\c_cpp
+drop=cd /d d:\dropbox

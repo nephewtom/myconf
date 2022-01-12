@@ -23,6 +23,7 @@
   filemode = false
   autocrlf = input
   editor = code
+  #editor = emacsclientw.exe -n `wslpath -m $*` 
 
 ; Haven't tested it...
 

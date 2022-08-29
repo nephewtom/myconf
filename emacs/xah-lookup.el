@@ -58,5 +58,5 @@
 ;; https://emacs.stackexchange.com/questions/47782/is-there-a-way-emacs-can-infer-is-running-on-wsl-windows-subsystem-for-linux
 (defun browse-url-tom (url &optional new-window)
   (shell-command
-   (concat "chrome.exe " url)))
+   (concat "C:\\Users\\etomort\\scoop\\apps\\googlechrome\\current\\chrome.exe " url)))
 (setq browse-url-browser-function 'browse-url-tom)

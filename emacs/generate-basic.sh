@@ -4,14 +4,33 @@
 echo "*** Generating BASIC configuration:"
 
 FILES="begin.el
+package.el
 
 bars-and-title.el
 column-and-line-numbers.el
 paren-indent.el
+
 cond-mac-linux-win.el
 duplicate-line.el
 xah-cut-copy.el
+
 defalias.el
+dired.el
+
+
+
+movement.el
+buffers-utils.el
+elisp.el
+
+
+
+
+
+
+
+
+
 
 
 
@@ -19,6 +38,7 @@ defalias.el
 keybindings.el
 basic-special.el
 cua.el"
+
 
 rm -f basic.el 
 echo $FILES | sed 's/ /\n/g' | while read f; do

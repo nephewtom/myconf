@@ -14,3 +14,5 @@
 ;; Follow git symlinks
 (setq vc-follow-symlinks t)
 
+(setq custom-file "~/myconf/emacs/garbage.el")
+;;(load custom-file) 

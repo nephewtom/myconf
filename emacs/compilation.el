@@ -54,8 +54,8 @@
          (switch-to-previous-buffer)
          )
   
-  (global-set-key (kbd "<f9>") 'run-program)
-  (global-set-key (kbd "<f11>") 'clean-program)
+  ;; (global-set-key (kbd "<f9>") 'run-program)
+  ;; (global-set-key (kbd "<f11>") 'clean-program)
   )
 
  ((message "System: Other"))

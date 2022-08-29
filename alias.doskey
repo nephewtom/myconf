@@ -1,9 +1,20 @@
+alias=doskey /macros
 ex.=explorer.exe .
-np=notepad.exe $*
-lt=ls -ltr
-dlt=dir /od /a-h
+c=code $*
 wm=winmergeu.exe $*
+iv=jpegview.exe $1
+pu=plantuml.cmd $1
+np=notepad.exe $*
+chr=chrome.exe $*
+lt=ls -ltr $*
+dlt=dir /od /a-h
 
-ogl=cd /d c:/Users/tomas/Desktop/OpenGL/LearnOpenGL
-playground=cd /d d:\playground
+home=cd /d %home%
+myconf=cd /d %home%/myconf
+down=cd %home%\Downloads
+desktop= cd %home%\Desktop
+
+ogl=cd /d %home%/Desktop/OpenGL
+play=cd /d d:\playground
 playc=cd /d d:\playground\c_cpp
+drop=cd /d d:\dropbox

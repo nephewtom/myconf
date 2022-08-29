@@ -1,4 +1,5 @@
-;; --- FILE:  init.begin.el
+
+;; *** FILE:  begin.el
 ;; Provide timestamp to *Messages* logs
 (load "~/myconf/emacs/log.el")
 
@@ -15,7 +16,10 @@
 ;; Follow git symlinks
 (setq vc-follow-symlinks t)
 
+(setq custom-file "~/myconf/emacs/garbage.el")
+;;(load custom-file) 
 
+;; *** FILE:  package.el
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -47,7 +51,11 @@
 
 ; set the path for manually installed packages
 (add-to-list 'load-path "~/.emacs.d/packages")
-;; --- FILE:  bars-and-title.el
+
+;; --- Wrap region: https://stackoverflow.com/a/2747142/316232
+;; (wrap-region-mode t)
+
+;; *** FILE:  bars-and-title.el
 ;; --- Bars & title
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
@@ -57,6 +65,8 @@
 (setq frame-title-format '("tom@" (:eval (format "%s" system-type))
                            ": "(:eval (if (buffer-file-name)
                                           (buffer-file-name) "%b"))))
+
+(fringe-mode '(16 . 0)) ;; Make left fringe 16 pixels and no right fringe
 
 ;; (setq initial-frame-alist
 ;;       '((background-color . "honeydew")))
@@ -77,27 +87,21 @@
 ;; since Emacs gets terribly slow
 ;; http://shallowsky.com/blog/linux/editors/no-emacs-version-control.html
 (setq vc-handled-backends nil)
-;; --- FILE:  column-and-line-numbers.el
+
+;; *** FILE:  column-and-line-numbers.el
 ;; --- Columns, line-numbers, etc.
 (column-number-mode t)
-(global-linum-mode t) ;; line numbers in all buffers
+;; (global-linum-mode t) ;; line numbers in all buffers
+(global-display-line-numbers-mode)
 
-;; https://stackoverflow.com/q/9990370/316232
-(global-hl-line-mode t) ;; highlight current line
-(make-variable-buffer-local 'global-hl-line-mode)
 
-(load-theme 'monokai t)
 
-;; current line highlighted color
-(set-face-background hl-line-face "#404040")
+;;(set-face-attribute 'linum nil :foreground "#44b340")
 
-;; region highlight color
-(set-face-attribute 'region nil :background "#848000") ;;
+(which-function-mode)
+(set-face-attribute 'which-func nil :foreground "#44b340")
 
-;; fringe color (between line numbers and buffer)
-(set-face-attribute 'fringe nil :background "#505050")
-
-;; --- FILE:  paren-indent.el
+;; *** FILE:  paren-indent.el
 ;; --- Paren stuff
 (show-paren-mode 1)
 (electric-pair-mode 1)
@@ -112,9 +116,8 @@
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
 
-;; --- Wrap region: https://stackoverflow.com/a/2747142/316232
-(wrap-region-mode t)
-;; --- FILE:  cond-mac-linux-win.el
+
+;; *** FILE:  cond-mac-linux-win.el
 (cond
  ;; --- Mac OS X stuff ---
  ((string-equal system-type "darwin")
@@ -162,7 +165,8 @@
   (setq x-wait-for-event-timeout nil)
   )
  )
-;; --- FILE:  duplicate-line.el
+
+;; *** FILE:  duplicate-line.el
 ;; Duplicate line
 (defun duplicate-line (ARG)
   "Duplicate current line, ARG, leaving point in lower line."
@@ -199,7 +203,8 @@
   ;; put the point in the lowest line and return
   (next-line ARG))
 
-;; --- FILE:  xah-cut-copy.el
+
+;; *** FILE:  xah-cut-copy.el
 ;; --- Cut, Copy, Paste from Xah Lee functions   ---
 ;; Check http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
 (defun xah-cut-line-or-region ()
@@ -258,10 +263,58 @@ Version 2017-07-08"
     (end-of-line)
     (forward-char)
             (message "line copied")))))))
-;; --- FILE:  dired.el
+
+;; *** FILE:  defalias.el
+;; defalias for Fast M-x
+;; http://ergoemacs.org/emacs/emacs_alias.html
+
+(defalias 'hgrep 'helm-grep-do-git-grep)
+(defalias 'hfind 'helm-find)
+(defalias 'hman 'helm-man-woman)
+(defalias 'hoccur 'helm-occur)
+(defalias 'hr 'helm-recentf)
+(defalias 'hrec 'helm-recentf)
+
+;; TRY helm-swoop & swiper more...
+
+(defalias 'qr 'query-replace)
+(defalias 'qrr 'query-replace-regexp)
+
+(defalias 'lb 'list-buffers)
+(defalias 'lp 'list-processes)
+(defalias 'eb 'eval-buffer)
+(defalias 'er 'eval-region)
+(defalias 'db 'ediff-buffers)
+(defalias 'difbuf 'ediff-buffers)
+(defalias 'diffil 'ediff-files)
+
+(defalias 'trf 'transpose-frame)
+(defalias 'trframe 'transpose-frame)
+(defalias 'df 'delete-frame)
+(defalias 'nf 'new-frame)
+
+(defalias 'odired 'open-in-dired)
+
+(defalias 'open-in-chrome 'browse-url-of-file)
+(defalias 'oichrome 'browse-url-of-file)
+
+(defun start-windows-explorer () (interactive) (shell-command "explorer.exe ."))
+(defalias 'wx 'start-windows-explorer)
+(defalias 'wexp 'start-windows-explorer)
+
+;; *** FILE:  dired.el
 ;; --- Dired ---
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
+(defvar my-dired-listing-switches nil)
+(defvar my-dired-listing-switches-flag t)
+(defun toggle-hidden-dirs ()
+  (interactive)
+  (if my-dired-listing-switches-flag
+      (dired-sort-other "-lkta")
+    (dired-sort-other "-lkt"))
+  (setq my-dired-listing-switches-flag (not my-dired-listing-switches-flag))
+  (dired-sort-toggle))
 
 (use-package dired
   :bind (:map dired-mode-map
@@ -271,7 +324,9 @@ Version 2017-07-08"
               ("j" . dired-find-file)
               ("e" . ora-ediff-files)
               ("P" . peep-dired)
+              ("h" . toggle-hidden-dirs)
               ("<M-return>" . dired-w32-browser)
+              ("M-i" . switch-to-buffer-other-window)
               )
   :config
   (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
@@ -288,6 +343,7 @@ Version 2017-07-08"
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
   (unbind-key "C-w" dired-mode-map)
+  (unbind-key "M-i" dired-mode-map)
 
 
   (cond
@@ -380,7 +436,8 @@ Version 2017-07-08"
   (setq find-ls-option '("-exec ls -lSr {} + | cut -d ' ' -f5-" . "-lSr"))
   (find-dired dir args)
   (setq find-ls-option '("-ls" . "-dilsb")))
-;; --- FILE:  movement.el
+
+;; *** FILE:  movement.el
 ;; --- Move end of line / Join line
 (defun move-end-of-line-newline-and-indent ()
   "Insert a newline, then indent according to major mode."
@@ -394,19 +451,16 @@ Version 2017-07-08"
 (use-package move-text
   :ensure t
   :config (move-text-default-bindings))
-;; --- FILE:  buffers-utils.el
-(defun switch-to-previous-buffer ()
-  "Swap to previous buffer."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-(defun indent-buffer ()
-  "Select current buffer and indent it."
-  (interactive)
-  (save-excursion
-    (indent-region (point-min) (point-max) nil)))
+;; *** FILE:  buffers-utils.el
+;; TODO: change by use-package
+(require 'buffer-move)
+(defun win-swap () "Swap windows using buffer-move.el" (interactive)
+       (if (null (windmove-find-other-window 'right))
+           (buf-move-left)
+         (buf-move-right)))
+(global-set-key (kbd "C-2") 'win-swap)
 
-(global-auto-revert-mode t) ;; automatically revert buffer when file changes
 
 ;; --- Uniquify 
 (require 'uniquify)
@@ -454,51 +508,55 @@ Version 2017-07-08"
   ;; (add-to-list 'ibuffer-never-show-predicates " .*")
 
   ;; Remove the buffers that match these regexp
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*grip-.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*NeoTree.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*lsp.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Metahelp*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*tip*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*git-credential.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Minibuf-.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Echo Area.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Custom.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Python.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*DOC.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*SPP.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*temp.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*edit.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*ediff-tmp.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*emacs-query.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*autoload.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*spool.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*code-conver.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*helm.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Deletions.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*http.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*RNC.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*elpy.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*server.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\Marked.*")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm ag")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm mini")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm find")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm grep exts")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm M-x")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm-mode")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm buffers")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm man woman*")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Helm Swoop")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Messages")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Help")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*JDEE")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*process")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*diff")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
+  (add-to-list 'ibuffer-never-show-predicates "^\\*")
+  (add-to-list 'ibuffer-never-show-predicates "^ \\*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*grip-.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*NeoTree.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*lsp.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Metahelp*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*tip*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*git-credential.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Minibuf-.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Echo Area.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Custom.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Python.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*DOC.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*SPP.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*temp.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*edit.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*ediff-tmp.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*emacs-query.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*autoload.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*spool.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*code-conver.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*helm.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Deletions.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*http.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*RNC.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*elpy.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*server.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\Marked.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm ag")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm mini")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm find")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm grep exts")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm M-x")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm-mode")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm buffers")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm man woman*")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Helm Swoop")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Messages")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Help")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*JDEE")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*process")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*diff")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*canonical address.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*extract address components.*")
   )
 
 ;; From: http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
@@ -538,17 +596,20 @@ Version 2017-07-08"
       '((mark modified read-only " "
               (name 30 30 :left :elide) ; change: 30s were originally 18s
               " "
-              (vtime 4 4 :left)
+
+              ;; TODO
+              ;;              (vtime 4 4 :left)
+              ;;              " "
+              (mode 16 16 :left :elide)
               " "
               (size 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
 
               " " filename-and-process)
         (mark " "
               (name 16 -1)
               " " filename)))
-;; --- FILE:  elisp.el
+
+;; *** FILE:  elisp.el
 ;; --- Elisp related
 (require 'hl-defined)
 
@@ -560,7 +621,8 @@ Version 2017-07-08"
 (define-key 'help-command (kbd "C-k") 'find-function-on-key)
 (define-key 'help-command (kbd "C-v") 'find-variable)
 
-;; --- FILE:  keybindings.el
+
+;; *** FILE:  keybindings.el
 (require 'iso-transl) ;; Make dead keys work
 
 ;; NOTE: Do not bind C-y & M-w to anything.
@@ -571,9 +633,12 @@ Version 2017-07-08"
 ;; --- Cua mode 
 (cua-mode t) ;; Ctrl+Z, Ctrl+X, Ctrl+C, Ctrl+V (Cmd+ in Mac OSX)
 
+
 ;; --- Search with C-f like MOST apps...
 (global-set-key (kbd "C-f") 'isearch-forward)
+(global-set-key (kbd "C-S-f") 'isearch-forward-symbol-at-point)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-t") 'isearch-yank-word-or-char)
 (define-key isearch-mode-map [down] 'isearch-repeat-forward)
 (define-key isearch-mode-map [up] 'isearch-repeat-backward)
 (global-set-key (kbd "C-s") 'save-buffer) ;; Use C-s to save
@@ -581,9 +646,19 @@ Version 2017-07-08"
 ;; Check: http://emacs.stackexchange.com/questions/22621/cutting-selection-with-cua-mode-bindings-after-searching/
 (define-key isearch-mode-map (kbd "C-x") nil)
 
+
 ;; --- Scroll up & down
 (global-set-key (kbd "M-p") 'backward-paragraph)
 (global-set-key (kbd "M-n") 'forward-paragraph)
+
+
+;; --- Macros
+;; Differenciate <RET> from C-m 
+;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
+(define-key input-decode-map [?\C-m] [C-m])
+(global-set-key (kbd "<C-m>") 'kmacro-start-macro)
+(global-set-key (kbd "<C-S-m>") 'kmacro-end-and-call-macro)
+(global-set-key (kbd "<C-f9>") 'kmacro-call-macro)
 
 
 ;; --- Line operations
@@ -592,8 +667,10 @@ Version 2017-07-08"
 ;; I used to set it to C-j... in order to be similar to vi J key
 ;; join-line function is a defalias of delete-indentation.
 
-(global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "M-<backspace>") 'backward-kill-word)
+(global-set-key (kbd "C-<backspace>") 'backward-kill-sexp)
 (global-set-key (kbd "C-d") 'kill-whole-line)
+(global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
 (global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
 (global-set-key (kbd "M-s s") 'delete-horizontal-space)
@@ -601,6 +678,7 @@ Version 2017-07-08"
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 ;; In that SO question says to use delete-indentation function
 ;; Tomi, what is the difference between both?
+
 
 ;; --- Paren operations
 (global-set-key "%" 'match-paren) ;; Like vim
@@ -614,19 +692,38 @@ Version 2017-07-08"
 
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
+
+
 (global-set-key (kbd "<f7>") 'neotree-toggle)
 (global-set-key (kbd "<f8>") 'ibuffer)
 
-;; TODO: When switch-to-previous-buffer , minibuffer shows 'Mark set',
-;; and sometimes need to hit the key twice... 
-;;(global-set-key (kbd "<fXX>") 'switch-to-previous-buffer) ;; buffer-utils.el
-(global-set-key (kbd "<f9>") 'indent-buffer) ;; buffer-utils.el
-(global-set-key (kbd "<f10>") 'kmacro-start-macro)
-(global-set-key (kbd "<f11>") 'kmacro-end-and-call-macro)
-(global-set-key (kbd "<f12>") 'recompile)
+(defun mark-whole-buffer-and-indent ()
+  (interactive)
+  (mark-whole-buffer)
+  (indent-buffer)
+  )
+(global-set-key (kbd "<f9>") 'mark-whole-buffer-and-indent)
+
+;; F9 & F12 are defined in compilation.el
+(global-set-key (kbd "<f11>") 'indent-buffer)
+(global-set-key (kbd "C-<f12>") 'start-windows-explorer)
 
 
 ;; --- Buffers
+(defun switch-to-previous-buffer ()
+  "Swap to previous buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(defun indent-buffer ()
+  "Select current buffer and indent it."
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+
+(global-auto-revert-mode t) ;; automatically revert buffer when file changes
+
+
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
@@ -647,14 +744,7 @@ Version 2017-07-08"
 (global-set-key [C-next] 'windmove-right)
 (global-set-key [C-prior] 'windmove-left)
 
-;; TODO: change by use-package
-(require 'buffer-move)
-(defun win-swap () "Swap windows using buffer-move.el" (interactive)
-       (if (null (windmove-find-other-window 'right))
-           (buf-move-left)
-         (buf-move-right)))
-(global-set-key (kbd "C-2") 'win-swap)
-(global-set-key (kbd "C-S-o") 'find-file-other-window)
+
 
 ;; --- Font-size & split-pane size
 (global-set-key (kbd "C-=") 'text-scale-adjust)
@@ -688,9 +778,21 @@ Version 2017-07-08"
 
 
 ;; --- Miscellaneous
+
+;; No me funciona... ya que no me deja meter por lo que quiero sustituir...
+(defun query-replace-symbol-at-point ()
+  "Start `query-replace-regexp' with symbol at point as default."
+  (interactive)
+  (let ((sym (symbol-at-point)))
+    (when sym
+      ;; (push (cons (format "\\_<%s\\_>" sym) "") query-replace-defaults)
+      (push (cons (format "%s" sym) "") query-replace-defaults)
+      (call-interactively #'query-replace))))
+
+
 (global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim
-(global-set-key (kbd "C-,") 'iedit-mode)
+(global-set-key (kbd "M-r") 'iedit-mode)
 
 (global-set-key (kbd "M-y") 'company-complete)
 (global-set-key (kbd "M-;") 'hippie-expand)
@@ -713,17 +815,42 @@ Version 2017-07-08"
 ;; Translate the problematic keys to the function key Hyper:
 (keyboard-translate ?\C-i ?\H-i)
 ;; (global-set-key (kbd "<tab>") 'indent-for-tab-command)
-(define-key help-mode-map (kbd "<tab>") 'forward-button) 
+(global-set-key (kbd "M-i") 'switch-to-buffer-other-window)
+;;(define-key help-mode-map (kbd "<tab>") 'forward-button)
 
 ;; Paste with middle mouse button
 ;; https://stackoverflow.com/a/13043670/316232
 (setq mouse-drag-copy-region t)
 (setq select-active-regions nil)
 (global-set-key [mouse-2] 'mouse-yank-at-click)
-;; --- FILE:  keybasic.el
+
+;; *** FILE:  basic-special.el
 (global-set-key (kbd "C-o") 'find-file)
 (global-set-key (kbd "H-i") 'switch-to-buffer)
-;; --- FILE:  cua.el
+
+(eval-after-load "dired" '(progn
+                            (define-key dired-mode-map (kbd "f") 'dired-find-alternate-file)
+                            (put 'dired-find-alternate-file 'disabled nil)
+                            (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
+                            (define-key dired-mode-map (kbd "C-o") 'find-file)
+                            (define-key dired-mode-map (kbd "C-w") 'kill-this-buffer)
+                            (setq dired-listing-switches "-lkt")
+                            )
+                 )
+(eval-after-load "ibuffer" '(progn
+                              (define-key ibuffer-mode-map (kbd "C-o") nil)
+                              (define-key ibuffer-mode-map (kbd "C-i") nil)
+                              (define-key ibuffer-mode-map (kbd "M-h") 'toggle-ibuffer-groups)
+                              (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-forward-filter-group)
+                              )
+                 )
+
+;; (load "~/.emacs.d/elpa/hl-defined-20170223.744/hl-defined-autoloads.el")
+;; (load "~/.emacs.d/elpa/wrap-region-20140117.720/wrap-region-autoloads.el")
+;; (load "~/.emacs.d/elpa/company-20190116.1133/company-autoloads.el")
+;; (load "~/.emacs.d/elpa/helm-20190213.609/helm-autoloads.el")
+
+;; *** FILE:  cua.el
 (defun special-c-return-in-dired ()
   (interactive)
   (if (derived-mode-p 'dired-mode)
@@ -732,55 +859,4 @@ Version 2017-07-08"
   )
 
 (define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
-
-;; --- FILE:  init.end.el
-;; TODO: Print date in scratch buffer
-;; (message (format-time-string "%H:%M:%S.%3N"))
-;; (setq myscratch (get-buffer "*scratch*"))
-;; (print (format-time-string "%H:%M:%S.%3N") myscratch)
-;; (print "rubbish"  myscratch)
-
-;;(setq custom-file "~/myconf/emacs/custom.el")
-;;(load custom-file) 
-(put 'scroll-left 'disabled nil)
-
-
-;;(load "~/myconf/emacs/rg.el")
-;;(load "~/myconf/emacs/smart-line.el")
-;;(load "~/myconf/emacs/spaceline.el")
-
-(server-start) ;; emacs server
-(message "Emacs ready with init.el !")
-(put 'narrow-to-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-
-;; Problem when hitting Alt+Tab on Windows
-;;(global-set-key (kbd "<Scroll_Lock>") '(lambda () (interactive) nil ))
-(global-set-key (kbd "<Scroll_Lock>") 'ignore)
-
-;; --- Recent files stuff
-(recentf-mode 1)
-(setq recentf-max-menu-items 10)
-(defalias 'recf 'recentf-open-files)
-
-;; --- Font-size & split-pane size
-;; For some reason this get disabled if I put it in keybinding.el
-(global-set-key (kbd "C-=") 'text-scale-adjust)
-
-;; --- Custom variables
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (lorem-ipsum flymd zenburn-theme yaml-mode yafolding xah-lookup wgrep web-beautify use-package typing transpose-frame tabbar sx switch-window strace-mode stem sqlplus sql-indent speed-type spaceline-all-the-icons smart-mode-line-powerline-theme scss-mode rpm-spec-mode rainbow-mode rainbow-delimiters racket-mode pyenv-mode py-autopep8 puppet-mode psession projectile processing-snippets processing-mode prettier-js peep-dired paredit pandoc-mode org2blog org-pandoc openwith nhexl-mode move-text monokai-theme micgoline mediawiki markdown-toc magit love-minor-mode log4j-mode load-theme-buffer-local lispy json-mode jedi impatient-mode hl-defined highlight-chars hideshowvis helm-swoop helm-smex helm-gtags helm-etags-plus helm-descbinds helm-css-scss helm-company groovy-mode groovy-imports google-this google-c-style gnuplot-mode ggtags function-args fold-dwim flymake-json flycheck-irony flycheck-color-mode-line flx fill-column-indicator exec-path-from-shell evil etags-select esup elpy elisp-slime-nav edit-server dumb-jump doremi-frm doremi-cmd direx dired-toggle-sudo dired+ diminish diff-hl counsel company-irony company-c-headers color-theme-monokai color-theme-emacs-revert-theme color-theme-eclipse color-theme-buffer-local cmake-mode cmake-ide buffer-move better-defaults bash-completion base16-theme awk-it auto-complete-nxml auto-complete-clang auto-complete-c-headers aggressive-indent))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 

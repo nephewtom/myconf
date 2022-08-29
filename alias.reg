@@ -5,4 +5,4 @@ Windows Registry Editor Version 5.00
 "DefaultColor"=dword:00000000
 "EnableExtensions"=dword:00000001
 "PathCompletionChar"=dword:00000009
-"Autorun"="DOSKEY /MACROFILE=\"C:\\Users\\tomas\\alias.doskey\""
+"Autorun"="DOSKEY /MACROFILE=\"C:\\Users\\tomas\\myconf\\alias.doskey\""

@@ -4,8 +4,6 @@
 ;; (print (format-time-string "%H:%M:%S.%3N") myscratch)
 ;; (print "rubbish"  myscratch)
 
-;;(setq custom-file "~/myconf/emacs/custom.el")
-;;(load custom-file) 
 (put 'scroll-left 'disabled nil)
 
 

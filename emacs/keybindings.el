@@ -31,8 +31,9 @@
 ;; Differenciate <RET> from C-m 
 ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
 (define-key input-decode-map [?\C-m] [C-m])
+(define-key input-decode-map [?\C-\S-m] [C-S-m])
 (global-set-key (kbd "<C-m>") 'kmacro-start-macro)
-(global-set-key (kbd "<C-S-m>") 'kmacro-end-and-call-macro)
+(global-set-key (kbd "<C-S-m>") 'kmacro-end-macro) ;; TODO: This conflicts with S-RET from simple.el
 (global-set-key (kbd "<C-f9>") 'kmacro-call-macro)
 
 
@@ -67,8 +68,17 @@
 
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
+
+
 (global-set-key (kbd "<f7>") 'neotree-toggle)
 (global-set-key (kbd "<f8>") 'ibuffer)
+
+(defun mark-whole-buffer-and-indent ()
+  (interactive)
+  (mark-whole-buffer)
+  (indent-buffer)
+  )
+(global-set-key (kbd "<f9>") 'mark-whole-buffer-and-indent)
 
 ;; F9 & F12 are defined in compilation.el
 (global-set-key (kbd "<f11>") 'indent-buffer)

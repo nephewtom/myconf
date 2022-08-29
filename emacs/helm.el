@@ -2,7 +2,7 @@
 ;; * helm-find: C-x c /
 ;; * To find from helm-find-files (C-x C-f), press: C-c /
 ;; * To grep from helm-find-files (C-x C-f), press: C-u C-s
-;; * helm-do-grep:
+;; * helm-grep-do-git-grep:
 ;;
 (use-package helm
   :ensure t

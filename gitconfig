@@ -22,7 +22,8 @@
 [core]
   filemode = false
   autocrlf = input
-  editor = emacsclientw.exe -n `wslpath -m $*` 
+  editor = code
+  #editor = emacsclientw.exe -n `wslpath -m $*` 
 
 ; Haven't tested it...
 
@@ -59,3 +60,5 @@
   ;; WSL tricks from: https://www.sep.com/sep-blog/2017/06/07/20170607wsl-git-and-beyond-compare/
 
 
+[credential "http://smip-sm2m-dev"]
+	provider = generic

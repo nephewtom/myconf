@@ -1,3 +1,11 @@
+* netcat
+#+begin_example
+nc -v -z -w 1 158.230.72.252 443
+
+-v, --verbose              Set verbosity level (can be used several times)
+-z                         Zero-I/O mode, report connection status only
+-w, --wait <time>          Connect timeout
+#+end_example
 * yum stuff
   yum list installed | grep restzly-server
   yum --showduplicates list available restzly-server

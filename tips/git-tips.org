@@ -1,116 +1,116 @@
 #+STARTUP: content
 * CANCELLED Learn to use magit with Reddit comments & a video from creator :noexport:
-  https://www.reddit.com/r/emacs/comments/2n9tj8/anyone_care_to_share_their_magit_workflow/
-  https://vimeo.com/2871241
-  https://magit.vc/manual/magit/Ediffing.html
+https://www.reddit.com/r/emacs/comments/2n9tj8/anyone_care_to_share_their_magit_workflow/
+https://vimeo.com/2871241
+https://magit.vc/manual/magit/Ediffing.html
 
   
 * Logging
 ** Log show filenames: *git log --name-only*
-   http://stackoverflow.com/questions/1230084/how-to-have-git-log-show-filenames-like-svn-log-v
+http://stackoverflow.com/questions/1230084/how-to-have-git-log-show-filenames-like-svn-log-v
 
 ** View change history of file (diff): *git log -p <filename>*
-   http://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning
+http://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning
 
 ** Log short just one commit line: *git log --pretty=oneline --abbrev-commit*
-   http://stackoverflow.com/questions/4479225/how-to-output-git-log-with-the-first-line-only
+http://stackoverflow.com/questions/4479225/how-to-output-git-log-with-the-first-line-only
 
 ** Log short just one commit line with author: *git log --pretty=format:"%h%x09%an%x09%ad%x09%s"/*
-   http://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date
+http://stackoverflow.com/questions/1441010/the-shortest-possible-output-from-git-log-containing-author-and-date
 
 
 * Diff
 ** Diff a file between branches: *git diff branchA branchB -- myfile*
-   http://stackoverflow.com/questions/4099742/how-to-compare-files-from-two-different-branches
+http://stackoverflow.com/questions/4099742/how-to-compare-files-from-two-different-branches
 ** Diff which files changes between branches: *git diff --name-status master..branchName*
-  Only show filename:
-  git diff --name-status master..branchName
+Only show filename:
+git diff --name-status master..branchName
 
-  Show file differences:
-  git diff master..branchName
-  http://stackoverflow.com/questions/822811/showing-which-files-have-changed-between-two-revisions
+Show file differences:
+git diff master..branchName
+http://stackoverflow.com/questions/822811/showing-which-files-have-changed-between-two-revisions
 ** Show staged changes: *git diff --cached*
-  http://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged
+http://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged
 
 ** Stop tracking a remote branch
-  http://stackoverflow.com/questions/3046436/how-do-you-stop-tracking-a-remote-branch-in-git
-  Simply delete your remote tracking branch :
-  (This will not delete the branch on the remote repo!)
+http://stackoverflow.com/questions/3046436/how-do-you-stop-tracking-a-remote-branch-in-git
+Simply delete your remote tracking branch :
+(This will not delete the branch on the remote repo!)
 
-  git branch -d -r origin/<remote branch name>
+git branch -d -r origin/<remote branch name>
 
-  Remove the upstream information for <branchname>:
-  If no branch is specified it defaults to the current branch.
+Remove the upstream information for <branchname>:
+If no branch is specified it defaults to the current branch.
 
-  git branch --unset-upstream
+git branch --unset-upstream
 
 ** Difftool can be used for GUI tool: *git difftool branchA branchB myfile*
-   Configuring properly .gitconfig
+Configuring properly .gitconfig
 
 
 * Branching
 ** Create a remote branch: *git checkout -b your_branch && git push -u origin your_branch*
-  First, you must create your branch locally
+First, you must create your branch locally
 
-  git checkout -b your_branch
+git checkout -b your_branch
 
-  After that, you can work locally in your branch, when you are ready to share the branch, push it.
-  The next command push the branch to the remote repository origin and tracks it
+After that, you can work locally in your branch, when you are ready to share the branch, push it.
+The next command push the branch to the remote repository origin and tracks it
 
-  git push -u origin your_branch
-  http://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
+git push -u origin your_branch
+http://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
 
 ** Delete local branch: *git branch -d the_local_branch*
-  http://makandracards.com/makandra/621-git-delete-a-branch-local-or-remote
+http://makandracards.com/makandra/621-git-delete-a-branch-local-or-remote
 ** Delete local & remote branch: *git branch -d branch_name && git push origin --delete branch_name*
-   http://stackoverflow.com/questions/2003505/how-to-delete-a-git-branch-both-locally-and-remotely
+http://stackoverflow.com/questions/2003505/how-to-delete-a-git-branch-both-locally-and-remotely
 ** Rename git branch locally and remotely
-   https://gist.github.com/lttlrck/9628955
-   git branch -m old_branch new_branch         # Rename branch locally    
-   git push origin :old_branch                 # Delete the old branch (colon does it)
-   git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote
+https://gist.github.com/lttlrck/9628955
+git branch -m old_branch new_branch         # Rename branch locally    
+git push origin :old_branch                 # Delete the old branch (colon does it)
+git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote
 
 ** Checkout remote branch: *git fetch && git checkout <branch-name>*
-   http://stackoverflow.com/questions/1783405/how-to-check-out-a-remote-git-branch
+http://stackoverflow.com/questions/1783405/how-to-check-out-a-remote-git-branch
 
 
 * Undoing/Delete
 ** Discard unstaged changes: *git checkout path/to/file/to/revert*
-  http://stackoverflow.com/questions/52704/how-do-you-discard-unstaged-changes-in-git
+http://stackoverflow.com/questions/52704/how-do-you-discard-unstaged-changes-in-git
 
 ** Undo last commit and keep changes at index: *git reset --soft HEAD~1*
-  http://stackoverflow.com/questions/927358/how-to-undo-last-commits-in-git
+http://stackoverflow.com/questions/927358/how-to-undo-last-commits-in-git
 
 ** Undo a git merge that hasn't been pushed yet: *git reset --hard <commit_sha>*
-  With git log check which commit is one prior the merge. Then you can reset it using:
-  git reset --hard <commit_sha>
+With git log check which commit is one prior the merge. Then you can reset it using:
+git reset --hard <commit_sha>
 
-  There's also another way that will get you back 1 commit.
-  git reset --hard HEAD~1
+There's also another way that will get you back 1 commit.
+git reset --hard HEAD~1
 
-  http://stackoverflow.com/questions/2389361/undo-a-git-merge-that-hasnt-been-pushed-yet
+http://stackoverflow.com/questions/2389361/undo-a-git-merge-that-hasnt-been-pushed-yet
 
 ** Delete file from repo: *git rm file1.txt*
-   git rm file1.txt
-   git commit -m "remove file1.txt"
+git rm file1.txt
+git commit -m "remove file1.txt"
 
-   But if you want to remove the file only from the Git repository and not remove it from the filesystem, use:
-   git rm --cached file1.txt
+But if you want to remove the file only from the Git repository and not remove it from the filesystem, use:
+git rm --cached file1.txt
 
-   And to push changes to remote repo:
-   git push origin branch_name  
-   http://stackoverflow.com/questions/2047465/how-can-i-delete-a-file-from-git-repo
+And to push changes to remote repo:
+git push origin branch_name  
+http://stackoverflow.com/questions/2047465/how-can-i-delete-a-file-from-git-repo
 
 ** Delete directory from repo
-   Both git and local:
-   git rm -r myFolder
-   git commit -m "Remove myFolder directory"
-   git push origin <your-git-branch>
+Both git and local:
+git rm -r myFolder
+git commit -m "Remove myFolder directory"
+git push origin <your-git-branch>
 
-   Remove from git but not from local:
-   git rm -r --cached myFolder
+Remove from git but not from local:
+git rm -r --cached myFolder
 
-   https://stackoverflow.com/questions/6313126/how-to-remove-a-directory-from-git-repository
+https://stackoverflow.com/questions/6313126/how-to-remove-a-directory-from-git-repository
 
 
 * Stash
@@ -119,54 +119,54 @@
    
 * Workflow/Theory
 ** When to *git pull*
-   I would say, after stage the changes.
-   If it is done after commit, to avoid an extra merge commit, do *git pull --rebase*
-   Othe way is to *git stash* before *git pull* and then *git stash apply*
-   http://stackoverflow.com/questions/18529206/when-do-i-need-to-do-git-pull-before-or-after-git-add-git-commit
+I would say, after stage the changes.
+If it is done after commit, to avoid an extra merge commit, do *git pull --rebase*
+Othe way is to *git stash* before *git pull* and then *git stash apply*
+http://stackoverflow.com/questions/18529206/when-do-i-need-to-do-git-pull-before-or-after-git-add-git-commit
 ** What is HEAD
-   http://stackoverflow.com/questions/2529971/what-is-the-head-in-git
-   Interesting answer and comments that explain that a branch point to a commit.
-   And a commit to its parents, but there is no reference from the commits to the branch.
-   - TODO: Read more about *git internals*
-   - If you look at the contents of .git/HEAD you'll see something like "ref: refs/heads/master"
+http://stackoverflow.com/questions/2529971/what-is-the-head-in-git
+Interesting answer and comments that explain that a branch point to a commit.
+And a commit to its parents, but there is no reference from the commits to the branch.
+  - TODO: Read more about *git internals*
+  - If you look at the contents of .git/HEAD you'll see something like "ref: refs/heads/master"
 
-   More complete: http://stackoverflow.com/questions/964876/head-and-orig-head-in-git/964927#964927
+    More complete: http://stackoverflow.com/questions/964876/head-and-orig-head-in-git/964927#964927
 
 
 * Other
 ** Check if pull needed on branch: *git remote update && git status -uno*
-   - First use *git remote update*, to bring your remote refs up to date
-   - Then:
-     1) *git status -uno* will tell you whether the branch you are tracking is ahead, behind or has diverged.
-        If it says nothing, the local and remote are the same.
-     2) *git show-branch *master* will show you the commits in all of the branches whose names end in master
-        (eg master and origin/master).
-   http://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
-   
+  - First use *git remote update*, to bring your remote refs up to date
+  - Then:
+    1) *git status -uno* will tell you whether the branch you are tracking is ahead, behind or has diverged.
+       If it says nothing, the local and remote are the same.
+    2) *git show-branch *master* will show you the commits in all of the branches whose names end in master
+       (eg master and origin/master).
+       http://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
+
 ** Cherry pick: *git cherry-pick <commitSha>*
-   Use first *git hist* to list the commits I want to cherry pick.
-   This can be used to get the first five commit Sha:
-   #+BEGIN_SRC shell
-$ git log --pretty=format:'%h' | head -5
-42de4805e5
-d8e30e7644
-ae64b9324e
-9151fb9777
-09352747ed   
-   #+END_SRC
-   Then use cherry-pick to the ones desired:
-   : git cherry-pick 42de4805e5
-   : git cherry-pick 9151fb9777
+Use first *git hist* to list the commits I want to cherry pick.
+This can be used to get the first five commit Sha:
+#+BEGIN_SRC shell
+  $ git log --pretty=format:'%h' | head -5
+  42de4805e5
+  d8e30e7644
+  ae64b9324e
+  9151fb9777
+  09352747ed   
+#+END_SRC
+Then use cherry-pick to the ones desired:
+: git cherry-pick 42de4805e5
+: git cherry-pick 9151fb9777
 
 ** Create tag: *git tag <tag-name> && git push origin <tag-name>*
-   Tags locally
-   : git tag 8.2.2-1
-   and push it to remote repository
-   : git push origin 8.2.2-1
+Tags locally
+: git tag 8.2.2-1
+and push it to remote repository
+: git push origin 8.2.2-1
 
 ** Delete tag:
-   Delete it locally
-   : git tag -d 8.2.2-1
-   and delete it in remote repository:
-   : git push origin --delete 8.2.2-1
+Delete it locally
+: git tag -d 8.2.2-1
+and delete it in remote repository:
+: git push origin --delete 8.2.2-1
    

@@ -15,7 +15,7 @@
  ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
-  (set-face-attribute 'default nil :family "Consolas" :height 140)
+  (set-face-attribute 'default nil :family "Consolas" :height 130)
   (add-to-list 'exec-path "%HOME%/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 

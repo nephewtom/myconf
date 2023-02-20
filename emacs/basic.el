@@ -135,7 +135,7 @@
  ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
-  (set-face-attribute 'default nil :family "Consolas" :height 140)
+  (set-face-attribute 'default nil :family "Consolas" :height 130)
   (add-to-list 'exec-path "%HOME%/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 
@@ -280,6 +280,7 @@ Version 2017-07-08"
 (defalias 'qr 'query-replace)
 (defalias 'qrr 'query-replace-regexp)
 
+(defalias 'ib 'ibuffer)
 (defalias 'lb 'list-buffers)
 (defalias 'lp 'list-processes)
 (defalias 'eb 'eval-buffer)
@@ -339,7 +340,7 @@ Version 2017-07-08"
   (setq diredp-hide-details-initially-flag nil)
   (add-hook 'dired-mode-hook 'auto-revert-mode)
   (require 'dired-x)
-  (require 'dired+)
+  ;;(require 'dired+)
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
   (unbind-key "C-w" dired-mode-map)
@@ -656,8 +657,9 @@ Version 2017-07-08"
 ;; Differenciate <RET> from C-m 
 ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
 (define-key input-decode-map [?\C-m] [C-m])
+(define-key input-decode-map [?\C-\S-m] [C-S-m])
 (global-set-key (kbd "<C-m>") 'kmacro-start-macro)
-(global-set-key (kbd "<C-S-m>") 'kmacro-end-and-call-macro)
+(global-set-key (kbd "<C-S-m>") 'kmacro-end-macro) ;; TODO: This conflicts with S-RET from simple.el
 (global-set-key (kbd "<C-f9>") 'kmacro-call-macro)
 
 
@@ -778,6 +780,8 @@ Version 2017-07-08"
 
 
 ;; --- Miscellaneous
+
+(global-set-key (kbd "C-h 8") 'google-translate-at-point)
 
 ;; No me funciona... ya que no me deja meter por lo que quiero sustituir...
 (defun query-replace-symbol-at-point ()

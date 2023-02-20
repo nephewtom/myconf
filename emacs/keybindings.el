@@ -155,6 +155,8 @@
 
 ;; --- Miscellaneous
 
+(global-set-key (kbd "C-h 8") 'google-translate-at-point)
+
 ;; No me funciona... ya que no me deja meter por lo que quiero sustituir...
 (defun query-replace-symbol-at-point ()
   "Start `query-replace-regexp' with symbol at point as default."

@@ -24,7 +24,6 @@ buffers-utils.el
 elisp.el
 flycheck.el
 company.el
-xah-lookup.el
 google-translate.el
 magit.el
 term.el
@@ -34,11 +33,15 @@ markdown.el
 
 edit-with-emacs.el
 python.el
-cpp.el
+toc-org.el
 keybindings.el
 compilation.el
 cua.el
+
 end.el"
+
+# TODO: Test that thing
+# emacs-reveal.el
 
 rm -f init.el 
 echo $FILES | sed 's/ /\n/g' | while read f; do

@@ -20,10 +20,11 @@
 [credential]
   helper = store
 [core]
-  filemode = false
+  ; filemode = false
   autocrlf = input
-  editor = code
+  #editor = code
   #editor = emacsclientw.exe -n `wslpath -m $*` 
+  editor = emacsclientw.exe -n 
 
 ; Haven't tested it...
 

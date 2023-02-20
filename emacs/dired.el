@@ -34,7 +34,7 @@
   (setq diredp-hide-details-initially-flag nil)
   (add-hook 'dired-mode-hook 'auto-revert-mode)
   (require 'dired-x)
-  (require 'dired+)
+  ;;(require 'dired+)
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
   (unbind-key "C-w" dired-mode-map)

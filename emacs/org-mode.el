@@ -1,7 +1,12 @@
+;; Need to put this and not in keybindings.el
+;; to avoid org-mode C-h 7 specific definition being overwritten
+(global-set-key (kbd "C-h 7") 'browse-url-at-point)
+
 (use-package org
   :ensure
   :bind (("C-c l" . org-store-link)
          ("C-c o" . org-open-at-point)
+         ("C-h 7" . org-open-at-point)
          :map org-mode-map
          ("C-<tab>" . nil)
          ("M-h" . nil)                                  
@@ -48,6 +53,9 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((dot . t)))
+  
+  :init
+  (add-hook 'org-mode-hook 'org-indent-mode)
   )
 
 (defun my/fix-inline-images ()
@@ -82,13 +90,18 @@
 ;;   (interactive)
 ;;   (browse-url-of-file (markdown-export)))
 
+
+;; https://emacs.stackexchange.com/questions/19945/command-to-insert-code-block
+(require 'org-tempo)
+
+
 (defun org-toggle-link-display ()
   "Toggle the literal or descriptive display of links."
   (interactive)
   (if org-descriptive-links
       (progn (org-remove-from-invisibility-spec '(org-link))
-         (org-restart-font-lock)
-         (setq org-descriptive-links nil))
+             (org-restart-font-lock)
+             (setq org-descriptive-links nil))
     (progn (add-to-invisibility-spec '(org-link))
-       (org-restart-font-lock)
-       (setq org-descriptive-links t))))
+           (org-restart-font-lock)
+           (setq org-descriptive-links t))))

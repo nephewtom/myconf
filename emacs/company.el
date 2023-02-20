@@ -8,7 +8,7 @@
   (company-mode)
   (setq company-idle-delay 0)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
-  (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
+  ;; (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
   (add-to-list 'company-backends 'company-elisp)
   (when (boundp 'company-backends)
     (make-local-variable 'company-backends)

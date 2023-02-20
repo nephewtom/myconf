@@ -56,9 +56,9 @@
 ;; (wrap-region-mode t)
 
 ;; *** FILE:  theme.el
-;;(load-theme 'monokai t)
+(load-theme 'monokai t)
 
-(load-theme 'naysayer t)
+;;(load-theme 'naysayer t)
 (set-face-attribute 'mode-line-inactive nil :box t)
 ;; (custom-theme-set-variables
 ;;  'naysayer
@@ -70,25 +70,25 @@
  ' (org-level-1 ((t (:inherit outline-1 :foreground "#FD971F")))))
 
 (custom-set-faces
- ' (org-level-2 ((t (:inherit outline-1 :foreground "#A6E22E")))))
+ ' (org-level-2 ((t (:inherit outline-2 :foreground "#A6E22E")))))
 
 (custom-set-faces
- ' (org-level-3 ((t (:inherit outline-1 :foreground "#66D9EF")))))
+ ' (org-level-3 ((t (:inherit outline-3 :foreground "#66D9EF")))))
 
 (custom-set-faces
- ' (org-level-4 ((t (:inherit outline-1 :foreground "#E6DB74")))))
+ ' (org-level-4 ((t (:inherit outline-4 :foreground "#E6DB74")))))
 
 (custom-set-faces
- ' (org-level-5 ((t (:inherit outline-1 :foreground "#A1EFE4")))))
+ ' (org-level-5 ((t (:inherit outline-5 :foreground "#A1EFE4")))))
 
 (custom-set-faces
- ' (org-level-6 ((t (:inherit outline-1 :foreground "#A6E22E")))))
+ ' (org-level-6 ((t (:inherit outline-6 :foreground "#A6E22E")))))
 
 (custom-set-faces
- ' (org-level-7 ((t (:inherit outline-1 :foreground "#F92672")))))
+ ' (org-level-7 ((t (:inherit outline-7 :foreground "#F92672")))))
 
 (custom-set-faces
- ' (org-level-8 ((t (:inherit outline-1 :foreground "#66D9EF")))))
+ ' (org-level-8 ((t (:inherit outline-8 :foreground "#66D9EF")))))
 
 
 
@@ -203,7 +203,7 @@
  ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
-  (set-face-attribute 'default nil :family "Consolas" :height 140)
+  (set-face-attribute 'default nil :family "Consolas" :height 130)
   (add-to-list 'exec-path "%HOME%/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 
@@ -362,6 +362,7 @@ buffer is not visiting a file."
 (defalias 'qr 'query-replace)
 (defalias 'qrr 'query-replace-regexp)
 
+(defalias 'ib 'ibuffer)
 (defalias 'lb 'list-buffers)
 (defalias 'lp 'list-processes)
 (defalias 'eb 'eval-buffer)
@@ -421,7 +422,7 @@ buffer is not visiting a file."
   (setq diredp-hide-details-initially-flag nil)
   (add-hook 'dired-mode-hook 'auto-revert-mode)
   (require 'dired-x)
-  (require 'dired+)
+  ;;(require 'dired+)
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
   (unbind-key "C-w" dired-mode-map)
@@ -873,7 +874,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (company-mode)
   (setq company-idle-delay 0)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
-  (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
+  ;; (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
   (add-to-list 'company-backends 'company-elisp)
   (when (boundp 'company-backends)
     (make-local-variable 'company-backends)
@@ -890,70 +891,6 @@ https://github.com/jaypei/emacs-neotree/pull/110"
               :map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
-
-;; *** FILE:  xah-lookup.el
-;; --- Extend xah-lookup with spanish & alias ---
-(use-package xah-lookup
-  :ensure t
-  :config
-  ;; M-x rae
-  (defun xah-lookup-drae (&optional *word)
-    "Lookup definition of current *WORD or text selection in URL 'http://dle.rae.es/?w='."
-    "Note: this is the old address `http://buscon.rae.es/drae/srv/search?val='."
-    (interactive)
-    (xah-lookup-word-on-internet
-     *word
-     (get 'xah-lookup-drae 'xah-lookup-url )
-     (get 'xah-lookup-drae 'xah-lookup-browser-function  )))
-
-  (put 'xah-lookup-drae 'xah-lookup-url "http://dle.rae.es/?w=word02051")
-  (put 'xah-lookup-drae 'xah-lookup-browser-function xah-lookup-browser-function)
-
-  ;; M-x uee
-  (defun xah-lookup-linguee (&optional *word)
-    "Lookup definition of current *WORD or text selection in URL `http://www.linguee.es/espanol-ingles/search?source=auto&query='."
-    (interactive)
-    (xah-lookup-word-on-internet
-     *word
-     (get 'xah-lookup-linguee 'xah-lookup-url )
-     (get 'xah-lookup-linguee 'xah-lookup-browser-function )))
-  
-  (put 'xah-lookup-linguee 'xah-lookup-url  "http://www.linguee.es/espanol-ingles/search?source=auto&query=word02051")
-  (put 'xah-lookup-linguee 'xah-lookup-browser-function xah-lookup-browser-function)
-
-  (defun xah-google-translate (&optional *word)
-    "Lookup definition of current *WORD or text selection in URL https://translate.google.com/?source=gtx_c#auto/es/"
-    (interactive)
-    (xah-lookup-word-on-internet
-     *word
-     (get 'xah-google-translate 'xah-lookup-url )
-     (get 'xah-google-translate 'xah-lookup-browser-function )))
-  
-  (put 'xah-google-translate 'xah-lookup-url  "https://translate.google.com/?source=gtx_c#auto/es/word02051")
-  (put 'xah-google-translate 'xah-lookup-browser-function xah-lookup-browser-function)
-
-  
-  (defalias 'xlgoogle 'xah-lookup-google) ;; M-x xlg
-  (defalias 'xlwikipedia 'xah-lookup-wikipedia) ;; M-x xlw
-
-  :bind (
-         :map help-map
-         ("6" . browse-url-of-buffer)
-         ("7" . browse-url-at-point)
-         ("8" . xah-lookup-google)
-         ("9" . xah-lookup-word-definition)
-         ("0" . xah-google-translate))
-  )
-
-(global-set-key (kbd "<f1> 7") 'browse-url-at-point)
-(global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
-
-;; TODO: I only want this on WSL
-;; https://emacs.stackexchange.com/questions/47782/is-there-a-way-emacs-can-infer-is-running-on-wsl-windows-subsystem-for-linux
-(defun browse-url-tom (url &optional new-window)
-  (shell-command
-   (concat "C:\\Users\\etomort\\scoop\\apps\\googlechrome\\current\\chrome.exe " url)))
-(setq browse-url-browser-function 'browse-url-tom)
 
 ;; *** FILE:  google-translate.el
 (use-package google-translate
@@ -1071,10 +1008,15 @@ https://github.com/jaypei/emacs-neotree/pull/110"
     (shell)))
 
 ;; *** FILE:  org-mode.el
+;; Need to put this and not in keybindings.el
+;; to avoid org-mode C-h 7 specific definition being overwritten
+(global-set-key (kbd "C-h 7") 'browse-url-at-point)
+
 (use-package org
   :ensure
   :bind (("C-c l" . org-store-link)
          ("C-c o" . org-open-at-point)
+         ("C-h 7" . org-open-at-point)
          :map org-mode-map
          ("C-<tab>" . nil)
          ("M-h" . nil)                                  
@@ -1121,6 +1063,9 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((dot . t)))
+  
+  :init
+  (add-hook 'org-mode-hook 'org-indent-mode)
   )
 
 (defun my/fix-inline-images ()
@@ -1155,16 +1100,21 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 ;;   (interactive)
 ;;   (browse-url-of-file (markdown-export)))
 
+
+;; https://emacs.stackexchange.com/questions/19945/command-to-insert-code-block
+(require 'org-tempo)
+
+
 (defun org-toggle-link-display ()
   "Toggle the literal or descriptive display of links."
   (interactive)
   (if org-descriptive-links
       (progn (org-remove-from-invisibility-spec '(org-link))
-         (org-restart-font-lock)
-         (setq org-descriptive-links nil))
+             (org-restart-font-lock)
+             (setq org-descriptive-links nil))
     (progn (add-to-invisibility-spec '(org-link))
-       (org-restart-font-lock)
-       (setq org-descriptive-links t))))
+           (org-restart-font-lock)
+           (setq org-descriptive-links t))))
 
 ;; *** FILE:  nxml.el
 ;; --- XML Stuff ---
@@ -1265,8 +1215,8 @@ by using nxml's indentation rules."
          ("M-n" . nil))
 
   :config
-  (setq markdown-open-command "markdownmonster.exe")
-  ;;(setq markdown-command "markdown")
+  (setq markdown-open-command nil)
+  (setq markdown-command nil)
   )
 
 ;; IMP!: grip-mode is the way to go for Markdown preview
@@ -1282,15 +1232,12 @@ by using nxml's indentation rules."
 
 (defun markdown-html (buffer)
   (princ (with-current-buffer buffer
-           (format "<!DOCTYPE html><html><title>Tom Cooking Markdown...</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
-         (current-buffer)))
+           (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+    (current-buffer)))
 
-;; Gives error...
-;;(imp-set-user-filter 'markdown-html)
 
-;; (setq imp-user-filter 'markdown-filter-for-impatient-mode)
-;; (cl-incf imp-last-state)
-;; (imp--notify-clients)
+(require 'impatient-mode)
+(imp-set-user-filter 'markdown-html)
 
 (defun markdown-preview-browser ()
   (interactive)
@@ -1298,6 +1245,16 @@ by using nxml's indentation rules."
   (setq imp-user-filter #'markdown-html)
   (cl-incf imp-last-state)
   (imp--notify-clients))
+
+
+
+;; I modified the code slightly to export my org-mode code as markdown and then display it:
+(defun markdown-html-org (buffer)
+  (with-current-buffer buffer (org-md-export-as-markdown))
+  (princ (with-current-buffer "*Org MD Export*"
+           (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+    (current-buffer)))
+;; .... Works great as long as org-export-show-temporary-export-buffer is nil
 
 ;; *** FILE:  edit-with-emacs.el
 ;; --- Edit with Emacs ---
@@ -1345,45 +1302,17 @@ by using nxml's indentation rules."
 
 ;; (setq elpy-rpc-python-command "python2")  
 
-;; *** FILE:  cpp.el
-(use-package cc-mode
-  :config
-  (unbind-key "C-M-h" c++-mode-map)
-  (unbind-key "C-M-j" c++-mode-map)
-  (setq c-default-style "linux") ;; BSD/Allman brackets
-  (setq c-basic-offset 4)      ;; 4-space indent
-  )
+;; *** FILE:  toc-org.el
+(if (require 'toc-org nil t)
+    (progn
+      (add-hook 'org-mode-hook 'toc-org-mode)
 
+      ;; enable in markdown, too
+      (add-hook 'markdown-mode-hook 'toc-org-mode)
+      ;; (define-key markdown-mode-map (kbd "\C-c\C-o") 'toc-org-markdown-follow-thing-at-point)
+      )
+  (warn "toc-org not found"))
 
-;; https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
-(require 'aggressive-indent) ;; Aggresive indentation
-(aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
-
-;;(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)
-
-;; (Conditional) C/C++ Keybinds
-;; (add-hook 'c-mode-common-hook
-;; (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
-
-(defun delete-carrage-returns ()
-  (interactive)
-  (save-excursion
-    (goto-char 0)
-    (while (search-forward "\r" nil :noerror)
-      (replace-match ""))))
-
-(defun astyle-this-buffer (pmin pmax)
-  (interactive "r")
-  (shell-command-on-region pmin pmax
-                           "astyle --style=mozilla -s4 -xB -k1"
-                           (current-buffer) t 
-                           (get-buffer-create "*Astyle Errors*") t)
-  (replace-string  )
-  (mark-whole-buffer)
-  (indent-buffer)
-  )
-
-(defalias 'ast 'astyle-this-buffer)
 
 ;; *** FILE:  keybindings.el
 (require 'iso-transl) ;; Make dead keys work
@@ -1419,8 +1348,9 @@ by using nxml's indentation rules."
 ;; Differenciate <RET> from C-m 
 ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
 (define-key input-decode-map [?\C-m] [C-m])
+(define-key input-decode-map [?\C-\S-m] [C-S-m])
 (global-set-key (kbd "<C-m>") 'kmacro-start-macro)
-(global-set-key (kbd "<C-S-m>") 'kmacro-end-and-call-macro)
+(global-set-key (kbd "<C-S-m>") 'kmacro-end-macro) ;; TODO: This conflicts with S-RET from simple.el
 (global-set-key (kbd "<C-f9>") 'kmacro-call-macro)
 
 
@@ -1541,6 +1471,8 @@ by using nxml's indentation rules."
 
 
 ;; --- Miscellaneous
+
+(global-set-key (kbd "C-h 8") 'google-translate-at-point)
 
 ;; No me funciona... ya que no me deja meter por lo que quiero sustituir...
 (defun query-replace-symbol-at-point ()

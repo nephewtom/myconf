@@ -24,7 +24,7 @@ buffers-utils.el
 elisp.el
 flycheck.el
 company.el
-xah-lookup.el
+
 google-translate.el
 magit.el
 term.el
@@ -34,7 +34,7 @@ markdown.el
 
 edit-with-emacs.el
 python.el
-cpp.el
+
 keybindings.el
 compilation.el
 cua.el

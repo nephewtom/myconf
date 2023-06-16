@@ -31,4 +31,4 @@
 (add-to-list 'load-path "~/.emacs.d/packages")
 
 ;; --- Wrap region: https://stackoverflow.com/a/2747142/316232
-(wrap-region-mode t)
+;; (wrap-region-mode t)

@@ -1,7 +1,7 @@
 ;; --- Elisp related
-(require 'hl-defined)
+;; (require 'hl-defined)
 
-(add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
+;; (add-hook 'emacs-lisp-mode-hook 'hdefd-highlight-mode 'APPEND)
 
 ;; http://emacsredux.com/blog/2014/06/18/quickly-find-emacs-lisp-sources/
 (define-key 'help-command (kbd "C-l") 'find-library)

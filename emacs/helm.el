@@ -42,9 +42,9 @@
   (setq helm-split-window-inside-p t)
   (helm-autoresize-mode 1))
 
-(use-package helm-config
-  ;; :ensure t
-  )
+;; (use-package helm-config
+;;   ;; :ensure t
+;;   )
 
 ;;(setq helm-display-header-line nil) ;; t by default
 ;;(set-face-attribute 'helm-source-header t :height 10.0)

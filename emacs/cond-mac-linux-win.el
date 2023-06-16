@@ -32,7 +32,8 @@
  
  ;; --- Linux stuff ---
  ((message "System: Linux")
-  (set-face-attribute 'default nil :family "Consolas" :height 140)
+  (set-face-attribute 'default nil :family "Liberation Mono-14" :height 120)
+  (set-frame-font "Liberation Mono-14:antialias=1")
 
   ;; --- Persistent sessions
   ;; https://github.com/thierryvolpiatto/psession

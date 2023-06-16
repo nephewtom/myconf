@@ -1,5 +1,5 @@
 [user]
-  name = nephewTom 
+  name = tomasorti
   email = tomasorti@gmail.com
 
 [sendpack]
@@ -17,8 +17,10 @@
   ui = auto
 [difftool]
   prompt = false
-[credential]
-  helper = store
+
+; [credential]
+; helper = store
+
 [core]
   filemode = false
   autocrlf = input

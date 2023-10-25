@@ -1,0 +1,138 @@
+* Basics: IoC container and Beans
+** What is a Spring Bean?
+The objects that form the backbone of a Spring application and that are managed by the Spring Inversion of Control (IoC) container are called beans.
+So, a bean is an object that is instantiated, assembled and otherwise managed by a Spring IoC container.
+https://www.baeldung.com/spring-bean
+
+** Application Context
+The interfaces BeanFactory and ApplicationContext represent the Spring IoC container.
+
+BeanFactory is the root interface for accessing the Spring container.
+It provides basic functionalities for managing beans.
+
+On the other hand, the ApplicationContext is a sub-interface of the BeanFactory.
+Therefore, it offers all the functionalities of BeanFactory plus enterprise-specific functionalities.
+Like: resolving messages, supporting internationalization, publishing events, and application-layer specific contexts.
+https://www.baeldung.com/spring-application-context
+
+** @Component
+It allows Spring to detect our custom beans automatically.
+So, our application will be scanned by Spring to find all these annotations.
+It will instantiate them and inject specific dependencies into them.
+And inject them wherever needed.
+https://www.baeldung.com/spring-component-annotation
+
+** @Bean
+It is used at method level but NOT at class level.
+
+** @Autowired
+To read  AGAIN:
+https://www.baeldung.com/inversion-control-and-dependency-injection-in-spring
+https://www.baeldung.com/spring-autowire
+
+
+* Common Spring Beans annotations
+@Configuration, @Controller, @Service and @Repository are all meta-annotations of @Component.
+They share the same bean naming behavior.
+Spring also automatically picks them up during the component scanning process.
+https://www.baeldung.com/spring-bean-annotations
+
+** @Configuration
+
+** @Controller @RestController
+@Controller is simply a specialization of the @Component class, which allows us to auto-detect implementation classes through the classpath scanning.
+Typically used in combination with a @RequestMapping annotation for request handling methods.
+It is the C in Spring MVC (Model-View-Controller).
+
+@RestController is a specialized version to simplify the creation of RESTful web services.
+It includes the @Controller and @ResponseBody annotations, so simplifies the implementation.
+https://www.baeldung.com/spring-controller-vs-restcontroller
+
+** @Service
+Its goal is mostly to tell Spring this class is going to be a @Component and mark it with a special stereotype, which is @Service in our case.
+
+But, hey, Tom, @Service and @Controller annotations are exactly equal...
+https://www.baeldung.com/spring-service-annotation-placement
+
+** @Repository
+Used in DAO or Repository classes that represent the database access layer in an application.
+https://www.baeldung.com/spring-component-repository-service
+
+
+* @ConfigurationProperties @PropertySource
+https://www.baeldung.com/configuration-properties-in-spring-boot
+https://www.baeldung.com/properties-with-spring
+https://www.baeldung.com/spring-yaml-propertysource
+
+* Java annotations
+https://www.baeldung.com/java-default-annotations
+https://www.baeldung.com/java-custom-annotation
+
+* Circular dependencies in Spring
+SO post:
+https://stackoverflow.com/questions/77353601/how-to-solve-a-circular-reference-in-a-springboot-application-using-propertysou
+
+
+https://stackoverflow.com/questions/3485347/circular-dependency-in-spring
+https://www.baeldung.com/circular-dependencies-in-spring
+https://medium.com/@karthik.jeyapal/circular-dependency-in-spring-boot-how-to-detect-and-fix-it-2a6e64bb488f
+
+** StackOverflow code post
+
+#+begin_src java
+---
+        @SpringBootApplication
+        public class Application {
+                public static void main(String[] args) {
+                	SpringApplication.run(Application.class, args);
+                }
+        }
+        ---
+        @Configuration
+        @ConfigurationProperties
+        @PropertySource(value = "classpath:endpoints.yaml", factory = YamlPropertySourceFactory.class)
+         
+        public class MyConfig {
+            public List<Endpoint> endpoints;
+        }
+        ---
+        https://www.baeldung.com/spring-yaml-propertysource
+        ---
+        public class Endpoint {
+            public String host;
+            public int port;
+            public Connection connection;
+                // getters & setters
+        }
+        ---
+        public class Connection {
+            private Endpoint endpoint;
+            public Connection(Endpoint endpoint) {
+                this.endpoint = endpoint;
+                }
+                // more stuff
+         
+        ---
+        @Service
+        public class Router {
+            private MyConfig myconfig;
+         
+            public Router(MyConfig mc) {
+                myconfig = mc;
+                for (Endpoint endpoint : myconfig.endpoints) {
+                		endpoint.connection = new Connection(endpoint);
+                }
+
+#+end_src
+
+
+* RabbitMQ
+https://www.baeldung.com/rabbitmq
+https://www.baeldung.com/java-rabbitmq-exchanges-queues-bindings
+https://www.baeldung.com/java-rabbitmq-channels-connections
+https://www.baeldung.com/rabbitmq-dynamic-queues
+https://www.baeldung.com/rabbitmq-spring-amqp
+
+https://www.rabbitmq.com/tutorials/tutorial-six-java.html
+https://spring.io/guides/gs/messaging-rabbitmq/
+Check Validator code + Soumen support

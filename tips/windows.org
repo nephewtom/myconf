@@ -1,0 +1,41 @@
+* fd + rg (or grep) on Windows CMD
+How to highlight rg or grep results from fd?
+With -X, for example:
+: fd -e org -X rg toc {}
+
+I am also getting this error from CMD:
+#+begin_src sh
+  C:\Users\etomort
+  > rg "rg -tom"
+  OneDrive - Ericsson\SMIP\iop\vagrant-portal-problem: The cloud operation was not completed before the time-out period expired. (os error 426)
+  OneDrive - Ericsson\SMIP\iop\Smip_iop1_APN_test.pcap: The cloud operation was not completed before the time-out period expired. (os error 426)
+  OneDrive - Ericsson\SMIP\iop\tunnel-opengate-commhubs: The cloud operation was not completed before the time-out period expired. (os error 426)
+#+end_src
+ 
+It seems OneDrive is farting and not being able to download those files...
+Which makes rg take much loooonger time than it should?
+Shame on OneDrive!!!
+Finally, it worked.
+
+* tasklist with commandline
+wmic process where caption="java.exe" get commandline,processid
+wmic process where caption="java.exe" get commandline,processid /format:csv
+wmic /output:.\kk.csv process where caption="java.exe" get commandline,processid /format:csv
+
+* mklink to create links to OneDrive
+*** For directories using junction, not symbolic links:
+For those hating the \OneDrive - Ericsson\ path, this does the trick:
+#+begin_src sh
+  mklink /J "c:\Users\etomort\smip\OneDrive" "c:\Users\etomort\OneDrive - Ericsson\SMIP"
+  Junction created for c:\Users\etomort\smip\OneDrive <<===>> c:\Users\etomort\OneDrive - Ericsson\SMIP
+
+  mklink /J "c:\Users\etomort\smip\cr192-GDPR" "c:\Users\etomort\OneDrive - Ericsson\SMIP\cr192-GDPR\"
+  Junction created for c:\Users\etomort\smip\cr192-GDPR <<===>> c:\Users\etomort\OneDrive - Ericsson\SMIP\cr192-GDPR\
+#+end_src
+
+*** For files using symbolic links:
+IMPORTANT: You need first to start a CMD as Administrator, or it will not allow it.
+#+begin_src sh
+  mklink "c:\Users\etomort\smip\SMIP-ONGOING.org" "c:\Users\etomort\smip\OneDrive\SMIP-ONGOING.org"
+  symbolic link created for c:\Users\etomort\smip\SMIP-ONGOING.org <<===>> c:\Users\etomort\smip\OneDrive\SMIP-ONGOING.org
+#+end_src

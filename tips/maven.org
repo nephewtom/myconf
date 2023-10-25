@@ -1,0 +1,10 @@
+* Watch out the syntax
+  If spaces are left, that causes errors...
+  #+BEGIN_SRC shell 
+mvn archetype:generate -DgroupId=com.ericsson.smip -DartifactId=quartz-poc -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false  
+  #+END_SRC
+
+  #+BEGIN_EXAMPLE error 
+[ERROR] The goal you specified requires a project to execute but there is no POM in this directory (/mnt/c/Users/etomort/smip/iop/mc-core/tools/quartz-poc). Please verify you invoked Maven from the correct directory. -> [Help 1]
+org.apache.maven.lifecycle.MissingProjectException: The goal you specified requires a project to execute but there is no POM in this directory (/mnt/c/Users/etomort/smip/iop/mc-core/tools/quartz-poc). Please verify you invoked Maven from the correct directory.
+  #+END_EXAMPLE

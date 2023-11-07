@@ -39,3 +39,52 @@ IMPORTANT: You need first to start a CMD as Administrator, or it will not allow 
   mklink "c:\Users\etomort\smip\SMIP-ONGOING.org" "c:\Users\etomort\smip\OneDrive\SMIP-ONGOING.org"
   symbolic link created for c:\Users\etomort\smip\SMIP-ONGOING.org <<===>> c:\Users\etomort\smip\OneDrive\SMIP-ONGOING.org
 #+end_src
+
+
+* Run .bat file at Windows startup
+Example with postgreSQL.
+
+Put ~start.bat~ batch file under ~C:\Program Files\PostgreSQL\14\bin~ with contents:
+
+#+begin_src bat
+pg_ctl.exe start -D c:\PostgreSQL\14\data -l c:\PostgreSQL\14\data\postgresql.log 
+#+end_src
+
+Create a Windows shortcut to the batch file and then place it into the following path:
+: C:\Users\<SIGNUM>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
+This should then start it when you logon.
+
+* Symbolic links created in WSL
+The symbolic links I created in WSL are JUNCTIONs in NTFS.
+#+BEGIN_EXAMPLE WSL
+$ pwd
+/mnt/c/Users/etomort/elx
+
+$ ls -la | grep "\->"
+lrwxrwxrwx 1 root root       19 Dec 19 12:19 .gitconfig -> ../myconf/gitconfig
+lrwxrwxrwx 1 root root       10 Dec 18 16:05 myconf -> ../myconf/
+lrwxrwxrwx 1 root root        8 Dec 18 16:07 smip -> ../smip/
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE CMD
+C:\Users\etomort\elx
+$ dir /al
+Volume in drive C is OSDisk
+Volume Serial Number is 9CE8-C5B2
+
+Directory of C:\Users\etomort\elx
+
+19-Dec-18  12:19    <JUNCTION>     .gitconfig [...]
+18-Dec-18  16:05    <JUNCTION>     myconf [...]
+18-Dec-18  16:07    <JUNCTION>     smip [...]
+            3 File(s)             37 bytes
+            0 Dir(s)  294,429,671,424 bytes free   
+#+END_EXAMPLE
+** Window tmp directories & symlinks & WSLENV
+https://github.com/Microsoft/WSL/issues/2779 
+https://github.com/Microsoft/WSL/issues/3611
+https://blogs.msdn.microsoft.com/commandline/2017/12/22/share-environment-vars-between-wsl-and-windows/
+https://blog.stangroome.com/2018/06/25/wslpath-and-mktemp/
+    
+     

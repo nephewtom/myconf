@@ -30,13 +30,14 @@ term.el
 org-mode.el
 nxml.el
 markdown.el
-
 edit-with-emacs.el
 python.el
 toc-org.el
+
+
 keybindings.el
-compilation.el
 cua.el
+dashboard.el
 
 end.el"
 

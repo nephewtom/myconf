@@ -898,8 +898,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   :config
   (setq google-translate-default-source-language "en")
   (setq google-translate-default-target-language "es")
-  (global-set-key (kbd "C-<f12>") 'google-translate-at-point)
-  (global-set-key (kbd "C-<f11>") 'google-translate-at-point-reverse)
+  (global-set-key (kbd "C-<f11>") 'google-translate-at-point)
+  (global-set-key (kbd "C-<f10>") 'google-translate-at-point-reverse)
   (require 'google-translate-default-ui)
   )
 
@@ -1004,8 +1004,18 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
 (defun my-bash-on-windows-shell ()
   (interactive)
-  (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
+  (let ((explicit-shell-file-name "bash")
+  ;; (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe")
+        (shell-file-name "bash")
+        (explicit-bash-args '("--norc" "--noprofile"))
+        ;; (comint-prompt-regexp "$")
+        ;; (comint-use-prompt-regexp "$")
+        ;; (explicit-bash-args '("--norc" "--noprofile" "--rcfile" "~/.bashrc_emacs"))
+        )
     (shell)))
+
+(defalias 'myshell 'my-bash-on-windows-shell)
+(defalias 'mybash 'my-bash-on-windows-shell)
 
 ;; *** FILE:  org-mode.el
 ;; Need to put this and not in keybindings.el
@@ -1036,10 +1046,11 @@ https://github.com/jaypei/emacs-neotree/pull/110"
           ("ON-HOLD" . (:foreground "orange" :weight bold))
           ("DONE" . (:foreground "forest green" :weight bold))
 
-          ("TRY" . (:foreground "purple" :weight bold))
           ("NOTE" . (:foreground "black" :weight bold))
           ("REVIEW" . (:foreground "purple" :weight bold))
-          ("PERMANENT" . (:foreground "purple" :weight bold))
+          ("FIX" . (:foreground "orange" :weight bold)) ;; Color not working
+          ("IMPROVEMENT" . (:foreground "purple" :weight bold))
+          ("TRY" . (:foreground "purple" :weight bold))
           ("CANCELLED" . (:foreground "black" :weight bold))
 
           ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
@@ -1047,7 +1058,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "ON-HOLD" "|" "DONE")
-          (sequence "TRY" "NOTE" "REVIEW" "PERMANENT" "CANCELLED" "|" "WTF")))
+          (sequence "NOTE" "REVIEW" "FIX" "IMPROVEMENT" "TRY" "CANCELLED" "|" "WTF")))
 
   (setq org-priority-faces '((?A . (:background "#DD0000"  :foreground "black" :box '(:line-width 2 :style released-button)))
                              (?B . (:background "#A366FF" :foreground "black" :box '(:line-width 2 :style released-button)))
@@ -1210,26 +1221,22 @@ by using nxml's indentation rules."
 
   :bind ( ;;("C-M-m" . livedown:preview)
          :map markdown-mode-map
-         ("C-c C-c t" . markdown-toc/generate-toc)
+         ("C-c C-c t" . markdown-toc-generate-toc)
          ("M-p" . nil)
-         ("M-n" . nil))
+         ("M-n" . nil)
+         ("M-<up>" . markdown-move-up)
+         ("M-<down>" . markdown-move-down)
+         )
 
   :config
   (setq markdown-open-command nil)
   (setq markdown-command nil)
   )
 
-;; IMP!: grip-mode is the way to go for Markdown preview
-;; Though it FAILS with images in WSL Emacs... WTF! Check if I can fix that.
+;; FINAL NOTE: I decided not to preview Markdown on Emacs since the solutions tend to fail
+;; Use vscode or IntelliJ for integrated Preview.
 
-;; Forget about impatient mode and flymd
 ;; https://stackoverflow.com/questions/36183071/how-can-i-preview-markdown-in-emacs-in-real-time
-
-(defun markdown-html-no-title (buffer)
-  (princ (with-current-buffer buffer
-           (format "<!DOCTYPE html><html><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
-         (current-buffer)))
-
 (defun markdown-html (buffer)
   (princ (with-current-buffer buffer
            (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
@@ -1247,12 +1254,12 @@ by using nxml's indentation rules."
   (imp--notify-clients))
 
 
-
+;; TO REVIEW
 ;; I modified the code slightly to export my org-mode code as markdown and then display it:
 (defun markdown-html-org (buffer)
   (with-current-buffer buffer (org-md-export-as-markdown))
   (princ (with-current-buffer "*Org MD Export*"
-           (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+           (format "<!DOCTYPE html><html><title>Markdown Preview with impatient-mode</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
     (current-buffer)))
 ;; .... Works great as long as org-export-show-temporary-export-buffer is nil
 
@@ -1519,88 +1526,6 @@ by using nxml's indentation rules."
 (setq select-active-regions nil)
 (global-set-key [mouse-2] 'mouse-yank-at-click)
 
-;; *** FILE:  compilation.el
-(defun my-compilation-hook () 
-  "Make sure that the compile window is splitting vertically"
-  (progn
-    (if (not (get-buffer-window "*compilation*"))
-        (progn
-          (split-window-vertically)
-          ))))
-(add-hook 'compilation-mode-hook 'my-compilation-hook)
-
-
-;; Function for compiling 
-(defun my-compile ()
-  "Run compile and resize the compile window"
-  (interactive)
-  (progn
-    (call-interactively 'recompile)
-    (setq cur (selected-window))
-    (setq w (get-buffer-window "*compilation*"))
-    (select-window w)
-    (setq h (window-height w))
-    (shrink-window (- h 15))
-    (select-window cur)
-    ))
-(global-set-key (kbd "<f12>") 'my-compile)
-
-
-;; Funtion to run compiled programs
-(cond
- ((string-equal system-type "windows-nt")
-  (message "System: Windows")
-  (setq compile-command "build.bat")
-
-  (defun run-program () (interactive)
-         (when (get-buffer "*run*")
-           (kill-buffer "*run*"))
-         
-         (when (get-buffer "*compilation*")
-           (delete-window (get-buffer-window (get-buffer "*compilation*")))
-           (kill-buffer "*compilation*"))
-         (add-to-list 'display-buffer-alist '("*Async Shell Command*" . (display-buffer-no-window . nil)) )
-         (async-shell-command "run.bat")
-         (switch-to-buffer (get-buffer "*Async Shell Command*"))
-         (rename-buffer "*run*")
-         (switch-to-previous-buffer)
-         )
-  
-  (defun clean-program () (interactive)
-         (when (get-buffer "*clean*")
-           (kill-buffer "*clean*"))
-         (add-to-list 'display-buffer-alist '("*Async Shell Command*" . (display-buffer-no-window . nil)) )
-         (async-shell-command "clean.bat")         
-         (switch-to-buffer (get-buffer "*Async Shell Command*"))
-         (rename-buffer "*clean*")
-         (switch-to-previous-buffer)
-         )
-  
-  ;; (global-set-key (kbd "<f9>") 'run-program)
-  ;; (global-set-key (kbd "<f11>") 'clean-program)
-  )
-
- ((message "System: Other"))
- )
-
-
-
-;; NOT USED NOW
-;; Helper for compilation. Close the compilation window if there was no error at all.
-(defun compilation-exit-autoclose (status code msg)
-  ;; If M-x compile exists with a 0
-  (when (and (eq status 'exit) (zerop code))
-    ;; then bury the *compilation* buffer, so that C-x b doesn't go there
-    (bury-buffer)
-    ;; and delete the *compilation* window
-    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
-  ;; Always return the anticipated result of compilation-exit-message-function
-  (cons msg code))
-
-;; Specify my function (maybe I should have done a lambda function)
-;;(setq compilation-exit-message-function 'compilation-exit-autoclose)
-
-
 ;; *** FILE:  cua.el
 (defun special-c-return-in-dired ()
   (interactive)
@@ -1611,6 +1536,12 @@ by using nxml's indentation rules."
 
 (define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
 
+
+;; *** FILE:  dashboard.el
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
 
 ;; *** FILE:  end.el
 ;; TODO: Print date in scratch buffer

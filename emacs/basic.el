@@ -828,6 +828,17 @@ Version 2017-07-08"
 (setq select-active-regions nil)
 (global-set-key [mouse-2] 'mouse-yank-at-click)
 
+;; *** FILE:  cua.el
+(defun special-c-return-in-dired ()
+  (interactive)
+  (if (derived-mode-p 'dired-mode)
+      (dired-w32explore)
+    (cua-set-rectangle-mark))
+  )
+
+(define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
+
+
 ;; *** FILE:  basic-special.el
 (global-set-key (kbd "C-o") 'find-file)
 (global-set-key (kbd "H-i") 'switch-to-buffer)
@@ -849,18 +860,9 @@ Version 2017-07-08"
                               )
                  )
 
+(require 'dashboard)
+(dashboard-open)
 ;; (load "~/.emacs.d/elpa/hl-defined-20170223.744/hl-defined-autoloads.el")
 ;; (load "~/.emacs.d/elpa/wrap-region-20140117.720/wrap-region-autoloads.el")
 ;; (load "~/.emacs.d/elpa/company-20190116.1133/company-autoloads.el")
 ;; (load "~/.emacs.d/elpa/helm-20190213.609/helm-autoloads.el")
-
-;; *** FILE:  cua.el
-(defun special-c-return-in-dired ()
-  (interactive)
-  (if (derived-mode-p 'dired-mode)
-      (dired-w32explore)
-    (cua-set-rectangle-mark))
-  )
-
-(define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
-

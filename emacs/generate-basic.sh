@@ -36,9 +36,10 @@ elisp.el
 
 
 keybindings.el
-basic-special.el
-cua.el"
+cua.el
 
+basic-special.el
+"
 
 rm -f basic.el 
 echo $FILES | sed 's/ /\n/g' | while read f; do

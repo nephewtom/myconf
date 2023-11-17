@@ -5,6 +5,8 @@ So, a bean is an object that is instantiated, assembled and otherwise managed by
 https://www.baeldung.com/spring-bean
 
 ** Application Context
+The Spring IoC container is responsible for managing the objects of an application.
+It uses dependency injection (DI) to achieve inversion of control.
 The interfaces BeanFactory and ApplicationContext represent the Spring IoC container.
 
 BeanFactory is the root interface for accessing the Spring container.
@@ -14,6 +16,9 @@ On the other hand, the ApplicationContext is a sub-interface of the BeanFactory.
 Therefore, it offers all the functionalities of BeanFactory plus enterprise-specific functionalities.
 Like: resolving messages, supporting internationalization, publishing events, and application-layer specific contexts.
 https://www.baeldung.com/spring-application-context
+
+Series of articles about DI:
+https://www.baeldung.com/spring-dependency-injection
 
 ** @Component
 It allows Spring to detect our custom beans automatically.
@@ -26,10 +31,18 @@ https://www.baeldung.com/spring-component-annotation
 It is used at method level but NOT at class level.
 
 ** @Autowired
-To read  AGAIN:
-https://www.baeldung.com/inversion-control-and-dependency-injection-in-spring
+Basics
 https://www.baeldung.com/spring-autowire
 
+Some more on IoC, DI and about field-based DI
+https://www.baeldung.com/inversion-control-and-dependency-injection-in-spring
+
+As of Spring 4.3, classes with a single constructor can omit the @Autowired annotation. This is a nice little bit of convenience and boilerplate removal.
+On top of that, also starting with 4.3, we can leverage the constructor-based injection in @Configuration annotated classes.
+Constructor injection has a few advantages compared to field injection. The first benefit is testability.
+See: https://www.baeldung.com/constructor-injection-in-spring
+
+https://www.baeldung.com/java-spring-field-injection-cons
 
 * Common Spring Beans annotations
 @Configuration, @Controller, @Service and @Repository are all meta-annotations of @Component.
@@ -72,6 +85,8 @@ https://www.baeldung.com/java-custom-annotation
 SO post:
 https://stackoverflow.com/questions/77353601/how-to-solve-a-circular-reference-in-a-springboot-application-using-propertysou
 
+
+- 
 
 https://stackoverflow.com/questions/3485347/circular-dependency-in-spring
 https://www.baeldung.com/circular-dependencies-in-spring
@@ -126,13 +141,9 @@ https://medium.com/@karthik.jeyapal/circular-dependency-in-spring-boot-how-to-de
 #+end_src
 
 
-* RabbitMQ
-https://www.baeldung.com/rabbitmq
-https://www.baeldung.com/java-rabbitmq-exchanges-queues-bindings
-https://www.baeldung.com/java-rabbitmq-channels-connections
-https://www.baeldung.com/rabbitmq-dynamic-queues
-https://www.baeldung.com/rabbitmq-spring-amqp
+* More autowiring and injection
+https://blog.scottlogic.com/2020/02/25/spring-autowiring-its-a-kind-of-magic.html
 
-https://www.rabbitmq.com/tutorials/tutorial-six-java.html
-https://spring.io/guides/gs/messaging-rabbitmq/
-Check Validator code + Soumen support
+https://www.baeldung.com/spring-injecting-collections
+
+https://www.google.com/search?q=%22Autowiring+by+type+from+bean+name%22+&sca_esv=576600514&sxsrf=AM9HkKn4ezMgPMYLxDg0y7LMgl-Gp8M6OA%3A1698267994451&ei=WoM5Ze2UG8XjsAfd442gAw&ved=0ahUKEwjtqaukjZKCAxXFMewKHd1xAzQQ4dUDCBA&uact=5&oq=%22Autowiring+by+type+from+bean+name%22+&gs_lp=Egxnd3Mtd2l6LXNlcnAiJCJBdXRvd2lyaW5nIGJ5IHR5cGUgZnJvbSBiZWFuIG5hbWUiIDIEECMYJzIGEAAYFhgeMggQABiKBRiGAzIIEAAYigUYhgNIo1VQqQtYv1NwAXgBkAEAmAGEAaAB6QGqAQMwLjK4AQPIAQD4AQHCAgoQABhHGNYEGLAD4gMEGAAgQYgGAZAGCA&sclient=gws-wiz-serp

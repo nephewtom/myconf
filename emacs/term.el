@@ -66,5 +66,15 @@
 
 (defun my-bash-on-windows-shell ()
   (interactive)
-  (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
+  (let ((explicit-shell-file-name "bash")
+  ;; (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe")
+        (shell-file-name "bash")
+        (explicit-bash-args '("--norc" "--noprofile"))
+        ;; (comint-prompt-regexp "$")
+        ;; (comint-use-prompt-regexp "$")
+        ;; (explicit-bash-args '("--norc" "--noprofile" "--rcfile" "~/.bashrc_emacs"))
+        )
     (shell)))
+
+(defalias 'myshell 'my-bash-on-windows-shell)
+(defalias 'mybash 'my-bash-on-windows-shell)

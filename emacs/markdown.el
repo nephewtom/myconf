@@ -9,7 +9,10 @@
          :map markdown-mode-map
          ("C-c C-c t" . markdown-toc-generate-toc)
          ("M-p" . nil)
-         ("M-n" . nil))
+         ("M-n" . nil)
+         ("M-<up>" . markdown-move-up)
+         ("M-<down>" . markdown-move-down)
+         )
 
   :config
   (setq markdown-open-command nil)

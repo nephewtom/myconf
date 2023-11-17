@@ -26,10 +26,11 @@
           ("ON-HOLD" . (:foreground "orange" :weight bold))
           ("DONE" . (:foreground "forest green" :weight bold))
 
-          ("TRY" . (:foreground "purple" :weight bold))
           ("NOTE" . (:foreground "black" :weight bold))
           ("REVIEW" . (:foreground "purple" :weight bold))
-          ("PERMANENT" . (:foreground "purple" :weight bold))
+          ("FIX" . (:foreground "orange" :weight bold)) ;; Color not working
+          ("IMPROVEMENT" . (:foreground "purple" :weight bold))
+          ("TRY" . (:foreground "purple" :weight bold))
           ("CANCELLED" . (:foreground "black" :weight bold))
 
           ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
@@ -37,7 +38,7 @@
 
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "ON-HOLD" "|" "DONE")
-          (sequence "TRY" "NOTE" "REVIEW" "PERMANENT" "CANCELLED" "|" "WTF")))
+          (sequence "NOTE" "REVIEW" "FIX" "IMPROVEMENT" "TRY" "CANCELLED" "|" "WTF")))
 
   (setq org-priority-faces '((?A . (:background "#DD0000"  :foreground "black" :box '(:line-width 2 :style released-button)))
                              (?B . (:background "#A366FF" :foreground "black" :box '(:line-width 2 :style released-button)))

@@ -1,12 +1,15 @@
 #+TITLE:	README for myconf
-#+AUTHOR:	Tomas Orti
+#+AUTHOR:	Nephew Tom
 #+STARTUP:	content
-
+#+OPTIONS:      \n:t
 * myconf
-  This repo stores my configuration settings for bash & GNU Emacs under Linux and Mac OS X.
-
-  In order to set bash environment and aliases, it is necessary to source the corresponding script.\\
-  On Ubuntu 14.04:
+  This repository stores my configuration settings for bash & GNU Emacs under Linux, WSL and Mac OS X.
+  It also has several utils for Microsoft Windows CMD terminal, the old /esoteric/ thing.
+  And the [[file:tips/][tips]] directory collects tips for several different topics.
+  
+  In order to set bash environment and aliases, it is necessary to source the corresponding script.
+  
+  For example, on Ubuntu:
   #+BEGIN_EXAMPLE
     user@ubuntu:~$ tail -3 .bashrc
     # --- my conf
@@ -37,4 +40,4 @@
 
   : user@hostname:~/.emacs.d$ ln -s ~/myconf/init.el init.el
 
-  TODO: I might change its name to **onmyset**, as it has a [[http://es.urbandictionary.com/define.php?term=On+My+Set][funny meaning]]
+  TODO: I might change its name to **onmyset**, as it has a [[https://www.urbandictionary.com/define.php?term=On%20My%20Set][funny meaning]]

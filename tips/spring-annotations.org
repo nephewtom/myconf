@@ -30,6 +30,9 @@ https://www.baeldung.com/spring-component-annotation
 ** @Bean
 It is used at method level but NOT at class level.
 
+Spring Bean Scopes
+https://www.baeldung.com/spring-bean-scopes
+
 ** @Autowired
 Basics
 https://www.baeldung.com/spring-autowire

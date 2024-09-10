@@ -1,3 +1,21 @@
+* Profile file
+Check where is the profile file that will be run in a PowerShell session
+See: https://ss64.com/ps/syntax-profile.html
+#+begin_example
+PS C:\Users\etomort> "$Profile"
+C:\Users\etomort\OneDrive - Ericsson\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+#+end_example
+
+Check also:
+https://superuser.com/questions/1090141/does-powershell-have-any-sort-of-bashrc-equivalent#comment1543925_1090141
+
+Using Emacs keybindings:
+#+begin_src
+PS C:\Users\etomort> cat $profile
+
+Set-PSReadLineOption -EditMode Emacs
+#+end_src
+
 * Find file
   Get-ChildItem -Path . -Filter cygpath.exe -Recurse -ErrorAction Ignore | % {$_.FullName}
 

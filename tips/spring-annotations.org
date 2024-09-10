@@ -33,6 +33,9 @@ It is used at method level but NOT at class level.
 Spring Bean Scopes
 https://www.baeldung.com/spring-bean-scopes
 
+Dependency injection in @Bean method parameters, inter-dependency
+https://www.logicbig.com/tutorials/spring-framework/spring-core/javaconfig-methods-inter-dependency.html
+
 ** @Autowired
 Basics
 https://www.baeldung.com/spring-autowire
@@ -46,6 +49,8 @@ Constructor injection has a few advantages compared to field injection. The firs
 See: https://www.baeldung.com/constructor-injection-in-spring
 
 https://www.baeldung.com/java-spring-field-injection-cons
+
+[[https://blog.marcnuri.com/field-injection-is-not-recommended]]
 
 * Common Spring Beans annotations
 @Configuration, @Controller, @Service and @Repository are all meta-annotations of @Component.
@@ -150,3 +155,7 @@ https://blog.scottlogic.com/2020/02/25/spring-autowiring-its-a-kind-of-magic.htm
 https://www.baeldung.com/spring-injecting-collections
 
 https://www.google.com/search?q=%22Autowiring+by+type+from+bean+name%22+&sca_esv=576600514&sxsrf=AM9HkKn4ezMgPMYLxDg0y7LMgl-Gp8M6OA%3A1698267994451&ei=WoM5Ze2UG8XjsAfd442gAw&ved=0ahUKEwjtqaukjZKCAxXFMewKHd1xAzQQ4dUDCBA&uact=5&oq=%22Autowiring+by+type+from+bean+name%22+&gs_lp=Egxnd3Mtd2l6LXNlcnAiJCJBdXRvd2lyaW5nIGJ5IHR5cGUgZnJvbSBiZWFuIG5hbWUiIDIEECMYJzIGEAAYFhgeMggQABiKBRiGAzIIEAAYigUYhgNIo1VQqQtYv1NwAXgBkAEAmAGEAaAB6QGqAQMwLjK4AQPIAQD4AQHCAgoQABhHGNYEGLAD4gMEGAAgQYgGAZAGCA&sclient=gws-wiz-serp
+
+* Other
+[[https://www.baeldung.com/rest-template]]
+[[https://stackoverflow.com/questions/22338176/spring-http-client]]

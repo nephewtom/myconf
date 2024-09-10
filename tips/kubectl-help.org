@@ -1,0 +1,329 @@
+* Kube config & kubectl completion
+Kubernetes configuration can be found under ~/.kube/config file.
+
+- Show the config:
+  : kubectl config view
+  
+  #+begin_example
+  $ kubectl config view
+  apiVersion: v1
+  clusters:
+  - cluster:
+      certificate-authority-data: DATA+OMITTED
+      server: https://10.95.31.80:6443
+    name: kubernetes
+  contexts:
+  - context:
+      cluster: kubernetes
+      namespace: core      <=======================
+      user: kubernetes-admin
+    name: kubernetes-admin@kubernetes
+  current-context: kubernetes-admin@kubernetes
+  kind: Config
+  preferences: {}
+  users:
+  - name: kubernetes-admin
+    user:
+      client-certificate-data: REDACTED
+      client-key-data: REDACTED
+
+  #+end_example
+
+- For kubectl completion refer to:
+  https://kubernetes.io/docs/reference/kubectl/generated/kubectl_completion/
+  https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#enable-shell-autocompletion
+
+** Context & namespace
+They are specified in the config file under context section.
+
+- Show context:
+  : kubectl config view --output 'jsonpath={..context}'
+
+- Show namespace in context:
+  : kubectl config view --output 'jsonpath={..namespace}'
+
+- Change current context:
+  : kubectl config set-context --current --namespace=core
+
+* Get/describe pods
+
+- List pods of the default namespace:
+  : kubectl get pods
+  : kubectl get pods -o wide
+
+- List pods of all namespaces:
+  kubectl get pods --all-namespaces
+  : kubectl get pods -A
+
+- List pods of an specific namespace:
+  : kubectl get pods -n core
+
+- List pods showing specific columns information (image in this case)
+  : kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.image}{"\n"}{end}{end}'
+  : kubectl get pods -o go-template --template='{{range .items}}{{.metadata.name}}{{"\t"}}{{range .spec.containers}}{{.image}}{{"\n"}}{{end}}{{end}}'
+  
+  https://kubernetes.io/docs/reference/kubectl/jsonpath/
+
+  : kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |tr -s '[[:space:]]' '\n' |sort |uniq -c
+
+- Describe a pod:
+  : kubectl describe pods xml-sign
+  : kubectl describe pods core -n core
+  : kubectl describe pods core
+
+  #+begin_example
+$ kubectl describe pods core-77cc9d47b6-mhq9w
+Name:             core-77cc9d47b6-mhq9w
+Namespace:        core
+Priority:         0
+Service Account:  default
+Node:             iopref-kube-4/10.95.31.84
+Start Time:       Tue, 06 Aug 2024 11:41:37 +0200
+Labels:           app=core
+                  pod-template-hash=77cc9d47b6
+Annotations:      cni.projectcalico.org/containerID: dc0680f70efb7d31c344e6a9f3c12c43312fe3e76c6979b8552795ecc754c70f
+                  cni.projectcalico.org/podIP: 192.168.167.158/32
+                  cni.projectcalico.org/podIPs: 192.168.167.158/32
+                  kubectl.kubernetes.io/restartedAt: 2024-08-06T10:41:36+01:00
+Status:           Running
+IP:               192.168.167.158
+IPs:
+  IP:           192.168.167.158
+Controlled By:  ReplicaSet/core-77cc9d47b6
+Containers:
+  core:
+    Container ID:   containerd://129a00ae995078dc036287c195957645c01d8694d548fbc6ddafb169e57125e6
+    Image:          smipericssoncr.azurecr.io/az-core
+    Image ID:       smipericssoncr.azurecr.io/az-core@sha256:7b3c110143cbb672013b8cf974c9a11e067240af8f24633456bfcdd882e8e151
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Tue, 06 Aug 2024 11:41:38 +0200
+    Ready:          True
+    Restart Count:  0
+    Environment Variables from:
+      core-config  ConfigMap  Optional: false
+    Environment:   <none>
+    Mounts:
+      /config/imsi-ranges.yaml from imsi-ranges (rw,path="imsi-ranges.yaml")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-pl8s2 (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  imsi-ranges:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      imsi-ranges-config
+    Optional:  false
+  kube-api-access-pl8s2:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+  #+end_example
+
+# kubectl run tick --image=localhost/tick.jar
+
+- Using labels:
+  : kubectl get pods -l app=core
+
+* Logging
+- Tails the logs of pod with name core-???
+  : kubectl logs -f core-79f56c8655-q4x69
+- Tails by label:
+  : kubectl logs -f -l app=core
+- 
+
+https://spacelift.io/blog/kubectl-logs
+
+* Configmaps
+- Get (list) the availabe ConfigMaps
+  : kubectl get configmaps
+
+  #+begin_example
+  $ kubectl get configmaps
+  NAME                   DATA   AGE
+  core-config            12     12d
+  dmm-endpoints-config   1      53d
+  dmm-ks                 1      12d
+  dmm-ts                 1      12d
+  imsi-ranges-config     1      53d
+  kube-root-ca.crt       1      104d
+  udb-endpoints-config   1      12d
+  #+end_example
+
+- Get a config map and show it as a YAML file
+  : kubectl get cm core-config -o yaml
+
+  #+begin_example
+$ k get cm imsi-ranges-config -o yaml
+apiVersion: v1
+data:
+  imsi-ranges.yaml: |
+    identifiers:
+      - id: iHLR_SIMULATOR
+        type: ericsson
+        ranges:
+          - begin: 234111100000000
+            end:   234111100001000
+          - begin: 234111100001020
+            end:   234111100001030
+
+      - id: UDB_SIMULATOR
+        type: nokia
+        ranges:
+          - begin: 234122200000000
+            end:   234122200000010
+
+      - id: DUAL_SIMULATORS
+        type: dual
+        primaryHandler: nokia
+        ranges:
+          - begin: 234133300000000
+            end:   234133300000010
+
+      - id: DUAL_SIMULATORS2
+        type: dual
+        primaryHandler: ericsson
+        ranges:
+          - begin: 234133300000011
+            end:   234133300000020
+      - id: UDB_REFERENCE_TESTBED
+        type: nokia
+        ranges:
+          - begin: 234119969000000
+            end:   234119969000149
+          - begin: 234119969000200
+            end:   234119969000699
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2024-07-11T14:25:22Z"
+  name: imsi-ranges-config
+  namespace: core
+  resourceVersion: "34041779"
+  uid: 9d0a0dc0-0dfc-4ed2-a6a5-32d6569a1db0
+  #+end_example
+  
+- Describe the config map
+  : kubectl describe cm imsi-ranges-config
+  
+  #+begin_example
+$ k describe cm imsi-ranges-config
+Name:         imsi-ranges-config
+Namespace:    core
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+imsi-ranges.yaml:
+----
+identifiers:
+  - id: iHLR_SIMULATOR
+    type: ericsson
+    ranges:
+      - begin: 234111100000000
+        end:   234111100001000
+      - begin: 234111100001020
+        end:   234111100001030
+
+  - id: UDB_SIMULATOR
+    type: nokia
+    ranges:
+      - begin: 234122200000000
+        end:   234122200000010
+
+  - id: DUAL_SIMULATORS
+    type: dual
+    primaryHandler: nokia
+    ranges:
+      - begin: 234133300000000
+        end:   234133300000010
+
+  - id: DUAL_SIMULATORS2
+    type: dual
+    primaryHandler: ericsson
+    ranges:
+      - begin: 234133300000011
+        end:   234133300000020
+  - id: UDB_REFERENCE_TESTBED
+    type: nokia
+    ranges:
+      - begin: 234119969000000
+        end:   234119969000149
+      - begin: 234119969000200
+        end:   234119969000699
+
+
+BinaryData
+====
+
+Events:  <none>
+  #+end_example
+
+- Apply a config map
+  : kubectl apply -f imsi-ranges-config.yaml
+  
+- Replace a config map 
+  : kubectl replace -f imsi-ranges-config.yaml
+
+- Edit a config map
+  : $ EDITOR=vim kubectl edit cm imsi-ranges-config
+  :  configmap/imsi-ranges-config edited
+
+  This made the YAML to loose format and screw the config map
+  #+begin_example
+Kubernetes stores ConfigMap data as strings. When you edit a ConfigMap using kubectl edit, it escapes certain characters (like newlines) within the string data to maintain the proper structure. This is why you see escaped newlines (\n) in the imsi-ranges.yaml content.
+
+When you view the ConfigMap with kubectl get cm -o yaml, Kubernetes displays the imsi-ranges.yaml content as a string, which results in the escaped characters.
+  #+end_example
+
+  To avoid this, use apply or replace
+  
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
+
+
+* Service
+In Kubernetes, a Service is a method for exposing a network application that is running as one or more Pods in your cluster.
+https://kubernetes.io/docs/concepts/services-networking/service/
+
+- Show services from 'core' namespace
+  : kubectl get service -n core
+
+* Ingress
+#+begin_example
+$ kubectl get ingress
+NAME       CLASS   HOSTS   ADDRESS        PORTS   AGE
+ing-core   nginx   *       10.95.31.101   80      13d
+
+$ kubectl describe ingress
+Name:             ing-core
+Labels:           <none>
+Namespace:        core
+Address:          10.95.31.101
+Ingress Class:    nginx
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *
+              /subscriptions/   core:80 (192.168.71.83:8080)
+              /core-query/      core-query:80 (192.168.71.76:8080)
+Annotations:  <none>
+Events:       <none>
+#+end_example
+
+https://kubernetes.io/docs/concepts/services-networking/ingress/
+https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
+
+https://kubernetes.github.io/ingress-nginx/deploy/

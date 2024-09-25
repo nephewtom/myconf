@@ -1,0 +1,66 @@
+* Introduction
+Testing examples from [[https://orgmode.org/manual/Environment-of-a-Code-Block.html][manual]].
+
+* Setting languages
+#+begin_src emacs-lisp
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((python . t)
+           (emacs-lisp . t)))
+#+end_src
+
+* Test lisp
+#+header: :var weight=65
+#+begin_src emacs-lisp :var height=169
+(message "weight: %Skg, height: %Scm" weight height)
+#+end_src
+
+#+results:
+: weight: 65kg, height: 169cm
+
+* Test table on lisp
+#+name: example-table
+| 1 |
+| 2 |
+| 3 |
+| 4 |
+
+#+name: table-length
+#+begin_src emacs-lisp :var table=example-table
+(length table)
+#+end_src
+
+#+results: table-length
+: 4
+
+* Test python
+#+name: less-cols
+| a |
+|---|
+| b |
+| c |
+
+#+begin_src python :var tab=less-cols :colnames nil
+  return [[val + '*' for val in row] for row in tab]
+#+end_src
+
+#+RESULTS:
+| a  |
+|----|
+| b* |
+| c* |
+
+* psql to org-mode
+:PROPERTIES:
+:header-args:sql :session 
+#+BEGIN_SRC sql
+SELECT column_name,
+       data_type,
+       is_nullable,
+       column_default
+FROM information_schema.columns
+WHERE table_name = 'lowercase_table_name';
+#+END_SRC
+
+#+RESULTS:
+

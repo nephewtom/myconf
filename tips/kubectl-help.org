@@ -323,7 +323,119 @@ Annotations:  <none>
 Events:       <none>
 #+end_example
 
+Get ingress from a concrete namespace
+#+begin_example
+$ k get ingress -n validator
+NAME                CLASS   HOSTS   ADDRESS        PORTS   AGE
+ing-inv-api         nginx   *       10.95.31.101   80      63d
+ing-sign-http       nginx   *       10.95.31.101   80      63d
+ing-validate-http   nginx   *       10.95.31.101   80      63d
+ing-xml             nginx   *       10.95.31.101   80      63d
+#+end_example
+
+Get ingress from one specific resource:
+#+begin_example
+$ kubectl get ingress ing-xml -n validator -o yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{},"name":"ing-xml","namespace":"validator"},"spec":{"ingressClassName":"nginx","rules":[{"http":{"paths":[{"backend":{"service":{"name":"xml-sign","port":{"number":80}}},"path":"/security/xml/sign","pathType":"Prefix"}]}}]}}
+  creationTimestamp: "2024-07-23T11:23:29Z"
+  generation: 1
+  name: ing-xml
+  namespace: validator
+  resourceVersion: "26235900"
+  uid: 9e01681f-00b9-4f36-b574-8fd5415a10b3
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: xml-sign
+            port:
+              number: 80
+        path: /security/xml/sign
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.95.31.101
+#+end_example
 https://kubernetes.io/docs/concepts/services-networking/ingress/
+
 https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
 
 https://kubernetes.github.io/ingress-nginx/deploy/
+
+* Jenkins Deployment in k8s
+-- #+begin_src groovy
+#+begin_src js
+node {
+    try {
+        stage('Checkout') {
+            checkout([$class: 'GitSCM', branches: [[name: "$branch"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '2e1abda9-41dc-41a9-a234-af698d621478', url: 'http://smip-sm2m-dev/core/ng-core.git']]])
+        }
+        stage('Maven build') {
+            parallel(
+                    'Build JAR': {
+                        dir('.') {
+                            sh "mvn clean install -Dmaven.test.skip=true -e"
+                        }
+                    }
+            )
+            archiveArtifacts 'core-app/target/*.jar'            
+            archiveArtifacts 'core-query/target/*.jar' 
+        }        
+        stage('Docker build') {
+            dir('core-app') {
+                sh "sudo docker login -u smipericssoncr -p 8OBqhXLyVHyH4CRX3IzV/RDdUnM2+W5MjkLKIKv/se+ACRDS1k2r smipericssoncr.azurecr.io"
+                sh "sudo docker build . -t smipericssoncr.azurecr.io/az-core"
+                sh "sudo docker push smipericssoncr.azurecr.io/az-core"
+            }
+            dir('core-query') {
+                sh "sudo docker login -u smipericssoncr -p 8OBqhXLyVHyH4CRX3IzV/RDdUnM2+W5MjkLKIKv/se+ACRDS1k2r smipericssoncr.azurecr.io"
+                sh "sudo docker build . -t smipericssoncr.azurecr.io/az-core-query"
+                sh "sudo docker push smipericssoncr.azurecr.io/az-core-query"
+            }
+        }
+        stage('Deploy') {
+            dir('core-app') {
+                sh "sudo kubectl rollout restart deployment -n core core core-query"
+            }
+        }
+        notifyBuildResult()
+    } catch (Exception e) {
+        currentBuild.result = 'FAILURE'
+        echo "Pipeline failed: ${e.message}"
+        notifyBuildResult()
+    }
+}
+
+def notifyBuildResult() {
+    echo "BUILD SUCCESS"
+}
+#+end_src
+
+Docker for files:
+
+core-query
+#+begin_example
+FROM openjdk:21-slim
+WORKDIR /app
+COPY target/*.jar /app/app.jar
+EXPOSE 8080
+CMD ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-XX:InitialRAMPercentage=50.0","-XX:+UseG1GC", "-XX:MaxGCPauseMillis=200", "-XX:InitiatingHeapOccupancyPercent=45","-Djava.security.egd=file:/dev/./urandom","-jar", "app.jar"]
+#+end_example
+
+core-app
+#+begin_example
+FROM openjdk:21-slim
+WORKDIR /app
+COPY target/*.jar /app/app.jar
+EXPOSE 8080
+CMD ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-XX:InitialRAMPercentage=50.0","-XX:+UseG1GC", "-XX:MaxGCPauseMillis=200", "-XX:InitiatingHeapOccupancyPercent=45","-Djava.security.egd=file:/dev/./urandom","-jar", "app.jar"]
+#+end_example

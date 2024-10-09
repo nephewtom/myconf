@@ -32,6 +32,7 @@ org-mode.el
 nxml.el
 markdown.el
 
+gdscript.el
 edit-with-emacs.el
 python.el
 

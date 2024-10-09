@@ -1,4 +1,5 @@
-;; --- FILE:  init.begin.el
+
+;; *** FILE:  begin.el
 ;; Provide timestamp to *Messages* logs
 (load "~/myconf/emacs/log.el")
 
@@ -16,6 +17,7 @@
 (setq vc-follow-symlinks t)
 
 
+;; *** FILE:  package.el
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -47,7 +49,27 @@
 
 ; set the path for manually installed packages
 (add-to-list 'load-path "~/.emacs.d/packages")
-;; --- FILE:  bars-and-title.el
+
+;; --- Wrap region: https://stackoverflow.com/a/2747142/316232
+(wrap-region-mode t)
+
+;; *** FILE:  theme.el
+(load-theme 'monokai t)
+
+;; https://stackoverflow.com/q/9990370/316232
+(global-hl-line-mode t) ;; highlight current line
+(make-variable-buffer-local 'global-hl-line-mode)
+
+;; current line highlighted color
+(set-face-background hl-line-face "#404040")
+
+;; region highlight color
+(set-face-attribute 'region nil :background "#848000") ;;
+
+;; fringe color (between line numbers and buffer)
+(set-face-attribute 'fringe nil :background "#505050")
+
+;; *** FILE:  bars-and-title.el
 ;; --- Bars & title
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
@@ -57,6 +79,8 @@
 (setq frame-title-format '("tom@" (:eval (format "%s" system-type))
                            ": "(:eval (if (buffer-file-name)
                                           (buffer-file-name) "%b"))))
+
+(fringe-mode '(16 . 0)) ;; Make left fringe 16 pixels and no right fringe
 
 ;; (setq initial-frame-alist
 ;;       '((background-color . "honeydew")))
@@ -77,27 +101,14 @@
 ;; since Emacs gets terribly slow
 ;; http://shallowsky.com/blog/linux/editors/no-emacs-version-control.html
 (setq vc-handled-backends nil)
-;; --- FILE:  column-and-line-numbers.el
+
+;; *** FILE:  column-and-line-numbers.el
 ;; --- Columns, line-numbers, etc.
 (column-number-mode t)
 (global-linum-mode t) ;; line numbers in all buffers
 
-;; https://stackoverflow.com/q/9990370/316232
-(global-hl-line-mode t) ;; highlight current line
-(make-variable-buffer-local 'global-hl-line-mode)
 
-(load-theme 'monokai t)
-
-;; current line highlighted color
-(set-face-background hl-line-face "#404040")
-
-;; region highlight color
-(set-face-attribute 'region nil :background "#848000") ;;
-
-;; fringe color (between line numbers and buffer)
-(set-face-attribute 'fringe nil :background "#505050")
-
-;; --- FILE:  paren-indent.el
+;; *** FILE:  paren-indent.el
 ;; --- Paren stuff
 (show-paren-mode 1)
 (electric-pair-mode 1)
@@ -111,7 +122,9 @@
   (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
-;; --- FILE:  calendar.el
+
+
+;; *** FILE:  calendar.el
 (setq calendar-week-start-day 1)
 
 ;; Display week number
@@ -127,7 +140,8 @@
       (propertize "Wk"                  ; or e.g. "KW" in Germany
                   'font-lock-face 'font-lock-keyword-face))
 
-;; --- FILE:  cond-mac-linux-win.el
+
+;; *** FILE:  cond-mac-linux-win.el
 (cond
  ;; --- Mac OS X stuff ---
  ((string-equal system-type "darwin")
@@ -142,11 +156,11 @@
                     (mouse-menu-bar-map))))
   (set-face-attribute 'default nil :height 200))
 
-  ;; --- Windows stuff ---
+ ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
   (message "System: Windows")
   (set-face-attribute 'default nil :family "Consolas" :height 140)
-  (add-to-list 'exec-path "c:/Users/etomort/scoop/apps/git/current/usr/bin")
+  (add-to-list 'exec-path "%HOME%/scoop/apps/git/current/usr/bin")
   (setenv "PATH" (mapconcat #'identity exec-path path-separator))
 
   (add-to-list 'exec-path "c:/Users/etomort/hunspell/bin/")
@@ -156,6 +170,8 @@
   (setq-default default-buffer-file-coding-system 'utf-8-unix)
   (set-default-coding-systems 'utf-8-unix)
   (prefer-coding-system 'utf-8-unix)
+  (setq find-program "%HOME%/scoop/apps/git/current/usr/bin/find.exe")
+  (setq compile-command "build.bat")
   )
  
  ;; --- Linux stuff ---
@@ -165,7 +181,7 @@
   ;; --- Persistent sessions
   ;; https://github.com/thierryvolpiatto/psession
   ;; https://github.com/emacs-helm/helm/issues/2028
-  (psession-mode 1)
+  ;;  (psession-mode 1)
 
   ;; This makes Emacs on Windows unusable...
   ;; So set it only on Linux
@@ -173,7 +189,8 @@
   (setq x-wait-for-event-timeout nil)
   )
  )
-;; --- FILE:  duplicate-line.el
+
+;; *** FILE:  duplicate-line.el
 ;; Duplicate line
 (defun duplicate-line (ARG)
   "Duplicate current line, ARG, leaving point in lower line."
@@ -210,7 +227,8 @@
   ;; put the point in the lowest line and return
   (next-line ARG))
 
-;; --- FILE:  xah-cut-copy.el
+
+;; *** FILE:  xah-cut-copy.el
 ;; --- Cut, Copy, Paste from Xah Lee functions   ---
 ;; Check http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
 (defun xah-cut-line-or-region ()
@@ -269,20 +287,8 @@ Version 2017-07-08"
     (end-of-line)
     (forward-char)
             (message "line copied")))))))
-;; --- FILE:  compilation.el
-;; Helper for compilation. Close the compilation window if there was no error at all.
-(defun compilation-exit-autoclose (status code msg)
-  ;; If M-x compile exists with a 0
-  (when (and (eq status 'exit) (zerop code))
-    ;; then bury the *compilation* buffer, so that C-x b doesn't go there
-    (bury-buffer)
-    ;; and delete the *compilation* window
-    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
-  ;; Always return the anticipated result of compilation-exit-message-function
-  (cons msg code))
-;; Specify my function (maybe I should have done a lambda function)
-(setq compilation-exit-message-function 'compilation-exit-autoclose)
-;; --- FILE:  sudo.el
+
+;; *** FILE:  sudo.el
 ;; From: http://emacsredux.com/blog/2013/04/21/edit-files-as-root/
 (defun sudo-edit (&optional arg)
   "Edit currently visited file as root.
@@ -295,7 +301,8 @@ buffer is not visiting a file."
       (find-file (concat "/sudo:root@localhost:"
                          (ido-read-file-name "Find file(as root): ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-;; --- FILE:  defalias.el
+
+;; *** FILE:  defalias.el
 ;; defalias for Fast M-x
 ;; http://ergoemacs.org/emacs/emacs_alias.html
 
@@ -303,6 +310,7 @@ buffer is not visiting a file."
 (defalias 'hfind 'helm-find)
 (defalias 'hman 'helm-man-woman)
 (defalias 'hoccur 'helm-occur)
+(defalias 'hr 'helm-recentf)
 (defalias 'hrec 'helm-recentf)
 
 ;; TRY helm-swoop & swiper more...
@@ -311,10 +319,17 @@ buffer is not visiting a file."
 (defalias 'qrr 'query-replace-regexp)
 
 (defalias 'lb 'list-buffers)
+(defalias 'lp 'list-processes)
 (defalias 'eb 'eval-buffer)
 (defalias 'er 'eval-region)
+(defalias 'db 'ediff-buffers)
 (defalias 'difbuf 'ediff-buffers)
 (defalias 'diffil 'ediff-files)
+
+(defalias 'trf 'transpose-frame)
+(defalias 'trframe 'transpose-frame)
+(defalias 'df 'delete-frame)
+(defalias 'nf 'new-frame)
 
 (defalias 'odired 'open-in-dired)
 
@@ -322,11 +337,22 @@ buffer is not visiting a file."
 (defalias 'oichrome 'browse-url-of-file)
 
 (defun start-windows-explorer () (interactive) (shell-command "explorer.exe ."))
+(defalias 'wx 'start-windows-explorer)
 (defalias 'wexp 'start-windows-explorer)
-;; --- FILE:  dired.el
+
+;; *** FILE:  dired.el
 ;; --- Dired ---
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
+(defvar my-dired-listing-switches nil)
+(defvar my-dired-listing-switches-flag t)
+(defun toggle-hidden-dirs ()
+  (interactive)
+  (if my-dired-listing-switches-flag
+      (dired-sort-other "-lkta")
+    (dired-sort-other "-lkt"))
+  (setq my-dired-listing-switches-flag (not my-dired-listing-switches-flag))
+  (dired-sort-toggle))
 
 (use-package dired
   :bind (:map dired-mode-map
@@ -336,7 +362,9 @@ buffer is not visiting a file."
               ("j" . dired-find-file)
               ("e" . ora-ediff-files)
               ("P" . peep-dired)
+              ("h" . toggle-hidden-dirs)
               ("<M-return>" . dired-w32-browser)
+              ("M-i" . switch-to-buffer-other-window)
               )
   :config
   (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
@@ -349,9 +377,13 @@ buffer is not visiting a file."
   (setq diredp-hide-details-initially-flag nil)
   (add-hook 'dired-mode-hook 'auto-revert-mode)
   (require 'dired-x)
+  (setq dired-omit-files "^\\...+$") ; Only omit hidden files
+
   (require 'dired+)
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)
+  (unbind-key "C-w" dired-mode-map)
+  (unbind-key "M-i" dired-mode-map)
 
 
   (cond
@@ -444,12 +476,31 @@ buffer is not visiting a file."
   (setq find-ls-option '("-exec ls -lSr {} + | cut -d ' ' -f5-" . "-lSr"))
   (find-dired dir args)
   (setq find-ls-option '("-ls" . "-dilsb")))
-;; --- FILE:  neotree.el
+
+;; *** FILE:  neotree.el
+;; (From https://www.emacswiki.org/emacs/NeoTree )
+;; Useful keybindings
+;; ------------------
+;; n : next line
+;; p : previous line 
+;; SPC/TAB : Fold/Unfold current item if it is a directory.
+;; SPC : Open current item if it is a file.
+;; ENTER : change root directory to current one
+;; . / U : go up a directory
+;; A : Maximize/Minimize NeoTree window 
+;; d : open in dired
+;; q : hide NeoTree
+
 (use-package neotree
   :ensure
   :config
   (setq neo-window-fixed-size nil)
   ;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+  :bind (:map neotree-mode-map
+              ("RET" . 'neotree-change-root)
+              ("." . 'neotree-select-up-node)
+              )
   )
 
 (defun neo-fit (&rest _args)
@@ -460,9 +511,10 @@ https://github.com/jaypei/emacs-neotree/pull/110"
      (let ((fit-window-to-buffer-horizontally t))
        (fit-window-to-buffer))))
 
-(add-hook 'neo-change-root-hook #'neotree-resize-window)
-(add-hook 'neo-enter-hook #'neotree-resize-window)
-;; --- FILE:  ediff.el
+;;(add-hook 'neo-change-root-hook #'neotree-resize-window)
+;;(add-hook 'neo-enter-hook #'neotree-resize-window)
+
+;; *** FILE:  ediff.el
 ;; https://oremacs.com/2017/03/18/dired-ediff/
 ;; -*- lexical-binding: t -*-
 (defun ora-ediff-files ()
@@ -514,7 +566,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
 (add-hook 'ediff-before-setup-hook #'my-store-pre-ediff-winconfig)
 (add-hook 'ediff-quit-hook #'my-restore-pre-ediff-winconfig)
-;; --- FILE:  helm.el
+
+;; *** FILE:  helm.el
 ;; --- Helm ---
 ;; * helm-find: C-x c /
 ;; * To find from helm-find-files (C-x C-f), press: C-c /
@@ -574,7 +627,9 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 ;;(setq x-wait-for-event-timeout nil)
 
 
-;; --- FILE:  movement.el
+;;(global-set-key (kbd "C-t") 'helm-grep-do-git-grep)
+
+;; *** FILE:  movement.el
 ;; --- Move end of line / Join line
 (defun move-end-of-line-newline-and-indent ()
   "Insert a newline, then indent according to major mode."
@@ -588,19 +643,16 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (use-package move-text
   :ensure t
   :config (move-text-default-bindings))
-;; --- FILE:  buffers-utils.el
-(defun switch-to-previous-buffer ()
-  "Swap to previous buffer."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-(defun indent-buffer ()
-  "Select current buffer and indent it."
-  (interactive)
-  (save-excursion
-    (indent-region (point-min) (point-max) nil)))
+;; *** FILE:  buffers-utils.el
+;; TODO: change by use-package
+(require 'buffer-move)
+(defun win-swap () "Swap windows using buffer-move.el" (interactive)
+       (if (null (windmove-find-other-window 'right))
+           (buf-move-left)
+         (buf-move-right)))
+(global-set-key (kbd "C-2") 'win-swap)
 
-(global-auto-revert-mode t) ;; automatically revert buffer when file changes
 
 ;; --- Uniquify 
 (require 'uniquify)
@@ -648,49 +700,55 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   ;; (add-to-list 'ibuffer-never-show-predicates " .*")
 
   ;; Remove the buffers that match these regexp
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*lsp.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Metahelp*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*tip*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*git-credential.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Minibuf-.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Echo Area.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Custom.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Python.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*DOC.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*SPP.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*temp.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*edit.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*ediff-tmp.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*emacs-query.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*autoload.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*spool.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*code-conver.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*helm.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*Deletions.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*http.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*RNC.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*elpy.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*server.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
-  (add-to-list 'ibuffer-never-show-predicates " .*\\Marked.*")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm ag")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm mini")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm find")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm grep exts")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm M-x")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm-mode")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm buffers")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*helm man woman*")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Helm Swoop")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Messages")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*Help")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*JDEE")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*process")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*diff")
-  (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
+  (add-to-list 'ibuffer-never-show-predicates "^\\*")
+  (add-to-list 'ibuffer-never-show-predicates "^ \\*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*grip-.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*NeoTree.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*lsp.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Metahelp*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*tip*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*git-credential.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Minibuf-.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Echo Area.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Custom.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Python.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*DOC.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*SPP.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*temp.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*edit.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*ediff-tmp.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*emacs-query.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*autoload.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*spool.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*code-conver.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*helm.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*Deletions.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*http.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*RNC.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*elpy.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*server.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\*org.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates " .*\\Marked.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm ag")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm mini")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm find")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm grep exts")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm M-x")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm-mode")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm buffers")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*helm man woman*")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Helm Swoop")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Messages")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Disabled")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*Help")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*tramp")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*JDEE")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*process")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*diff")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*magit.*log")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*canonical address.*")
+  ;; (add-to-list 'ibuffer-never-show-predicates "^\\*extract address components.*")
   )
 
 ;; From: http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
@@ -707,6 +765,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
            ("playground" (filename . "playground"))
            ("/usr/include/" (filename . "/usr/include/"))
            ("SDL" (filename . "tomas/SDL/"))
+           ("raylib" (filename . "raylib"))
            )
           ("default")
           ))
@@ -729,17 +788,20 @@ https://github.com/jaypei/emacs-neotree/pull/110"
       '((mark modified read-only " "
               (name 30 30 :left :elide) ; change: 30s were originally 18s
               " "
-              (vtime 4 4 :left)
+
+              ;; TODO
+              ;;              (vtime 4 4 :left)
+              ;;              " "
+              (mode 16 16 :left :elide)
               " "
               (size 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
 
               " " filename-and-process)
         (mark " "
               (name 16 -1)
               " " filename)))
-;; --- FILE:  elisp.el
+
+;; *** FILE:  elisp.el
 ;; --- Elisp related
 (require 'hl-defined)
 
@@ -751,12 +813,14 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (define-key 'help-command (kbd "C-k") 'find-function-on-key)
 (define-key 'help-command (kbd "C-v") 'find-variable)
 
-;; --- FILE:  flycheck.el
+
+;; *** FILE:  flycheck.el
 (use-package flycheck
   :ensure t
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-;; --- FILE:  company.el
+
+;; *** FILE:  company.el
 ;; --- Company ---
 (use-package company
   :init
@@ -767,9 +831,16 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (company-mode)
   (setq company-idle-delay 0)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
-  (add-to-list 'company-backends 'company-c-headers) ;; Bakckend for header files
+  (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
   (add-to-list 'company-backends 'company-elisp)
-
+  (when (boundp 'company-backends)
+    (make-local-variable 'company-backends)
+    ;; remove
+    (setq company-backends (delete 'company-clang company-backends))
+    ;; add
+    ;;(add-to-list 'company-backends 'company-dabbrev)
+    )
+  
   :bind (:map company-search-map  
               ("C-t" . company-search-toggle-filtering)
               ("C-n" . company-select-next)
@@ -777,7 +848,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
               :map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
-;; --- FILE:  xah-lookup.el
+
+;; *** FILE:  xah-lookup.el
 ;; --- Extend xah-lookup with spanish & alias ---
 (use-package xah-lookup
   :ensure t
@@ -824,6 +896,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
   :bind (
          :map help-map
+         ("6" . browse-url-of-buffer)
          ("7" . browse-url-at-point)
          ("8" . xah-lookup-google)
          ("9" . xah-lookup-word-definition)
@@ -831,7 +904,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   )
 
 (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
-(global-set-key (kbd "C-h 6") 'browse-url-of-buffer)
+(global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
 
 ;; TODO: I only want this on WSL
 ;; https://emacs.stackexchange.com/questions/47782/is-there-a-way-emacs-can-infer-is-running-on-wsl-windows-subsystem-for-linux
@@ -839,7 +912,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (shell-command
    (concat "chrome.exe " url)))
 (setq browse-url-browser-function 'browse-url-tom)
-;; --- FILE:  google-translate.el
+
+;; *** FILE:  google-translate.el
 (use-package google-translate
   :ensure t
   :config
@@ -849,7 +923,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (global-set-key (kbd "C-<f11>") 'google-translate-at-point-reverse)
   (require 'google-translate-default-ui)
   )
-;; --- FILE:  magit.el
+
+;; *** FILE:  magit.el
 
 ;; --- Git ---
 (use-package magit
@@ -880,7 +955,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (defun magit-staging ()
   (interactive)
   (magit-mode-setup #'magit-staging-mode))
-;; --- FILE:  term.el
+
+;; *** FILE:  term.el
 ;; --- terminal stuff ---
 (use-package term
   :init
@@ -951,7 +1027,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (interactive)
   (let ((explicit-shell-file-name "C:/Windows/System32/bash.exe"))
     (shell)))
-;; --- FILE:  org-mode.el
+
+;; *** FILE:  org-mode.el
 (use-package org
   :ensure
   :bind (("C-c l" . org-store-link)
@@ -963,6 +1040,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
          ("C-<up>" . org-backward-heading-same-level)  
          ("\C-ca" . org-agenda)                     
          ("C-c s" . org-edit-special)
+         ("M-p" . backward-paragraph)
+         ("M-n" . forward-paragraph)
          :map org-src-mode-map
          ("C-c s" . org-edit-src-exit))
   :config
@@ -970,7 +1049,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
         '(
           ("TODO" . (:foreground "blue" :weight bold))
           ("IN-PROGRESS" . (:foreground "red" :weight bold))
-          ("WAITING" . (:foreground "orange" :weight bold))
+          ("ON-HOLD" . (:foreground "orange" :weight bold))
           ("DONE" . (:foreground "forest green" :weight bold))
 
           ("TRY" . (:foreground "purple" :weight bold))
@@ -983,7 +1062,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
           ))
 
   (setq org-todo-keywords
-        '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE")
+        '((sequence "TODO" "IN-PROGRESS" "ON-HOLD" "|" "DONE")
           (sequence "TRY" "NOTE" "REVIEW" "PERMANENT" "CANCELLED" "|" "WTF")))
 
   (setq org-priority-faces '((?A . (:background "#DD0000"  :foreground "black" :box '(:line-width 2 :style released-button)))
@@ -1044,7 +1123,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
     (progn (add-to-invisibility-spec '(org-link))
        (org-restart-font-lock)
        (setq org-descriptive-links t))))
-;; --- FILE:  nxml.el
+
+;; *** FILE:  nxml.el
 ;; --- XML Stuff ---
 ;; (use-package sgml
 ;; ;  :ensure t
@@ -1127,7 +1207,8 @@ by using nxml's indentation rules."
     (add-hook 'which-func-functions 'nxml-where t t)))
 
 (add-hook 'find-file-hook 'xml-find-file-hook t)
-;; --- FILE:  markdown.el
+
+;; *** FILE:  markdown.el
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md$" . markdown-mode)
@@ -1146,10 +1227,10 @@ by using nxml's indentation rules."
   ;;(setq markdown-command "markdown")
   )
 
+;; IMP!: grip-mode is the way to go for Markdown preview
+;; Though it FAILS with images in WSL Emacs... WTF! Check if I can fix that.
 
-
-
-
+;; Forget about impatient mode and flymd
 ;; https://stackoverflow.com/questions/36183071/how-can-i-preview-markdown-in-emacs-in-real-time
 
 (defun markdown-html-no-title (buffer)
@@ -1175,51 +1256,11 @@ by using nxml's indentation rules."
   (setq imp-user-filter #'markdown-html)
   (cl-incf imp-last-state)
   (imp--notify-clients))
-;; --- FILE:  hideshow.el
-;; --- Hideshow ---
-(use-package hideshow
-  :init
-  (add-hook 'prog-mode-hook #'hs-minor-mode)
-  (add-hook 'nxml-mode-hook 'hs-minor-mode)
-  (add-hook 'html-mode-hook 'hs-minor-mode)
-  :bind (:map hs-minor-mode-map
-              ("C-c @ C-h" . nil)
-              ("C-c @ C-s" . nil)
-              ("C-c @ C-M-h" . nil)
-              ("C-c @ C-M-s" . nil)
-              ("C-c @ C-c" . nil)
-              ("C-c <left>" . hs-hide-block)
-              ("C-c h" . hs-hide-block)
-              ("M-]" . hs-hide-block)
-              ("C-c <right>" . hs-show-block)
-              ("C-c s" . hs-show-block)
-              ("M-[" . hs-show-block)
-              ("C-c <up>" . hs-hide-all)
-              ("C-c M-h" . hs-hide-all)
-              ("C-c <down>" . hs-show-all)
-              ("C-c M-s" . hs-show-all)
-              ("C-c C-c" . hs-toggle-hiding))
-  :config
-  (hideshowvis-minor-mode)
-  (hideshowvis-symbols)
-  )
 
-;; optional key bindings, easier than hs defaults
-;;(define-key html-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+;; *** FILE:  gdscript.el
+(require 'gdscript-mode)
 
-;; Yafolding shows a triangule at the left... Cool!
-
-;; TODO: Check yafolding mode. It looks very simple and easy to use.
-;; TODO: It has very easy key-bindings, though C-RET collide with cua-set-rectangle-mark
-;; TODO: Check: https://github.com/zenozeng/yafolding.el
-;; *** Bindings from yafolding.el ***
-;; (defvar yafolding-mode-map
-;;   (let ((map (make-sparse-keymap)))
-;;     (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
-;;     (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
-;;     (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
-;;     map))
-;; --- FILE:  edit-with-emacs.el
+;; *** FILE:  edit-with-emacs.el
 ;; --- Edit with Emacs ---
 
 ;; Stuff to edit content in web forms via "Edit with Emacs" Chrome plugin
@@ -1236,31 +1277,78 @@ by using nxml's indentation rules."
 
 ;; When using firefox plugin itsalltext with Emacs, finish editing on Emacs with C-x #
 ;; http://psung.blogspot.com.es/2009/05/using-itsalltext-with-emacsemacsclient.html
-;; --- FILE:  python.el
+
+;; *** FILE:  python.el
 (use-package python
   :mode ("\\.py\\'" . python-mode)
   :bind (:map  python-mode-map
-         ("C->" . python-indent-shift-right)
-         ("C-<" . python-indent-shift-left))
+               ("C->" . python-indent-shift-right)
+               ("C-<" . python-indent-shift-left))
   :config
-  (elpy-enable)
+  ;; (elpy-enable)
   ;; What about these two if I use virtualenv ?
-  (setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i --simple-prompt")
+  (setq python-shell-interpreter "ipython3"
+        python-shell-interpreter-args "-i --simple-prompt")
 
-  (setq elpy-rpc-python-command "python3")  
-  (setq elpy-rpc-backend "jedi") ;; Do I have to setq this?
+  ;; (setq elpy-rpc-python-command "python3")  
+  ;; (setq elpy-rpc-backend "jedi") ;; Do I have to setq this?
 
-  (when (require 'flycheck nil t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode)))
-
+  ;; (when (require 'flycheck nil t)
+  ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  ;; (setq flycheck-python-flake8-executable "python3")
+  ;; (setq flycheck-python-pycompile-executable "python3")
+  ;; (setq flycheck-python-pylint-executable "python3")
+  ;; (add-hook 'elpy-mode-hook 'flycheck-mode)
+  
+  )
 ;; I think jedi uses autocomplete-mode (AC) and not company-mode
 ;;(add-hook 'python-mode-hook 'jedi:setu)
 ;;(setq jedi:complete-on-dot t)
 
 ;; (setq elpy-rpc-python-command "python2")  
-;; --- FILE:  keybindings.el
+
+;; *** FILE:  cpp.el
+(use-package cc-mode
+  :config
+  (unbind-key "C-M-h" c++-mode-map)
+  (unbind-key "C-M-j" c++-mode-map)
+  (setq c-default-style "linux") ;; BSD/Allman brackets
+  (setq c-basic-offset 4)      ;; 4-space indent
+  )
+
+
+;; https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
+(require 'aggressive-indent) ;; Aggresive indentation
+(aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
+(which-function-mode)
+
+;;(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)
+
+;; (Conditional) C/C++ Keybinds
+;; (add-hook 'c-mode-common-hook
+;; (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
+
+(defun delete-carrage-returns ()
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (while (search-forward "\r" nil :noerror)
+      (replace-match ""))))
+
+(defun astyle-this-buffer (pmin pmax)
+  (interactive "r")
+  (shell-command-on-region pmin pmax
+                           "astyle --style=mozilla -s4 -xB -k1"
+                           (current-buffer) t 
+                           (get-buffer-create "*Astyle Errors*") t)
+  (replace-string  )
+  (mark-whole-buffer)
+  (indent-buffer)
+  )
+
+(defalias 'ast 'astyle-this-buffer)
+
+;; *** FILE:  keybindings.el
 (require 'iso-transl) ;; Make dead keys work
 
 ;; NOTE: Do not bind C-y & M-w to anything.
@@ -1270,13 +1358,33 @@ by using nxml's indentation rules."
 
 ;; --- Cua mode 
 (cua-mode t) ;; Ctrl+Z, Ctrl+X, Ctrl+C, Ctrl+V (Cmd+ in Mac OSX)
-(define-key isearch-mode-map (kbd "C-x") nil)
+
+
+;; --- Search with C-f like MOST apps...
+(global-set-key (kbd "C-f") 'isearch-forward)
+(global-set-key (kbd "C-S-f") 'isearch-forward-symbol-at-point)
+(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-t") 'isearch-yank-word-or-char)
+(define-key isearch-mode-map [down] 'isearch-repeat-forward)
+(define-key isearch-mode-map [up] 'isearch-repeat-backward)
+(global-set-key (kbd "C-s") 'save-buffer) ;; Use C-s to save
+
 ;; Check: http://emacs.stackexchange.com/questions/22621/cutting-selection-with-cua-mode-bindings-after-searching/
+(define-key isearch-mode-map (kbd "C-x") nil)
 
 
 ;; --- Scroll up & down
 (global-set-key (kbd "M-p") 'backward-paragraph)
 (global-set-key (kbd "M-n") 'forward-paragraph)
+
+
+;; --- Macros
+;; Differenciate <RET> from C-m 
+;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
+(define-key input-decode-map [?\C-m] [C-m])
+(global-set-key (kbd "<C-m>") 'kmacro-start-macro)
+(global-set-key (kbd "<C-S-m>") 'kmacro-end-and-call-macro)
+(global-set-key (kbd "<C-f9>") 'kmacro-call-macro)
 
 
 ;; --- Line operations
@@ -1285,6 +1393,9 @@ by using nxml's indentation rules."
 ;; I used to set it to C-j... in order to be similar to vi J key
 ;; join-line function is a defalias of delete-indentation.
 
+(global-set-key (kbd "M-<backspace>") 'backward-kill-word)
+(global-set-key (kbd "C-<backspace>") 'backward-kill-sexp)
+(global-set-key (kbd "C-d") 'kill-whole-line)
 (global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-l") 'duplicate-line) ;; duplicate-line.el
 (global-set-key (kbd "M-s M-s") 'delete-horizontal-space)
@@ -1293,6 +1404,7 @@ by using nxml's indentation rules."
 ;; http://stackoverflow.com/questions/445225/emacs-command-to-delete-up-to-non-whitespace-character
 ;; In that SO question says to use delete-indentation function
 ;; Tomi, what is the difference between both?
+
 
 ;; --- Paren operations
 (global-set-key "%" 'match-paren) ;; Like vim
@@ -1309,16 +1421,26 @@ by using nxml's indentation rules."
 (global-set-key (kbd "<f7>") 'neotree-toggle)
 (global-set-key (kbd "<f8>") 'ibuffer)
 
-;; TODO: When switch-to-previous-buffer , minibuffer shows 'Mark set',
-;; and sometimes need to hit the key twice... 
-;;(global-set-key (kbd "<fXX>") 'switch-to-previous-buffer) ;; buffer-utils.el
-(global-set-key (kbd "<f9>") 'indent-buffer) ;; buffer-utils.el
-(global-set-key (kbd "<f10>") 'kmacro-start-macro)
-(global-set-key (kbd "<f11>") 'kmacro-end-and-call-macro)
-(global-set-key (kbd "<f12>") 'recompile)
+;; F9 & F12 are defined in compilation.el
+(global-set-key (kbd "<f11>") 'indent-buffer)
+(global-set-key (kbd "C-<f12>") 'start-windows-explorer)
 
 
 ;; --- Buffers
+(defun switch-to-previous-buffer ()
+  "Swap to previous buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(defun indent-buffer ()
+  "Select current buffer and indent it."
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+
+(global-auto-revert-mode t) ;; automatically revert buffer when file changes
+
+
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
@@ -1328,20 +1450,19 @@ by using nxml's indentation rules."
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-3") 'split-window-below)
-(global-set-key (kbd "M-2") 'split-window-right)
+(global-set-key (kbd "M-o") 'find-file-other-window)
+
+(defun split-window-right-and-other-window () "Does that" (interactive)
+       (split-window-right)
+       (other-window 1))
+(global-set-key (kbd "M-2") 'split-window-right-and-other-window)
 (global-set-key (kbd "M-0") 'delete-window)
 
 (global-set-key [C-next] 'windmove-right)
 (global-set-key [C-prior] 'windmove-left)
 
-;; TODO: change by use-package
-(require 'buffer-move)
-(defun win-swap () "Swap windows using buffer-move.el" (interactive)
-       (if (null (windmove-find-other-window 'right))
-           (buf-move-left)
-         (buf-move-right)))
-(global-set-key (kbd "C-2") 'win-swap)
-`
+
+
 ;; --- Font-size & split-pane size
 (global-set-key (kbd "C-=") 'text-scale-adjust)
 
@@ -1374,9 +1495,21 @@ by using nxml's indentation rules."
 
 
 ;; --- Miscellaneous
+
+;; No me funciona... ya que no me deja meter por lo que quiero sustituir...
+(defun query-replace-symbol-at-point ()
+  "Start `query-replace-regexp' with symbol at point as default."
+  (interactive)
+  (let ((sym (symbol-at-point)))
+    (when sym
+      ;; (push (cons (format "\\_<%s\\_>" sym) "") query-replace-defaults)
+      (push (cons (format "%s" sym) "") query-replace-defaults)
+      (call-interactively #'query-replace))))
+
+
 (global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim
-(global-set-key (kbd "C-,") 'iedit-mode)
+(global-set-key (kbd "M-r") 'iedit-mode)
 
 (global-set-key (kbd "M-y") 'company-complete)
 (global-set-key (kbd "M-;") 'hippie-expand)
@@ -1399,14 +1532,98 @@ by using nxml's indentation rules."
 ;; Translate the problematic keys to the function key Hyper:
 (keyboard-translate ?\C-i ?\H-i)
 ;; (global-set-key (kbd "<tab>") 'indent-for-tab-command)
-(define-key help-mode-map (kbd "<tab>") 'forward-button) 
+(global-set-key (kbd "M-i") 'switch-to-buffer-other-window)
+;;(define-key help-mode-map (kbd "<tab>") 'forward-button)
 
 ;; Paste with middle mouse button
 ;; https://stackoverflow.com/a/13043670/316232
 (setq mouse-drag-copy-region t)
 (setq select-active-regions nil)
 (global-set-key [mouse-2] 'mouse-yank-at-click)
-;; --- FILE:  cua.el
+
+;; *** FILE:  compilation.el
+(defun my-compilation-hook () 
+  "Make sure that the compile window is splitting vertically"
+  (progn
+    (if (not (get-buffer-window "*compilation*"))
+        (progn
+          (split-window-vertically)
+          ))))
+(add-hook 'compilation-mode-hook 'my-compilation-hook)
+
+
+;; Function for compiling 
+(defun my-compile ()
+  "Run compile and resize the compile window"
+  (interactive)
+  (progn
+    (call-interactively 'recompile)
+    (setq cur (selected-window))
+    (setq w (get-buffer-window "*compilation*"))
+    (select-window w)
+    (setq h (window-height w))
+    (shrink-window (- h 15))
+    (select-window cur)
+    ))
+(global-set-key (kbd "<f12>") 'my-compile)
+
+
+;; Funtion to run compiled programs
+(cond
+ ((string-equal system-type "windows-nt")
+  (message "System: Windows")
+  (setq compile-command "build.bat")
+
+  (defun run-program () (interactive)
+         (when (get-buffer "*run*")
+           (kill-buffer "*run*"))
+         
+         (when (get-buffer "*compilation*")
+           (delete-window (get-buffer-window (get-buffer "*compilation*")))
+           (kill-buffer "*compilation*"))
+         (add-to-list 'display-buffer-alist '("*Async Shell Command*" . (display-buffer-no-window . nil)) )
+         (async-shell-command "run.bat")
+         (switch-to-buffer (get-buffer "*Async Shell Command*"))
+         (rename-buffer "*run*")
+         (switch-to-previous-buffer)
+         )
+  
+  (defun clean-program () (interactive)
+         (when (get-buffer "*clean*")
+           (kill-buffer "*clean*"))
+         (add-to-list 'display-buffer-alist '("*Async Shell Command*" . (display-buffer-no-window . nil)) )
+         (async-shell-command "clean.bat")         
+         (switch-to-buffer (get-buffer "*Async Shell Command*"))
+         (rename-buffer "*clean*")
+         (switch-to-previous-buffer)
+         )
+  
+  (global-set-key (kbd "<f9>") 'run-program)
+  (global-set-key (kbd "<f11>") 'clean-program)
+  )
+
+ ((message "System: Other"))
+ )
+
+
+
+;; NOT USED NOW
+;; Helper for compilation. Close the compilation window if there was no error at all.
+(defun compilation-exit-autoclose (status code msg)
+  ;; If M-x compile exists with a 0
+  (when (and (eq status 'exit) (zerop code))
+    ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+    (bury-buffer)
+    ;; and delete the *compilation* window
+    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
+  ;; Always return the anticipated result of compilation-exit-message-function
+  (cons msg code))
+
+;; Specify my function (maybe I should have done a lambda function)
+;;(setq compilation-exit-message-function 'compilation-exit-autoclose)
+
+
+;; *** FILE:  cua.el
 (defun special-c-return-in-dired ()
   (interactive)
   (if (derived-mode-p 'dired-mode)
@@ -1416,7 +1633,8 @@ by using nxml's indentation rules."
 
 (define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
 
-;; --- FILE:  init.end.el
+
+;; *** FILE:  end.el
 ;; TODO: Print date in scratch buffer
 ;; (message (format-time-string "%H:%M:%S.%3N"))
 ;; (setq myscratch (get-buffer "*scratch*"))
@@ -1444,6 +1662,7 @@ by using nxml's indentation rules."
 ;; --- Recent files stuff
 (recentf-mode 1)
 (setq recentf-max-menu-items 10)
+(defalias 'rf 'recentf-open-files)
 (defalias 'recf 'recentf-open-files)
 
 ;; --- Font-size & split-pane size

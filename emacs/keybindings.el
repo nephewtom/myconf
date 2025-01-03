@@ -72,7 +72,7 @@
 
 ;; F9 & F12 are defined in compilation.el
 (global-set-key (kbd "<f11>") 'indent-buffer)
-(global-set-key (kbd "C-<f12>") 'start-windows-explorer)
+(global-set-key (kbd "C-<f12>") 'start-file-manager)
 
 
 ;; --- Buffers

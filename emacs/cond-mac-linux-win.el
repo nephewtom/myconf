@@ -15,6 +15,7 @@
   (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
   (global-set-key (kbd "<home>") 'move-beginning-of-line)
   (global-set-key (kbd "<end>") 'move-end-of-line)
+  (defun start-file-manager () (interactive) (shell-command "open ."))
   )
 
  ;; --- Windows stuff ---
@@ -33,6 +34,7 @@
   (prefer-coding-system 'utf-8-unix)
   (setq find-program "%HOME%/scoop/apps/git/current/usr/bin/find.exe")
   (setq compile-command "build.bat")
+  (defun start-file-manager () (interactive) (shell-command "explorer.exe ."))
   )
  
  ;; --- Linux stuff ---

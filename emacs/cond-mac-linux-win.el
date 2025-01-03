@@ -2,15 +2,20 @@
  ;; --- Mac OS X stuff ---
  ((string-equal system-type "darwin")
   (message "System: Mac")
-  (setq mac-option-modifier 'command)
+  (setq mac-option-modifier 'control)
   (setq mac-command-modifier 'meta)
+
   (global-set-key (kbd "M-w") 'kill-this-buffer) ;; this works on Mac too
   (define-key global-map (kbd "C-<f2>")
     (lambda ()
       (interactive)
       (x-popup-menu (list '(0 0) (selected-frame))
                     (mouse-menu-bar-map))))
-  (set-face-attribute 'default nil :height 200))
+  (set-face-attribute 'default nil :height 200)
+  (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
+  (global-set-key (kbd "<home>") 'move-beginning-of-line)
+  (global-set-key (kbd "<end>") 'move-end-of-line)
+  )
 
  ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")

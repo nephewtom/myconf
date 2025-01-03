@@ -4,8 +4,7 @@ alias dir='ls -G -l'
 alias rm='rm -i'
 
 alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
-
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -Q -l ~/myconf/emacs/init.el &"
 alias mvim="open -a MacVim"
 
 alias chrome='open -a "Google Chrome"'

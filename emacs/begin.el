@@ -14,3 +14,6 @@
 ;; Follow git symlinks
 (setq vc-follow-symlinks t)
 
+(setq ring-bell-function
+      (lambda ()
+        (play-sound-file "~/myconf/emacs/hit.wav")))

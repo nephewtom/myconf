@@ -27,17 +27,16 @@ company.el
 
 google-translate.el
 magit.el
-term.el
 org-mode.el
 nxml.el
 markdown.el
-
 gdscript.el
 edit-with-emacs.el
-python.el
 
+python.el
 keybindings.el
 compilation.el
+
 cua.el
 end.el"
 

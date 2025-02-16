@@ -48,7 +48,7 @@
 
   ;; For WSL
   ;; Set in .bashrc: export TMPDIR=/mnt/c/Users/etomort/AppData/Local/Temp 
-  cmd = winmergeu.exe -e -u -dl \"$2\" -dr \"$3\" \"$(wslpath $LOCAL)\" \"$(wslpath $REMOTE)\"
+  ; cmd = winmergeu.exe -e -u -dl \"$2\" -dr \"$3\" \"$(wslpath $LOCAL)\" \"$(wslpath $REMOTE)\"
 
 [difftool "kdiff3"]
   trustExitCode = true
@@ -63,7 +63,7 @@
 
 
 [credential "helperselector"]
-	selected = cache
+	selected = wincred
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

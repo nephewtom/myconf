@@ -1,4 +1,7 @@
 ;; --- terminal stuff ---
+;; IMPORTANT: This file breaks starting CMD.exe inside Emacs via M-x shell
+;; So, removing for now.
+
 (use-package term
   :init
   ;; https://oremacs.com/2015/01/01/three-ansi-term-tips/

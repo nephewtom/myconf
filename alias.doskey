@@ -16,3 +16,5 @@ playc=cd /d d:\playground\c_cpp
 ncine=cd /d d:\playground\c_cpp\ncine
 
 drop=cd /d d:\dropbox
+
+make=mingw32-make.exe $*

@@ -33,10 +33,10 @@
 
   (setq diredp-hide-details-initially-flag nil)
   (add-hook 'dired-mode-hook 'auto-revert-mode)
-  (require 'dired-x)
-  ;; (require 'dired+)
 
-  (setq dired-omit-files "^\\...+$") ; Only omit hidden files
+  ;; (require 'dired+)
+  ;; (require 'dired-x)
+  ;; (setq dired-omit-files "^\\...+$") ; Only omit hidden files
 
   (require 'bind-key)
   (unbind-key "C-o" dired-mode-map)

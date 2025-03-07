@@ -22,8 +22,15 @@
 ;; *** FILE:  package.el
 (require 'package)
 (setq package-enable-at-startup nil)
+
+;; https://www.reddit.com/r/emacs/comments/1cc2205/failed_to_download_gnu_archive_in_emacs_28/
+(setq package-check-signature nil)
+
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+;; installed by default from Emacs 28 onwards
+
 
 ; activate all the packages (in particular autoloads)
 (package-initialize)
@@ -77,10 +84,17 @@
 ;; --- Miscellaneous
 (setq set-mark-command-repeat-pop t) ;; https://emacs.stackexchange.com/a/2818/6957
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
+(setq-default tab-width 4)
+
 (delete-selection-mode 1) ;; Allows to delete without kill-ring & inserting over selection.
+
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
-(setq split-width-threshold nil) ;; Split window vertically by default
+
+
 ;; https://stackoverflow.com/questions/7997590/how-to-change-the-default-split-screen-direction
+;; Only this made it work for Tom
+(setq split-width-threshold 200) ;; For split window vertically 
+
 
 
 ;; --- Disable all version control
@@ -328,6 +342,7 @@ Version 2017-07-08"
               ("h" . toggle-hidden-dirs)
               ("<M-return>" . dired-w32-browser)
               ("M-i" . switch-to-buffer-other-window)
+              ("<f2>" . wdired-change-to-wdired-mode)
               )
   :config
   (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
@@ -683,9 +698,10 @@ Version 2017-07-08"
 
 
 ;; --- Paren operations
-(global-set-key "%" 'match-paren) ;; Like vim
-(global-set-key (kbd "C-M-j") 'down-list) ;; As C-M-u does backward-up-list
+;; (global-set-key "%" 'match-paren) ;; Like vim
+;; (global-set-key "%" 'self-insert-command)
 
+(global-set-key (kbd "C-M-j") 'down-list) ;; As C-M-u does backward-up-list
 
 ;; --- FX keys
 (global-set-key (kbd "<f2>") 'xah-cut-line-or-region) ; cut

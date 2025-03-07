@@ -22,6 +22,7 @@
               ("h" . toggle-hidden-dirs)
               ("<M-return>" . dired-w32-browser)
               ("M-i" . switch-to-buffer-other-window)
+              ("<f2>" . wdired-change-to-wdired-mode)
               )
   :config
   (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))

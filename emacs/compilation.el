@@ -21,6 +21,7 @@
     (shrink-window (- h 15))
     (select-window cur)
     ))
+(global-set-key (kbd "M-<f12>") 'compile)
 (global-set-key (kbd "<f12>") 'my-compile)
 
 

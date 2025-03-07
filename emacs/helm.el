@@ -40,6 +40,8 @@
   (helm-mode 1)
   (setq helm-split-window-in-side-p t)
   (setq helm-split-window-inside-p t)
+  (setq helm-ff-kill-unused-buffers t)
+
   (helm-autoresize-mode 1))
 
 (use-package helm-config

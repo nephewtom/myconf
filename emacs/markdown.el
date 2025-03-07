@@ -19,7 +19,12 @@
   (setq markdown-command nil)
   )
 
-;; FINAL NOTE: I decided not to preview Markdown on Emacs since the solutions tend to fail
+
+;; FINAL NOTE 2: grip-mode works well previewing Markdown on the browser.
+;; Just try: M-x grip-mode 
+;; it needs python, grip package and Emacs grip-mode
+
+;; FINAL NOTE 1: I decided not to preview Markdown on Emacs since the solutions tend to fail
 ;; Use vscode or IntelliJ for integrated Preview.
 
 ;; https://stackoverflow.com/questions/36183071/how-can-i-preview-markdown-in-emacs-in-real-time

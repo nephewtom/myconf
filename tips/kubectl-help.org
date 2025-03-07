@@ -45,8 +45,8 @@ They are specified in the config file under context section.
 - Change current context:
   : kubectl config set-context --current --namespace=core
 
-* Get/describe pods
-
+* Pods typical commands
+** Get pods
 - List pods of the default namespace:
   : kubectl get pods
   : kubectl get pods -o wide
@@ -66,6 +66,10 @@ They are specified in the config file under context section.
 
   : kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |tr -s '[[:space:]]' '\n' |sort |uniq -c
 
+- Using labels:
+  : kubectl get pods -l app=core
+
+** Describe pods
 - Describe a pod:
   : kubectl describe pods xml-sign
   : kubectl describe pods core -n core
@@ -131,10 +135,8 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
 Events:                      <none>
   #+end_example
 
-# kubectl run tick --image=localhost/tick.jar
-
-- Using labels:
-  : kubectl get pods -l app=core
+** Get inside pods (exec)
+: kubectl exec -it core-d84db8c5f-26scq -- /bin/bash
 
 * Logging
 - Tails the logs of pod with name core-???

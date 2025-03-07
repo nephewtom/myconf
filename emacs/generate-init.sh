@@ -26,7 +26,7 @@ flycheck.el
 company.el
 google-translate.el
 magit.el
-term.el
+
 org-mode.el
 nxml.el
 markdown.el
@@ -34,7 +34,7 @@ edit-with-emacs.el
 python.el
 toc-org.el
 
-
+compilation.el
 keybindings.el
 cua.el
 dashboard.el

@@ -1,7 +1,14 @@
 (require 'package)
 (setq package-enable-at-startup nil)
+
+;; https://www.reddit.com/r/emacs/comments/1cc2205/failed_to_download_gnu_archive_in_emacs_28/
+(setq package-check-signature nil)
+
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+;; installed by default from Emacs 28 onwards
+
 
 ; activate all the packages (in particular autoloads)
 (package-initialize)

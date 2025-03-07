@@ -57,9 +57,10 @@
 
 
 ;; --- Paren operations
-(global-set-key "%" 'match-paren) ;; Like vim
-(global-set-key (kbd "C-M-j") 'down-list) ;; As C-M-u does backward-up-list
+;; (global-set-key "%" 'match-paren) ;; Like vim
+;; (global-set-key "%" 'self-insert-command)
 
+(global-set-key (kbd "C-M-j") 'down-list) ;; As C-M-u does backward-up-list
 
 ;; --- FX keys
 (global-set-key (kbd "<f2>") 'xah-cut-line-or-region) ; cut

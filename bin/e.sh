@@ -1,7 +1,7 @@
 #!/bin/bash
 # This file should be located in a directory found in env variable PATH
 
-if  grep -e Microsoft /proc/version &> /dev/null ; then
+if  grep -e icrosoft /proc/version &> /dev/null ; then
     # echo "arg:"$*
     if ! test -f $*; then
         MYPATH=$*

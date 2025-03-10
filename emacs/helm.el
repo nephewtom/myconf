@@ -40,7 +40,16 @@
   (helm-mode 1)
   (setq helm-split-window-in-side-p t)
   (setq helm-split-window-inside-p t)
-  (helm-autoresize-mode 1))
+  (helm-autoresize-mode 1)
+
+
+  (add-hook 'helm-after-action-hook
+            (lambda ()
+              (dolist (buffer (buffer-list))
+                (when (string-match "\\`\\*helm" (buffer-name buffer))
+                  (kill-buffer buffer)))))
+
+  )
 
 ;; (use-package helm-config
 ;;   ;; :ensure t

@@ -1,3 +1,5 @@
+(global-set-key (kbd "M-<f12>") 'compile)
+
 (defun my-compilation-hook () 
   "Make sure that the compile window is splitting vertically"
   (progn
@@ -54,8 +56,8 @@
          (switch-to-previous-buffer)
          )
   
-  (global-set-key (kbd "<f9>") 'run-program)
-  (global-set-key (kbd "<f11>") 'clean-program)
+  ;; (global-set-key (kbd "<f9>") 'run-program)
+  ;; (global-set-key (kbd "<f11>") 'clean-program)
   )
 
  ((message "System: Other"))

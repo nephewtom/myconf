@@ -19,10 +19,15 @@
 ;; --- Miscellaneous
 (setq set-mark-command-repeat-pop t) ;; https://emacs.stackexchange.com/a/2818/6957
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
+(setq-default tab-width 4)
+
+
 (delete-selection-mode 1) ;; Allows to delete without kill-ring & inserting over selection.
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
-(setq split-width-threshold nil) ;; Split window vertically by default
+
 ;; https://stackoverflow.com/questions/7997590/how-to-change-the-default-split-screen-direction
+(setq split-width-threshold 200) ;; For split window vertically 
+;; Only this made it work for Tom
 
 
 ;; --- Disable all version control

@@ -13,13 +13,14 @@
 (defalias 'qr 'query-replace)
 (defalias 'qrr 'query-replace-regexp)
 
-(defalias 'lb 'list-buffers)
-(defalias 'lp 'list-processes)
-(defalias 'eb 'eval-buffer)
-(defalias 'er 'eval-region)
+(defalias 'lb 'my-list-buffers)
 (defalias 'db 'ediff-buffers)
 (defalias 'difbuf 'ediff-buffers)
-(defalias 'diffil 'ediff-files)
+(defalias 'eb 'eval-buffer)
+(defalias 'ib 'indent-buffer)
+
+(defalias 'er 'eval-region)
+(defalias 'lp 'list-processes)
 
 (defalias 'trf 'transpose-frame)
 (defalias 'trframe 'transpose-frame)
@@ -27,6 +28,7 @@
 (defalias 'nf 'new-frame)
 
 (defalias 'odired 'open-in-dired)
+(defalias 'diffil 'ediff-files)
 
 (defalias 'open-in-chrome 'browse-url-of-file)
 (defalias 'oichrome 'browse-url-of-file)

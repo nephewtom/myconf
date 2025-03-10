@@ -38,7 +38,7 @@ compilation.el
 keybindings.el
 cua.el
 dashboard.el
-
+multiple-cursors.el
 end.el"
 
 # TODO: Test that thing

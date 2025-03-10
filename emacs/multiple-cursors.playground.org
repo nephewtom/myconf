@@ -1,0 +1,44 @@
+* Multiple cursors playground
+This is an example for testing multiple cursors in Emacs.
+
+** Exercise 1:
+#+begin_example
+<myTag>This is a sample tag
+<myTag>And another tag
+<myTag>And yet another
+#+end_example
+
+Now, select the previos 3 lines (position in the 'm' of the first 'myTag' and hit C-SPC and move with the down arrow till the third 'm' or use C-n).
+Then use C-: (also known as C-S-;), to change the 3 lines at the same time.
+So if 'myTag' is present, substitute it by 'yourTag'.
+Or if 'yourTag' is present, substitute it for 'myTag'.
+When finished, hit C-g.
+
+
+** Exercise 2:
+#+begin_example
+Apple is my prefered meal of the day, and i have many meals along the day.
+Pear is my prefered meal of the day, and i have many meals along the day.
+Banana is my prefered meal of the day, and i have many meals along the day.
+#+end_example
+
+Position the cursor in the 'm' letter of 'meal' word or in the 'f' letter of fruit.
+Them select it (Use C-M-SPC which runs mark-sexp)
+Now execute 'mc/mark-next-like-this', binded to M-; five times.
+Change 'meal' to 'fruit' or 'fruit' to 'meal'.
+When finished, hit C-g.
+
+
+** Exercise 3:
+#+begin_example
+This is the best day of my life, and i have many good days.
+Whenever i write many letters in a day, i can say it is a successful day.
+Don't you think that is a productive day?
+Good day!
+#+end_example
+
+Position in the 'd' of successful day (or 'w' of successful week) and select it.
+Now hit M-/ three times, which runs 'mc/mark-previous-like-this' to select
+previous occurrences of 'day' word.
+Now hit M-; twice to select the other 2 occurences of 'day' word.
+Change them to 'week' and finish hitting C-g.

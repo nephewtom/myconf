@@ -95,7 +95,7 @@
 
 
 (global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+(global-set-key (kbd "C-w") 'kill-current-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 
@@ -165,7 +165,7 @@
 (global-set-key (kbd "M-r") 'iedit-mode)
 
 (global-set-key (kbd "M-y") 'company-complete)
-(global-set-key (kbd "M-;") 'hippie-expand)
+;; (global-set-key (kbd "M-;") 'hippie-expand)
 (global-set-key (kbd "C-;") 'company-files)
 
 (global-set-key (kbd "C-x g") 'magit-status)

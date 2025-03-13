@@ -1,15 +1,49 @@
+;; Forget about aggressive-indent now, since it collides a bit with lsp-mode
+;; and it does not let enter more than a space between lines.
+
+;; (use-package aggressive-indent
+;;   :ensure t
+;;   :hook (prog-mode . aggressive-indent-mode)) ;; Enable in all programming modes
+
+;; (aggressive-indent-global-mode)
+
+
+;; --- Eglot ---
+(use-package eglot
+  :ensure t
+  :hook ((c-mode . eglot-ensure)
+         (c++-mode . eglot-ensure))
+  :config
+  (setq eglot-autoshutdown t)  ;; Automatically shutdown eglot when the buffer is killed
+  ;; Optional: Set clangd as the LSP server for C/C++
+  (setq eglot-server-programs '((c++-mode . ("clangd"))
+                                (c-mode . ("clangd"))))
+
+  (setq eglot-stay-out-of '(flymake))
+  (add-hook 'eglot-managed-mode-hook (lambda () (eldoc-mode -1))) ;; Disable Eldoc
+
+  )
+
+
+
 (use-package cc-mode
   :config
   (unbind-key "C-M-h" c++-mode-map)
   (unbind-key "C-M-j" c++-mode-map)
   (setq c-default-style "linux") ;; BSD/Allman brackets
   (setq c-basic-offset 4)      ;; 4-space indent
+  ;; :bind (:map c-mode-map
+  ;;             ("{" . my/c-electric-brace)
+  ;;             ("}" . my/c-electric-brace))
+  ;; :bind (:map c++-mode-map
+  ;;             ("{" . my/c-electric-brace)
+  ;;             ("}" . my/c-electric-brace))
+  ;;
+  :hook ((c-mode . (lambda () (eldoc-mode -1)))
+         (c++-mode . (lambda () (eldoc-mode -1))))
   )
 
 
-;; https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
-(require 'aggressive-indent) ;; Aggresive indentation
-(aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
 (which-function-mode)
 
 ;;(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)

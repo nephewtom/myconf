@@ -16,6 +16,11 @@
 ;; Follow git symlinks
 (setq vc-follow-symlinks t)
 
+(setq ring-bell-function
+      (lambda ()
+        (play-sound-file "~/myconf/emacs/hit.wav")))
+
+(server-start)
 
 ;; *** FILE:  bars-and-title.el
 ;; --- Bars & title
@@ -39,10 +44,15 @@
 ;; --- Miscellaneous
 (setq set-mark-command-repeat-pop t) ;; https://emacs.stackexchange.com/a/2818/6957
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
+(setq-default tab-width 4)
+
+
 (delete-selection-mode 1) ;; Allows to delete without kill-ring & inserting over selection.
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
-(setq split-width-threshold nil) ;; Split window vertically by default
+
 ;; https://stackoverflow.com/questions/7997590/how-to-change-the-default-split-screen-direction
+(setq split-width-threshold 200) ;; For split window vertically 
+;; Only this made it work for Tom
 
 
 ;; --- Disable all version control
@@ -53,8 +63,7 @@
 ;; *** FILE:  column-and-line-numbers.el
 ;; --- Columns, line-numbers, etc.
 (column-number-mode t)
-(global-linum-mode t) ;; line numbers in all buffers
-
+(global-display-line-numbers-mode)
 
 ;; *** FILE:  paren-indent.el
 ;; --- Paren stuff
@@ -77,15 +86,21 @@
  ;; --- Mac OS X stuff ---
  ((string-equal system-type "darwin")
   (message "System: Mac")
-  (setq mac-option-modifier 'command)
+  (setq mac-option-modifier 'control)
   (setq mac-command-modifier 'meta)
+
   (global-set-key (kbd "M-w") 'kill-this-buffer) ;; this works on Mac too
   (define-key global-map (kbd "C-<f2>")
     (lambda ()
       (interactive)
       (x-popup-menu (list '(0 0) (selected-frame))
                     (mouse-menu-bar-map))))
-  (set-face-attribute 'default nil :height 200))
+  (set-face-attribute 'default nil :height 200)
+  (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
+  (global-set-key (kbd "<home>") 'move-beginning-of-line)
+  (global-set-key (kbd "<end>") 'move-end-of-line)
+  (defun start-file-manager () (interactive) (shell-command "open ."))
+  )
 
  ;; --- Windows stuff ---
  ((string-equal system-type "windows-nt")
@@ -103,11 +118,13 @@
   (prefer-coding-system 'utf-8-unix)
   (setq find-program "%HOME%/scoop/apps/git/current/usr/bin/find.exe")
   (setq compile-command "build.bat")
+  (defun start-file-manager () (interactive) (shell-command "explorer.exe ."))
   )
  
  ;; --- Linux stuff ---
  ((message "System: Linux")
-  (set-face-attribute 'default nil :family "Consolas" :height 140)
+  (set-face-attribute 'default nil :family "Liberation Mono-14" :height 120)
+  (set-frame-font "Liberation Mono-14:antialias=1")
 
   ;; --- Persistent sessions
   ;; https://github.com/thierryvolpiatto/psession
@@ -235,13 +252,14 @@ Version 2017-07-08"
 (defalias 'qr 'query-replace)
 (defalias 'qrr 'query-replace-regexp)
 
-(defalias 'lb 'list-buffers)
-(defalias 'lp 'list-processes)
-(defalias 'eb 'eval-buffer)
-(defalias 'er 'eval-region)
+(defalias 'lb 'my-list-buffers)
 (defalias 'db 'ediff-buffers)
 (defalias 'difbuf 'ediff-buffers)
-(defalias 'diffil 'ediff-files)
+(defalias 'eb 'eval-buffer)
+(defalias 'ib 'indent-buffer)
+
+(defalias 'er 'eval-region)
+(defalias 'lp 'list-processes)
 
 (defalias 'trf 'transpose-frame)
 (defalias 'trframe 'transpose-frame)
@@ -249,13 +267,10 @@ Version 2017-07-08"
 (defalias 'nf 'new-frame)
 
 (defalias 'odired 'open-in-dired)
+(defalias 'diffil 'ediff-files)
 
 (defalias 'open-in-chrome 'browse-url-of-file)
 (defalias 'oichrome 'browse-url-of-file)
-
-(defun start-windows-explorer () (interactive) (shell-command "explorer.exe ."))
-(defalias 'wx 'start-windows-explorer)
-(defalias 'wexp 'start-windows-explorer)
 
 ;; *** FILE:  keybindings.el
 (require 'iso-transl) ;; Make dead keys work
@@ -329,11 +344,15 @@ Version 2017-07-08"
 (global-set-key (kbd "<f6>") 'mark-whole-buffer)
 (global-set-key (kbd "<f7>") 'neotree-toggle)
 (global-set-key (kbd "<f8>") 'ibuffer)
+(global-set-key (kbd "<f9>") 'whitespace-mode)
 
-;; F9 & F12 are defined in compilation.el
+;; F12 and M-F12 are defined in compilation.el
 (global-set-key (kbd "<f11>") 'indent-buffer)
-(global-set-key (kbd "C-<f12>") 'start-windows-explorer)
+(global-set-key (kbd "C-<f12>") 'start-file-manager)
 
+;; Open browser keys
+(global-set-key (kbd "<f1> 7") 'browse-url-at-point)
+(global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
 
 ;; --- Buffers
 (defun switch-to-previous-buffer ()
@@ -351,7 +370,7 @@ Version 2017-07-08"
 
 
 (global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+(global-set-key (kbd "C-w") 'kill-current-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 
@@ -421,7 +440,7 @@ Version 2017-07-08"
 (global-set-key (kbd "M-r") 'iedit-mode)
 
 (global-set-key (kbd "M-y") 'company-complete)
-(global-set-key (kbd "M-;") 'hippie-expand)
+;; (global-set-key (kbd "M-;") 'hippie-expand)
 (global-set-key (kbd "C-;") 'company-files)
 
 (global-set-key (kbd "C-x g") 'magit-status)

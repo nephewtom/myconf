@@ -62,12 +62,8 @@
   ;; WSL tricks from: https://www.sep.com/sep-blog/2017/06/07/20170607wsl-git-and-beyond-compare/
 
 
-[credential "helperselector"]
-	selected = cache
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[credential]
-	helper = manager-core

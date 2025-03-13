@@ -13,6 +13,7 @@ calendar.el
 cond-mac-linux-win.el
 duplicate-line.el
 xah-cut-copy.el
+keybindings.el
 sudo.el
 defalias.el
 dired.el
@@ -24,7 +25,6 @@ buffers-utils.el
 elisp.el
 flycheck.el
 company.el
-
 google-translate.el
 magit.el
 org-mode.el
@@ -32,7 +32,6 @@ nxml.el
 markdown.el
 cpp.el
 python.el
-keybindings.el
 compilation.el
 multiple-cursors.el
 cua.el

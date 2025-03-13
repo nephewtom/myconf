@@ -1,4 +1,4 @@
-#!/bin/bash
+ee#!/bin/bash
 # This script will concatenate all the desired .el files into basic.el
 
 echo "*** Generating BASIC configuration:"
@@ -13,6 +13,7 @@ paren-indent.el
 cond-mac-linux-win.el
 duplicate-line.el
 xah-cut-copy.el
+keybindings.el
 
 defalias.el
 
@@ -21,6 +22,7 @@ defalias.el
 
 
 
+elisp.el
 
 
 
@@ -30,11 +32,6 @@ defalias.el
 
 
 
-
-
-
-
-keybindings.el
 
 basic-special.el
 cua.el"

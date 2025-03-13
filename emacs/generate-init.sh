@@ -30,13 +30,11 @@ magit.el
 org-mode.el
 nxml.el
 markdown.el
-gdscript.el
-edit-with-emacs.el
 cpp.el
 python.el
 keybindings.el
 compilation.el
-multi-cursors.el
+multiple-cursors.el
 cua.el
 end.el"
 

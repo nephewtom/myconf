@@ -17,3 +17,5 @@
 (setq ring-bell-function
       (lambda ()
         (play-sound-file "~/myconf/emacs/hit.wav")))
+
+(server-start)

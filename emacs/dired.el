@@ -1,4 +1,5 @@
 ;; --- Dired ---
+
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
 (defvar my-dired-listing-switches nil)
@@ -120,8 +121,8 @@
 (setq find-args "")
 (defun find-dired-by-date (dir args)
   (interactive (list (read-directory-name "Run find in directory: " nil "" t)
-		     (read-string "Run find (with args): " find-args
-				  '(find-args-history . 1))))
+		             (read-string "Run find (with args): " find-args
+				                  '(find-args-history . 1))))
   ;; Set to this value in order to get a find sorted by date
   (setq find-ls-option '("-exec ls -lt {} + | cut -d ' ' -f5-" . "-lt"))
   (find-dired dir args)
@@ -129,9 +130,10 @@
 
 (defun find-dired-by-size (dir args)
   (interactive (list (read-directory-name "Run find in directory: " nil "" t)
-		     (read-string "Run find (with args): " find-args
-				  '(find-args-history . 1))))
+		             (read-string "Run find (with args): " find-args
+				                  '(find-args-history . 1))))
   ;; Set to this one to get it sorted by size
   (setq find-ls-option '("-exec ls -lSr {} + | cut -d ' ' -f5-" . "-lSr"))
   (find-dired dir args)
   (setq find-ls-option '("-ls" . "-dilsb")))
+

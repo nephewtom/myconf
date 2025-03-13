@@ -1,11 +1,8 @@
-;; Forget about aggressive-indent now, since it collides a bit with lsp-mode
-;; and it does not let enter more than a space between lines.
+(use-package aggressive-indent
+  :ensure t
+  :hook (prog-mode . aggressive-indent-mode)) ;; Enable in all programming modes
 
-;; (use-package aggressive-indent
-;;   :ensure t
-;;   :hook (prog-mode . aggressive-indent-mode)) ;; Enable in all programming modes
-
-;; (aggressive-indent-global-mode)
+(aggressive-indent-global-mode)
 
 
 ;; --- Eglot ---

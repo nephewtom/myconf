@@ -13,15 +13,21 @@
 
   :config
   (setq lsp-clients-clangd-executable "clangd")
-  ;; (setq lsp-clients-clangd-args
-  ;;       '(
-  ;;         "--compile-commands-dir=D:/playground/raylib/trayimg/" ;; Set compile_commands.json location
-  ;;         "--query-driver=C:/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/g++.exe"
-  ;;         "--header-insertion=never"
-  ;;         ))
+  (setq lsp-enable-indentation nil)
+  (setq lsp-enable-on-type-formatting nil)
+  
+  (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1)))
 
-  (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1))))
+  (define-key lsp-mode-map (kbd "M-<F9>") 'flycheck-list-errors)
 
+;; (setq lsp-clients-clangd-args
+;;       '(
+;;         "--compile-commands-dir=D:/playground/raylib/trayimg/" ;; Set compile_commands.json location
+;;         "--query-driver=C:/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/g++.exe"
+;;         "--header-insertion=never"
+;;         ))
+
+)
 
 
 ;; --- Company Mode ---

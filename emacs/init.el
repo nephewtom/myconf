@@ -871,6 +871,11 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
   :config
   (setq lsp-clients-clangd-executable "clangd")
+  (setq lsp-enable-indentation nil)
+  (setq lsp-enable-on-type-formatting nil)
+  
+  (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1)))
+  
   ;; (setq lsp-clients-clangd-args
   ;;       '(
   ;;         "--compile-commands-dir=D:/playground/raylib/trayimg/" ;; Set compile_commands.json location
@@ -878,7 +883,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   ;;         "--header-insertion=never"
   ;;         ))
 
-  (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1))))
+  )
 
 
 

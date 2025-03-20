@@ -35,6 +35,7 @@ python.el
 compilation.el
 multiple-cursors.el
 cua.el
+super-save.el
 end.el"
 
 rm -f init.el 

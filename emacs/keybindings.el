@@ -106,7 +106,7 @@
 
 
 (global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w") 'kill-this-buffer) ;; Just like Chrome, etc..
+(global-set-key (kbd "C-w") 'kill-current-buffer) ;; Just like Chrome, etc..
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 

@@ -14,5 +14,10 @@
 ;; Follow git symlinks
 (setq vc-follow-symlinks t)
 
-(setq custom-file "~/myconf/emacs/garbage.el")
+(setq ring-bell-function
+      (lambda ()
+        (play-sound-file "~/myconf/emacs/hit.wav")))
+
 ;;(load custom-file) 
+
+(server-start) ;; emacs server

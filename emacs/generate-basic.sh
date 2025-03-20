@@ -13,6 +13,7 @@ paren-indent.el
 cond-mac-linux-win.el
 duplicate-line.el
 xah-cut-copy.el
+keybindings.el
 
 defalias.el
 dired.el
@@ -32,12 +33,9 @@ elisp.el
 
 
 
-
-
-keybindings.el
-cua.el
-
 basic-special.el
+cua.el
+end.el
 "
 
 rm -f basic.el 

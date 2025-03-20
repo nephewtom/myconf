@@ -18,7 +18,7 @@
          :map helm-map
          ;; TODO: Understand what these keys are for...
          ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
-         ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
+         ;; ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
          ("M-x" . helm-select-action) ; list actions using M-x again
 
          ("M-n" . helm-next-page)
@@ -43,6 +43,8 @@
   (setq helm-ff-kill-unused-buffers t)
 
   (helm-autoresize-mode 1)
+
+  (setq helm-move-to-line-cycle-in-source nil)
 
 
   (add-hook 'helm-after-action-hook

@@ -6,8 +6,11 @@
   :config
   (elpy-enable)
   ;; What about these two if I use virtualenv ?
-  (setq python-shell-interpreter "ipython3"
-        python-shell-interpreter-args "-i --simple-prompt")
+
+  (setq python-shell-interpreter "python3"
+        python-shell-interpreter-args "-i")
+  ;; (setq python-shell-interpreter "ipython3"
+  ;;       python-shell-interpreter-args "-i --simple-prompt")
 
   (setq elpy-rpc-python-command "python3")  
   (setq elpy-rpc-backend "jedi") ;; Do I have to setq this?

@@ -11,7 +11,6 @@
 ;;(load "~/myconf/emacs/smart-line.el")
 ;;(load "~/myconf/emacs/spaceline.el")
 
-(server-start) ;; emacs server
 (message "Emacs ready with init.el !")
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)

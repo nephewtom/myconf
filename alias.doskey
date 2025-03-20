@@ -3,7 +3,7 @@ godot=cd /d d:\godot
 ex.=explorer.exe .
 c=code $*
 np=notepad.exe $*
-lt=ls -ltr
+lt=ls -ltr $*
 dlt=dir /od /a-h
 wm=winmergeu.exe $*
 

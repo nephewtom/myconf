@@ -42,6 +42,7 @@
   (setq helm-split-window-inside-p t)
   (helm-autoresize-mode 1)
 
+  (setq helm-move-to-line-cycle-in-source nil)
 
   (add-hook 'helm-after-action-hook
             (lambda ()
@@ -50,6 +51,9 @@
                   (kill-buffer buffer)))))
 
   )
+
+
+
 
 ;; (use-package helm-config
 ;;   ;; :ensure t

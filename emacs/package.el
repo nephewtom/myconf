@@ -1,9 +1,8 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 
-; activate all the packages (in particular autoloads)
+;; activate all the packages (in particular autoloads)
 (package-initialize)
 
 (setq package-check-signature nil)
@@ -31,6 +30,3 @@
 
 ; set the path for manually installed packages
 (add-to-list 'load-path "~/.emacs.d/packages")
-
-;; --- Wrap region: https://stackoverflow.com/a/2747142/316232
-;; (wrap-region-mode t)

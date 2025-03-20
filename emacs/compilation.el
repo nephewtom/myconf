@@ -15,7 +15,19 @@
   "Run compile and resize the compile window"
   (interactive)
   (progn
-    (call-interactively 'recompile)
+
+    ;; Kill the running compilation process if it exists
+    (let ((comp-proc (get-buffer-process "*compilation*")))
+      (when comp-proc
+        (sit-for 0.1)  ;; Give Emacs a short delay to properly kill the process
+        (when (process-live-p comp-proc)  ;; If still running, force kill
+          (delete-process comp-proc)
+          )))
+
+    ;; Now run recompile and force it to not prompt (avoid the "kill it?" prompt)
+    (let ((compilation-ask-about-save nil))  ;; Prevent asking about saving buffers
+      (call-interactively 'recompile))
+    
     (setq cur (selected-window))
     (setq w (get-buffer-window "*compilation*"))
     (select-window w)

@@ -18,16 +18,24 @@
   
   (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1)))
 
-  (define-key lsp-mode-map (kbd "M-<F9>") 'flycheck-list-errors)
+  (add-hook 'lsp-mode-hook
+            (lambda ()
+              (local-set-key (kbd "M-<f9>") 'flycheck-list-errors)
+              (local-set-key (kbd "M-<f5>") 'flycheck-next-error)
+              (local-set-key (kbd "M-<f6>") 'flycheck-previous-error)
+              ))
 
-;; (setq lsp-clients-clangd-args
-;;       '(
-;;         "--compile-commands-dir=D:/playground/raylib/trayimg/" ;; Set compile_commands.json location
-;;         "--query-driver=C:/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/g++.exe"
-;;         "--header-insertion=never"
-;;         ))
 
-)
+  (put 'lsp-clients-clangd-args 'safe-local-variable #'listp)
+
+  ;; (setq lsp-clients-clangd-args
+  ;;       '(
+  ;;         "--compile-commands-dir=D:/playground/raylib/trayimg/" ;; Set compile_commands.json location
+  ;;         "--query-driver=C:/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/g++.exe"
+  ;;         "--header-insertion=never"
+  ;;         ))
+
+  )
 
 
 ;; --- Company Mode ---
@@ -53,3 +61,18 @@
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
 
+(global-set-key (kbd "M-y") 'helm-company)
+
+
+(defun helm-company-complete ()
+  "Use helm to select company completions."
+  (interactive)
+  (when (company-manual-begin)
+    (let ((helm-candidates (company-candidates)))
+      (if helm-candidates
+          (helm :sources (helm-build-sync-source "Company Completions"
+                           :candidates helm-candidates
+                           :action (lambda (candidate)
+                                     (company-finish candidate)))
+                :buffer "*helm-company*")
+        (message "No completion candidates")))))

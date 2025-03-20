@@ -73,17 +73,21 @@
 
 (global-set-key (kbd "<f7>") 'neotree-toggle)
 (global-set-key (kbd "<f8>") 'ibuffer)
+(global-set-key (kbd "<f9>") 'whitespace-mode)
 
 (defun mark-whole-buffer-and-indent ()
   (interactive)
   (mark-whole-buffer)
   (indent-buffer)
   )
-(global-set-key (kbd "<f9>") 'mark-whole-buffer-and-indent)
+(global-set-key (kbd "<f11>") 'mark-whole-buffer-and-indent)
 
-;; F9 & F12 are defined in compilation.el
-(global-set-key (kbd "<f11>") 'indent-buffer)
+;; F12 & M-F12 are defined in compilation.el
 (global-set-key (kbd "C-<f12>") 'start-windows-explorer)
+
+;; Open browser keys
+(global-set-key (kbd "<f1> 7") 'browse-url-at-point)
+(global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
 
 
 ;; --- Buffers

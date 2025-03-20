@@ -7,6 +7,12 @@
 (global-set-key (kbd "C-2") 'win-swap)
 
 
+;; To be used with defalias lb to open list-buffers in same window
+(defun my-list-buffers (&optional arg)
+  "Display a list of existing buffers in the current window."
+  (interactive "P")
+  (switch-to-buffer (list-buffers-noselect arg)))
+
 ;; --- Uniquify 
 (require 'uniquify)
 ;;(setq uniquify-buffer-name-style 'forward)
@@ -21,7 +27,7 @@
   :config 
   (define-key ibuffer-mode-map (kbd "C-o") nil) ;; unbind from default
   (define-key ibuffer-mode-map (kbd "C-i") nil) ;; unbind from default
-  (define-key ibuffer-mode-map (kbd "M-h") 'toggle-ibuffer-groups) ;; unbind from default
+  ;; (define-key ibuffer-mode-map (kbd "M-h") 'ibuffer-toggle-filter-group) ;; unbind from default
   (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-forward-filter-group) ;; unbind from default
   )
 

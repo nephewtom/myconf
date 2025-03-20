@@ -42,7 +42,16 @@
   (setq helm-split-window-inside-p t)
   (setq helm-ff-kill-unused-buffers t)
 
-  (helm-autoresize-mode 1))
+  (helm-autoresize-mode 1)
+
+
+  (add-hook 'helm-after-action-hook
+            (lambda ()
+              (dolist (buffer (buffer-list))
+                (when (string-match "\\`\\*helm" (buffer-name buffer))
+                  (kill-buffer buffer)))))
+
+  )
 
 (use-package helm-config
   ;; :ensure t

@@ -31,14 +31,14 @@ org-mode.el
 nxml.el
 markdown.el
 edit-with-emacs.el
+cpp.el
 python.el
 toc-org.el
-
-compilation.el
 keybindings.el
+compilation.el
+multiple-cursors.el
 cua.el
 dashboard.el
-multiple-cursors.el
 end.el"
 
 # TODO: Test that thing

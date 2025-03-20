@@ -22,7 +22,7 @@ Pear is my prefered meal of the day, and i have many meals along the day.
 Banana is my prefered meal of the day, and i have many meals along the day.
 #+end_example
 
-Position the cursor in the 'm' letter of 'meal' word or in the 'f' letter of fruit.
+Position the cursor in the 'm' letter of 'meal' word (or the 'f' letter of fruit).
 Them select it (Use C-M-SPC which runs mark-sexp)
 Now execute 'mc/mark-next-like-this', binded to M-; five times.
 Change 'meal' to 'fruit' or 'fruit' to 'meal'.
@@ -31,14 +31,14 @@ When finished, hit C-g.
 
 ** Exercise 3:
 #+begin_example
-This is the best day of my life, and i have many good days.
-Whenever i write many letters in a day, i can say it is a successful day.
-Don't you think that is a productive day?
-Good day!
+This is the best week of my life, and i have many good weeks.
+Whenever i write many letters in a week, i can say it is a successful week.
+Don't you think that is a productive week?
+Good week!
 #+end_example
 
 Position in the 'd' of successful day (or 'w' of successful week) and select it.
 Now hit M-/ three times, which runs 'mc/mark-previous-like-this' to select
 previous occurrences of 'day' word.
-Now hit M-; twice to select the other 2 occurences of 'day' word.
-Change them to 'week' and finish hitting C-g.
+Now hit M-; twice to select the other 2 occurences of 'day' (or 'week') word.
+Change them to 'week' (or 'day') and finish hitting C-g.

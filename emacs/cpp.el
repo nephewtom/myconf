@@ -10,6 +10,7 @@
 ;; https://www.reddit.com/r/emacs/comments/2lf4un/how_do_you_make_emacs_work_for_development/
 (require 'aggressive-indent) ;; Aggresive indentation
 (aggressive-indent-global-mode)      ;; Enable aggressive indent mode everywhere
+(which-func-mode)
 
 ;;(add-hook 'c-mode-common-hook 'flycheck-color-mode-line-mode)
 
@@ -24,15 +25,16 @@
     (while (search-forward "\r" nil :noerror)
       (replace-match ""))))
 
-(defun astyle-this-buffer (pmin pmax)
-  (interactive "r")
-  (shell-command-on-region pmin pmax
-                           "astyle --style=mozilla -s4 -xB -k1"
-                           (current-buffer) t 
-                           (get-buffer-create "*Astyle Errors*") t)
-  (replace-string  )
-  (mark-whole-buffer)
-  (indent-buffer)
-  )
+;; From: https://github.com/rexim/simpc-mode
+(defun astyle-this-buffer ()
+  (interactive)
+  (let ((saved-line-number (line-number-at-pos)))
+    (shell-command-on-region
+     (point-min)
+     (point-max)
+     "astyle --style=kr"
+     nil
+     t)
+    (goto-line saved-line-number)))
 
 (defalias 'ast 'astyle-this-buffer)

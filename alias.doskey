@@ -1,6 +1,6 @@
 alias=doskey /macros
 ex.=explorer.exe .
-c=code $*
+code=code $*
 wm=winmergeu.exe $*
 iv=jpegview.exe $1
 pu=plantuml.cmd $1

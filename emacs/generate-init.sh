@@ -32,7 +32,7 @@ nxml.el
 markdown.el
 cpp.el
 python.el
-toc-org.el
+
 compilation.el
 multiple-cursors.el
 cua.el

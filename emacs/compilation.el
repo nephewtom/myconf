@@ -36,6 +36,13 @@
 (global-set-key (kbd "<f12>") 'my-compile)
 
 
+(defun hide-compilation-buffer ()
+  (interactive)
+  (let ((w (get-buffer-window "*compilation*")))
+    (when w
+      (delete-window w))))
+(global-set-key (kbd "C-<f12>") 'hide-compilation-buffer)
+
 ;; Funtion to run compiled programs
 (cond
  ((string-equal system-type "windows-nt")

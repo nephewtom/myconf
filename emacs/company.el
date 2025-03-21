@@ -1,23 +1,58 @@
-;; --- Company ---
+;; --- LSP Mode ---
+(use-package lsp-mode
+  :ensure t
+  :hook ((c-mode . lsp)
+         (c++-mode . lsp)
+         ;; (python-mode . lsp)
+         ;; (js-mode . lsp)
+         ;; Add more languages as needed, but NOT `emacs-lisp-mode`
+         ;; (lsp-mode . lsp-enable-which-key-integration) ;; Show key hints
+         )
+
+  :init
+  (setq lsp-diagnostics-provider :flycheck)
+
+  :config
+  (setq lsp-clients-clangd-executable "clangd")
+  (setq lsp-enable-indentation nil)
+  (setq lsp-enable-on-type-formatting nil)
+  
+  (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1)))
+
+  (add-hook 'lsp-mode-hook
+            (lambda ()
+              (local-set-key (kbd "M-<f9>") 'flycheck-list-errors)
+              (local-set-key (kbd "M-<f5>") 'flycheck-next-error)
+              (local-set-key (kbd "M-<f6>") 'flycheck-previous-error)
+              ))
+
+
+  (put 'lsp-clients-clangd-args 'safe-local-variable #'listp)
+
+  ;; (setq lsp-clients-clangd-args
+  ;;       '(
+  ;;         "--compile-commands-dir=D:/playground/raylib/trayimg/" ;; Set compile_commands.json location
+  ;;         "--query-driver=C:/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/g++.exe"
+  ;;         "--header-insertion=never"
+  ;;         ))
+
+  )
+
+;; --- Company Mode ---
 (use-package company
   :init
   (global-company-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode)
+
   :ensure t
+
   :config
   (company-mode)
   (setq company-idle-delay 0)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
-  ;; (add-to-list 'company-backends 'company-c-headers) ;; Backend for header files
-  (add-to-list 'company-backends 'company-elisp)
-  (when (boundp 'company-backends)
-    (make-local-variable 'company-backends)
-    ;; remove
-    (setq company-backends (delete 'company-clang company-backends))
-    ;; add
-    ;;(add-to-list 'company-backends 'company-dabbrev)
-    )
+  (add-to-list 'company-backends 'company-dabbrev)
   
+
   :bind (:map company-search-map  
               ("C-t" . company-search-toggle-filtering)
               ("C-n" . company-select-next)
@@ -25,3 +60,20 @@
               :map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
+
+(global-set-key (kbd "M-y") 'helm-company)
+
+
+(defun helm-company-complete ()
+  "Use helm to select company completions."
+  (interactive)
+  (when (company-manual-begin)
+    (let ((helm-candidates (company-candidates)))
+      (if helm-candidates
+          (helm :sources (helm-build-sync-source "Company Completions"
+                           :candidates helm-candidates
+                           :action (lambda (candidate)
+                                     (company-finish candidate)))
+                :buffer "*helm-company*")
+        (message "No completion candidates")))))
+

@@ -1,4 +1,6 @@
 ;; https://github.com/magnars/multiple-cursors.el
+(use-package multiple-cursors
+  :ensure t)
 
 ;; TO TEST THIS, USE THE FILE: multiple-cursors.playground
 

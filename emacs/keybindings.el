@@ -63,6 +63,10 @@
 (global-set-key (kbd "C-M-j") 'down-list) ;; As C-M-u does backward-up-list
 
 ;; --- FX keys
+;; Open browser keys
+(global-set-key (kbd "<f1> 7") 'browse-url-at-point)
+(global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
+
 (global-set-key (kbd "<f2>") 'xah-cut-line-or-region) ; cut
 (global-set-key (kbd "<f3>") 'xah-copy-line-or-region) ; copy
 (global-set-key (kbd "<f4>") 'yank) ; paste
@@ -75,38 +79,25 @@
 (global-set-key (kbd "<f8>") 'ibuffer)
 (global-set-key (kbd "<f9>") 'whitespace-mode)
 
-(defun mark-whole-buffer-and-indent ()
-  (interactive)
-  (mark-whole-buffer)
-  (indent-buffer)
-  )
-(global-set-key (kbd "<f11>") 'mark-whole-buffer-and-indent)
-
-;; F12 & M-F12 are defined in compilation.el
-(global-set-key (kbd "C-<f12>") 'start-windows-explorer)
-
-;; Open browser keys
-(global-set-key (kbd "<f1> 7") 'browse-url-at-point)
-(global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
-
-
-;; --- Buffers
-(defun switch-to-previous-buffer ()
-  "Swap to previous buffer."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
-
 (defun indent-buffer ()
   "Select current buffer and indent it."
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
+(global-set-key (kbd "<f11>") 'indent-buffer)
+;; F12 & M-F12 are defined in compilation.el
 
+
+;; --- Buffers
 (global-auto-revert-mode t) ;; automatically revert buffer when file changes
-
 
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") 'kill-current-buffer) ;; Just like Chrome, etc..
+
+(defun switch-to-previous-buffer ()
+  "Swap to previous buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 (global-set-key (kbd "C-0") 'switch-to-previous-buffer)
 
 

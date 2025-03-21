@@ -28,6 +28,8 @@
   (prefer-coding-system 'utf-8-unix)
   (setq find-program "%HOME%/scoop/apps/git/current/usr/bin/find.exe")
   (setq compile-command "build.bat")
+  (defun start-windows-explorer () (interactive) (shell-command "fpilot.exe ."))
+  (global-set-key (kbd "C-<f5>") 'start-windows-explorer)
   )
  
  ;; --- Linux stuff ---

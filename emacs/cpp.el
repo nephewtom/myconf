@@ -17,7 +17,9 @@
                                 (c-mode . ("clangd"))))
 
   (setq eglot-stay-out-of '(flymake))
+
   (add-hook 'eglot-managed-mode-hook (lambda () (eldoc-mode -1))) ;; Disable Eldoc
+  (add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
 
   )
 
@@ -48,6 +50,42 @@
 ;; (Conditional) C/C++ Keybinds
 ;; (add-hook 'c-mode-common-hook
 ;; (lambda () (local-set-key (kbd "M-o") 'ff-find-other-file)))
+
+
+(use-package glsl-mode
+  :ensure t
+  :mode (("\\.vs\\'" . glsl-mode)
+         ("\\.fs\\'" . glsl-mode)
+         ("\\.vert\\'" . glsl-mode)
+         ("\\.frag\\'" . glsl-mode))
+  :config
+  ;; Enable line numbers for GLSL editing
+  ;; (add-hook 'glsl-mode-hook #'display-line-numbers-mode)
+
+  ;; Enable automatic indentation
+  ;; (add-hook 'glsl-mode-hook #'electric-indent-mode)
+
+  ;; Highlight TODO/FIXME comments
+  (use-package hl-todo
+    :ensure t
+    :hook (glsl-mode . hl-todo-mode))
+
+  ;; Enable automatic bracket pairing
+  ;; (add-hook 'glsl-mode-hook #'electric-pair-mode)
+
+
+  (defun run-glsl-viewer ()
+    "Run glslViewer on the current GLSL shader file."
+    (interactive)
+    (when buffer-file-name
+      (save-buffer)  ;; Save before running
+      (start-process "glslViewer.exe" "*glslViewer*" "glslViewer" buffer-file-name)))
+
+  ;; Ensure keybinding is only set after glsl-mode is loaded
+  (with-eval-after-load 'glsl-mode
+    (define-key glsl-mode-map (kbd "C-<f4>") 'run-glsl-viewer)))
+
+
 
 (defun delete-carrage-returns ()
   (interactive)

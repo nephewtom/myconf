@@ -1,4 +1,4 @@
-ee#!/bin/bash
+#!/bin/bash
 # This script will concatenate all the desired .el files into basic.el
 
 echo "*** Generating BASIC configuration:"

@@ -37,6 +37,23 @@
     ))
 (global-set-key (kbd "<f12>") 'my-compile)
 
+(defun hide-compilation-buffer ()
+  (interactive)
+  (let ((w (get-buffer-window "*compilation*")))
+    (when w
+      (delete-window w))))
+(global-set-key (kbd "C-<f12>") 'hide-compilation-buffer)
+
+
+;; Change default comment for Windows .BAT files
+(defun my-bat-mode-hook ()
+  (setq comment-start ":: ")
+  (setq comment-start-skip "::[ \t]*"))
+
+(add-hook 'bat-mode-hook 'my-bat-mode-hook)
+
+
+;; FROM HERE TILL THE END, NOT USED NOW!
 
 ;; Funtion to run compiled programs
 (cond
@@ -76,8 +93,6 @@
  )
 
 
-
-;; NOT USED NOW
 ;; Helper for compilation. Close the compilation window if there was no error at all.
 (defun compilation-exit-autoclose (status code msg)
   ;; If M-x compile exists with a 0

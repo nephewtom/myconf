@@ -56,7 +56,8 @@
 
 
 ;; --- Paren operations
-(global-set-key "%" 'match-paren) ;; Like vim
+;; (global-set-key "%" 'match-paren) ;; Like vim
+;; (global-set-key "%" 'self-insert-command)
 (global-set-key (kbd "C-M-j") 'down-list) ;; As C-M-u does backward-up-list
 
 
@@ -73,11 +74,13 @@
 
 ;; F12 and M-F12 are defined in compilation.el
 (global-set-key (kbd "<f11>") 'indent-buffer)
-(global-set-key (kbd "C-<f12>") 'start-file-manager)
 
 ;; Open browser keys
 (global-set-key (kbd "<f1> 7") 'browse-url-at-point)
 (global-set-key (kbd "<f1> 6") 'browse-url-of-buffer)
+
+(global-set-key (kbd "C-<f5>") 'start-file-manager)
+
 
 ;; --- Buffers
 (defun switch-to-previous-buffer ()

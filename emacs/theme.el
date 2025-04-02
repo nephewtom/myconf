@@ -12,3 +12,7 @@
 
 ;; fringe color (between line numbers and buffer)
 (set-face-attribute 'fringe nil :background "#505050")
+
+(custom-set-faces
+ '(font-lock-comment-face ((t (:foreground "forest green" :slant italic))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "forest green")))))

@@ -1,6 +1,6 @@
 alias=doskey.exe /macros:all
 godot=cd /d d:\godot
-ex.=explorer.exe .
+ex.=fpilot.exe .
 c=code $*
 np=notepad.exe $*
 lt=ls -ltr $*

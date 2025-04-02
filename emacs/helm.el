@@ -14,6 +14,7 @@
          ("C-x C-b" . helm-buffers-list)
          ;; ("C-o" . helm-imenu)
          ("C-M-h" . helm-cscope-find-calling-this-function)
+         ("C-M-." . helm-imenu)
          
          :map helm-map
          ;; TODO: Understand what these keys are for...

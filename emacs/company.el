@@ -1,3 +1,15 @@
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
+
+(defun my-lsp-newline ()
+  "Custom function to override ENTER behavior in LSP buffers."
+  (interactive)
+  (insert-char ?\n)
+  (indent-according-to-mode))
+
 ;; --- LSP Mode ---
 (use-package lsp-mode
   :ensure t
@@ -11,11 +23,20 @@
   :init
   (setq lsp-diagnostics-provider :flycheck)
 
+  :bind (:map lsp-mode-map
+              ("RET" . my-lsp-newline))
+  
   :config
   (setq lsp-clients-clangd-executable "clangd")
   (setq lsp-enable-indentation nil)
   (setq lsp-enable-on-type-formatting nil)
-  
+  (setq lsp/insert-text-mode-adjust-indentation 4)
+
+;; TOM Testing
+  (setq lsp-completion-provider :none)      ;; Disable LSP completion provider (CAPF or others)
+  (setq lsp-completion-provider :capf)
+
+
   (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1)))
 
   (add-hook 'lsp-mode-hook

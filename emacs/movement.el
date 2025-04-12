@@ -11,3 +11,23 @@
 (use-package move-text
   :ensure t
   :config (move-text-default-bindings))
+
+
+;; Avoid C-k and M-backspace overwrite clipboard
+(defun my-backward-kill-word ()
+  "Kill the previous word without overwriting the clipboard."
+  (interactive)
+  (let ((clipboard-content (gui-get-selection 'CLIPBOARD))) ;; Save clipboard
+    (backward-kill-word 1)
+    (gui-set-selection 'CLIPBOARD clipboard-content))) ;; Restore clipboard
+
+(global-set-key (kbd "M-<backspace>") 'my-backward-kill-word)
+
+(defun my-kill-line ()
+  "Kill the line without overwriting the clipboard."
+  (interactive)
+  (let ((clipboard-content (gui-get-selection 'CLIPBOARD))) ;; Save clipboard
+    (kill-line)
+    (gui-set-selection 'CLIPBOARD clipboard-content))) ;; Restore clipboard
+
+(global-set-key (kbd "C-k") 'my-kill-line)

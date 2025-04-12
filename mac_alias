@@ -5,8 +5,15 @@ alias rm='rm -i'
 
 alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -Q -l ~/myconf/emacs/init.el &"
-alias mvim="open -a MacVim"
 
+
+alias myconf='cd ~/myconf'
+alias play='cd ~/playground'
+
+
+alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+
+alias ex.='open .'
 alias chrome='open -a "Google Chrome"'
 
 alias love="/Applications/love.app/Contents/MacOS/love"

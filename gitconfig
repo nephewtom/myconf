@@ -67,5 +67,10 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [init]
 	defaultBranch = master
+
+[http]
+	postBuffer = 524288000
+	version = HTTP/1.1

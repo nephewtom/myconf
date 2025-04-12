@@ -5,3 +5,5 @@ alias ex.='explorer.exe .'
 alias iv='iv.sh'
 alias rg='rg.exe'
 alias e='emacsclientw.exe -n'
+
+alias play='cd /mnt/d/playground'

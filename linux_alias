@@ -3,8 +3,6 @@ alias e='e.sh'
 alias eq='emacs -Q -visit ~/myconf/emacs/debug-emacs.el &'
 alias ebasic='emacs -Q -l ~/myconf/emacs/basic.el &'
 
-alias play='cd ~/playground'
-
 # Review to remove
 
 alias ctrlc='xclip -selection c'
@@ -20,3 +18,5 @@ alias meminfo='egrep --color "Mem|Cache|Swap" /proc/meminfo'
 alias sqlite='rlwrap -a -N -c -i sqlite3'
 alias dog='highlight -O ansi'
 
+
+alias play='cd /mnt/d/playground'

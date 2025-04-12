@@ -1,13 +1,31 @@
 (global-set-key (kbd "M-<f12>") 'compile)
 
-(defun my-compilation-hook () 
-  "Make sure that the compile window is splitting vertically"
-  (progn
-    (if (not (get-buffer-window "*compilation*"))
-        (progn
-          (split-window-vertically)
-          ))))
+(require 'ansi-color)
+
+(defun my-compilation-hook ()
+  "Ensure *compilation* splits vertically and applies ANSI colors."
+  (unless (get-buffer-window "*compilation*")
+    (split-window-vertically))
+
+  ;; Apply ANSI color codes to the compilation buffer
+  (add-hook 'compilation-filter-hook 'my-ansi-color-apply))
+
+(defun my-ansi-color-apply ()
+  "Apply ANSI colors to the *compilation* buffer."
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
 (add-hook 'compilation-mode-hook 'my-compilation-hook)
+
+
+
+;; (defun my-compilation-hook () 
+;;   "Make sure that the compile window is splitting vertically"
+;;   (progn
+;;     (if (not (get-buffer-window "*compilation*"))
+;;         (progn
+;;           (split-window-vertically)
+;;           ))))
+;; (add-hook 'compilation-mode-hook 'my-compilation-hook)
 
 
 ;; Function for compiling 

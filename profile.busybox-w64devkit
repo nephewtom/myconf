@@ -1,0 +1,61 @@
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+# TOM stuff
+
+if [ "$OS" = "Windows_NT" ]; then
+    echo "Running Busybox from w64devkit!"
+    # Function to update the prompt
+    set_prompt() {
+        PS1="\n\e[32m$PWD\e[0m\n\$ "  # Custom prompt showing the current directory
+    }
+
+    # Redefine the `cd` command to automatically update the prompt after changing directories
+    cd() {
+        command cd "$@"  # Call the real `cd` command to change the directory
+        set_prompt       # Update the prompt
+    }
+
+    # Initially call set_prompt to set the prompt when the shell starts
+    set_prompt
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    echo $PATH
+    export PATH=C:/w64devkit/bin:$PATH
+    
+else
+    echo "Plain WSL..."
+    . ~/myconf/linux_env
+fi
+
+# export DISPLAY=localhost:0.0
+. ~/myconf/bin/display.sh
+~/myconf/bin/start-xlaunch.sh
+
+. ~/.alias
+echo "From .profile"

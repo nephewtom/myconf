@@ -1,0 +1,12 @@
+# This is for busybox that runs on w64devkit.exe
+alias lt='ls -ltr'
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+alias myconf='cd ~/myconf/'
+alias play='cd d:/playground'
+alias raylib='cd d:/playground/raylib'
+alias roll='cd d:/playground/raylib/rolling-cube/'
+alias wm='winmergeu.exe'
+alias ex.='explorer.exe .'

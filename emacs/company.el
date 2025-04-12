@@ -24,7 +24,8 @@
   (setq lsp-diagnostics-provider :flycheck)
 
   :bind (:map lsp-mode-map
-              ("RET" . my-lsp-newline))
+              ("RET" . my-lsp-newline)
+              ("M-RET" . lsp-execute-code-action))
   
   :config
   (setq lsp-clients-clangd-executable "clangd")
@@ -32,9 +33,14 @@
   (setq lsp-enable-on-type-formatting nil)
   (setq lsp/insert-text-mode-adjust-indentation 4)
 
-;; TOM Testing
+  (unbind-key "M-n" lsp-signature-mode-map)
+  (unbind-key "M-p" lsp-signature-mode-map)
+  
+  ;; TOM Testing
   (setq lsp-completion-provider :none)      ;; Disable LSP completion provider (CAPF or others)
   (setq lsp-completion-provider :capf)
+
+
 
 
   (add-hook 'lsp-mode-hook (lambda () (eldoc-mode -1)))

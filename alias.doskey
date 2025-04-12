@@ -1,5 +1,4 @@
 alias=doskey.exe /macros:all
-godot=cd /d d:\godot
 ex.=fpilot.exe .
 c=code $*
 np=notepad.exe $*
@@ -10,9 +9,10 @@ wm=winmergeu.exe $*
 home=cd /d %home%
 myconf=cd /d %home%/myconf
 ogl=cd /d %home%/Desktop/OpenGL
-
+godot=cd /d d:\godot
 play=cd /d d:\playground
 playc=cd /d d:\playground\c_cpp
 ncine=cd /d d:\playground\c_cpp\ncine
+roll=cd /d d:\playground\raylib\rolling-cube
 
 drop=cd /d d:\dropbox

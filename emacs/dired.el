@@ -2,15 +2,15 @@
 
 ;; TODO: Sort dired by time date as default 
 ;; https://superuser.com/questions/875241/emacs-dired-sorting-by-time-date-as-default
-(defvar my-dired-listing-switches nil)
-(defvar my-dired-listing-switches-flag t)
-(defun toggle-hidden-dirs ()
-  (interactive)
-  (if my-dired-listing-switches-flag
-      (dired-sort-other "-lkta")
-    (dired-sort-other "-lkt"))
-  (setq my-dired-listing-switches-flag (not my-dired-listing-switches-flag))
-  (dired-sort-toggle))
+;; (defvar my-dired-listing-switches nil)
+;; (defvar my-dired-listing-switches-flag t)
+;; (defun toggle-hidden-dirs ()
+;;   (interactive)
+;;   (if my-dired-listing-switches-flag
+;;       (dired-sort-toggle-or-edit "-lkta --time-style=long-iso")
+;;     (dired-sort-toggle-or-edit "-lkt --time-style=long-iso"))
+;;   (setq my-dired-listing-switches-flag (not my-dired-listing-switches-flag))
+;;   (dired-sort-toggle-or-edit))
 
 (use-package dired
   :bind (:map dired-mode-map
@@ -25,10 +25,10 @@
               ("M-i" . switch-to-buffer-other-window)
               ("<f2>" . wdired-change-to-wdired-mode)
               )
+  
   :config
   (define-key dired-mode-map (kbd ".") (lambda () (interactive) (find-alternate-file "..")))
-  (put 'dired-find-alternate-file 'disabled nil)
-  (setq dired-listing-switches "-lkt")
+  (put 'dired-find-alternate-file 'disabled nil)  
 
   ;; Auto-refresh dired on file change
   (setq dired-auto-revert-buffer t)

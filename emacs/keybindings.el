@@ -30,10 +30,12 @@
 ;; --- Macros
 ;; Differenciate <RET> from C-m 
 ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
-(define-key input-decode-map [?\C-m] [C-m])
-(global-set-key (kbd "<C-m>") 'kmacro-start-macro)
-(global-set-key (kbd "<C-S-m>") 'kmacro-end-and-call-macro)
-(global-set-key (kbd "<C-f9>") 'kmacro-call-macro)
+;; (define-key input-decode-map [?\C-m] [C-m])
+
+
+(global-set-key (kbd "C-<f7>") 'kmacro-start-macro)
+(global-set-key (kbd "C-<f8>") 'kmacro-end-and-call-macro)
+(global-set-key (kbd "C-<f9>") 'kmacro-call-macro)
 
 
 ;; --- Line operations

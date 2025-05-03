@@ -2,9 +2,11 @@ alias=doskey.exe /macros:all
 ex.=fpilot.exe .
 c=code $*
 np=notepad.exe $*
-lt=ls -ltr $*
+lt=ls -ltr --color $*
+ll=ls -l --color $*
 dlt=dir /od /a-h
 wm=winmergeu.exe $*
+view="C:\Program Files (x86)\FastStone Image Viewer\FSViewer.exe" $*
 
 home=cd /d %home%
 myconf=cd /d %home%/myconf

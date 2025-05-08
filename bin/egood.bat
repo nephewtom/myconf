@@ -1,1 +1,1 @@
-runemacs.exe -Q -l ~/myconf/emacs/good.el &
+runemacs.exe -Q -l ~/myconf/emacs/good/good.el &

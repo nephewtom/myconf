@@ -1,10 +1,13 @@
 ;; --- Packages stuff
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'load-path "~/.emacs.d/packages")
+
 (package-initialize)
+
+(load "~/myconf/emacs/magit-conf.el")
+
 
 ;; --- Start-up some stuff
 

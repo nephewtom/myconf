@@ -5,10 +5,13 @@ alias rm='rm -i'
 
 alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -Q -l ~/myconf/emacs/init.el &"
+alias egood="/Applications/Emacs.app/Contents/MacOS/Emacs -Q -l ~/myconf/emacs/good/good.el &"
 
 
 alias myconf='cd ~/myconf'
 alias play='cd ~/playground'
+alias raylib='cd ~/playground/raylib'
+alias roll='cd ~/playground/raylib/rolling-cube'
 
 
 alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"

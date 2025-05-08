@@ -30,6 +30,8 @@
           ("WTF" . (:foreground "orange" :weight bold)) ;; Color not working
           ))
 
+  (require 'org-tempo)
+
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "ON-HOLD" "|" "DONE")
           (sequence "TRY" "NOTE" "REVIEW" "PERMANENT" "CANCELLED" "|" "WTF")))

@@ -4,19 +4,18 @@
 echo "*** Generating BASIC configuration:"
 
 FILES="begin.el
-
+package.el
 
 bars-and-title.el
 column-and-line-numbers.el
 paren-indent.el
 
 cond-mac-linux-win.el
-duplicate-line.el
 xah-cut-copy.el
 keybindings.el
 
 defalias.el
-
+dired.el
 
 
 
@@ -33,8 +32,11 @@ elisp.el
 
 
 
-basic-special.el
-cua.el"
+multiple-cursors.el
+cua.el
+
+anzu.el
+basic-special.el"
 
 
 rm -f basic.el 

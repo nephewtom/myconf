@@ -10,7 +10,7 @@
 ;; region highlight color
 (set-face-attribute 'region nil :background "#848000") ;;
 
-;; fringe color (between line numbers and buffer)
+;; fringe color (franja a la izquierda del buffer)
 (set-face-attribute 'fringe nil :background "#505050")
 
 (custom-set-faces

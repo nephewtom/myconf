@@ -154,15 +154,16 @@
 
 ;; --- Miscellaneous
 
-;; No me funciona... ya que no me deja meter por lo que quiero sustituir...
-(defun query-replace-symbol-at-point ()
-  "Start `query-replace-regexp' with symbol at point as default."
+(defun my/query-replace-from-region ()
+  "Start `query-replace` with the selected region as the initial string."
   (interactive)
-  (let ((sym (symbol-at-point)))
-    (when sym
-      ;; (push (cons (format "\\_<%s\\_>" sym) "") query-replace-defaults)
-      (push (cons (format "%s" sym) "") query-replace-defaults)
-      (call-interactively #'query-replace))))
+  (if (use-region-p)
+      (let ((from (buffer-substring-no-properties (region-beginning) (region-end))))
+        (deactivate-mark)
+        (call-interactively `(lambda (to)
+                               (interactive (list (read-string (format "Replace `%s` with: " from))))
+                               (query-replace from to))))
+    (call-interactively 'query-replace)))
 
 
 (global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
@@ -179,6 +180,8 @@
 
 (global-set-key (kbd "M-<f4>") 'kill-emacs)
 (global-set-key (kbd "<escape>") 'keyboard-quit)
+
+(global-set-key (kbd "C-x C-S-e") 'eval-print-last-sexp)
 
 ;; --- Differenciate C-i & TAB
 ;; https://stackoverflow.com/q/1792326/316232
@@ -198,3 +201,6 @@
 (setq mouse-drag-copy-region t)
 (setq select-active-regions nil)
 (global-set-key [mouse-2] 'mouse-yank-at-click)
+
+(global-set-key (kbd "C-o") 'find-file)
+(global-set-key (kbd "H-i") 'switch-to-buffer)

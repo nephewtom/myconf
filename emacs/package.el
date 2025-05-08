@@ -1,3 +1,8 @@
+;; Tell Emacs where to save compiled files
+;; (when (boundp 'native-comp-eln-load-path)
+;;   (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)))
+
+
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -28,5 +33,7 @@
 (use-package bind-key
   :ensure t)
 
-; set the path for manually installed packages
+;; set the path for manually installed packages
 (add-to-list 'load-path "~/.emacs.d/packages")
+
+(setq native-comp-async-report-warnings-errors nil)

@@ -16,5 +16,6 @@ play=cd /d d:\playground
 playc=cd /d d:\playground\c_cpp
 ncine=cd /d d:\playground\c_cpp\ncine
 roll=cd /d d:\playground\raylib\rolling-cube
+cotw=cd /d d:\playground\raylib\cube-of-the-words
 
 drop=cd /d d:\dropbox

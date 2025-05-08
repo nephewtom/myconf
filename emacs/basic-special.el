@@ -1,3 +1,4 @@
+
 (global-set-key (kbd "C-o") 'find-file)
 (global-set-key (kbd "H-i") 'switch-to-buffer)
 
@@ -18,7 +19,19 @@
                               )
                  )
 
-;; (load "~/.emacs.d/elpa/hl-defined-20170223.744/hl-defined-autoloads.el")
-;; (load "~/.emacs.d/elpa/wrap-region-20140117.720/wrap-region-autoloads.el")
-;; (load "~/.emacs.d/elpa/company-20190116.1133/company-autoloads.el")
-;; (load "~/.emacs.d/elpa/helm-20190213.609/helm-autoloads.el")
+
+;; --- Simpler and faster than helm
+(require 'smex)
+;; (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+                                        ; when Smex is auto-initialized on its first run.
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+
+;; --- Importing Tsoding simpc-mode
+(add-to-list 'load-path "~/myconf/emacs")
+(require 'simpc-mode)
+;; Automatically enabling simpc-mode on files with extensions like .h, .c, .cpp, .hpp
+(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))

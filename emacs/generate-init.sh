@@ -11,7 +11,6 @@ column-and-line-numbers.el
 paren-indent.el
 calendar.el
 cond-mac-linux-win.el
-duplicate-line.el
 xah-cut-copy.el
 keybindings.el
 sudo.el
@@ -19,7 +18,7 @@ defalias.el
 dired.el
 neotree.el
 ediff.el
-helm.el
+helm-conf.el
 movement.el
 buffers-utils.el
 elisp.el
@@ -36,6 +35,7 @@ compilation.el
 multiple-cursors.el
 cua.el
 super-save.el
+anzu.el
 end.el"
 
 rm -f init.el 

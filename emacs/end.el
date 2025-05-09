@@ -4,8 +4,6 @@
 ;; (print (format-time-string "%H:%M:%S.%3N") myscratch)
 ;; (print "rubbish"  myscratch)
 
-;;(setq custom-file "~/myconf/emacs/custom.el")
-;;(load custom-file) 
 (put 'scroll-left 'disabled nil)
 
 
@@ -40,20 +38,60 @@
 ;; (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 
 
-;; --- Custom variables
+(load-file custom-file)
+(require 'recentf)
+(recentf-mode 1)
+(recentf-open-files)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (lorem-ipsum flymd zenburn-theme yaml-mode yafolding xah-lookup wgrep web-beautify use-package typing transpose-frame tabbar sx switch-window strace-mode stem sqlplus sql-indent speed-type spaceline-all-the-icons smart-mode-line-powerline-theme scss-mode rpm-spec-mode rainbow-mode rainbow-delimiters racket-mode pyenv-mode py-autopep8 puppet-mode psession projectile processing-snippets processing-mode prettier-js peep-dired paredit pandoc-mode org2blog org-pandoc openwith nhexl-mode move-text monokai-theme micgoline mediawiki markdown-toc magit love-minor-mode log4j-mode load-theme-buffer-local lispy json-mode jedi impatient-mode hl-defined highlight-chars hideshowvis helm-swoop helm-smex helm-gtags helm-etags-plus helm-descbinds helm-css-scss helm-company groovy-mode groovy-imports google-this google-c-style gnuplot-mode ggtags function-args fold-dwim flymake-json flycheck-irony flycheck-color-mode-line flx fill-column-indicator exec-path-from-shell evil etags-select esup elpy elisp-slime-nav edit-server dumb-jump doremi-frm doremi-cmd direx dired-toggle-sudo dired+ diminish diff-hl counsel company-irony company-c-headers color-theme-monokai color-theme-emacs-revert-theme color-theme-eclipse color-theme-buffer-local cmake-mode cmake-ide buffer-move better-defaults bash-completion base16-theme awk-it auto-complete-nxml auto-complete-clang auto-complete-c-headers aggressive-indent))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(defun profile-emacs-startup ()
+  "Calculate and display the total time spent during Emacs startup based on log timestamps."
+  (interactive)
+  (with-current-buffer "*Messages*"
+    (let ((begin-timestamp nil)
+          (end-timestamp nil))
+      ;; Find BEGIN timestamp
+      (goto-char (point-min))
+      (when (search-forward "Emacs BEGIN" nil t)
+        (beginning-of-line)
+        (when (looking-at "\\[\\(.*?\\)\\]")
+          (setq begin-timestamp (match-string 1))))
+
+      ;; Find END timestamp
+      (goto-char (point-min))
+      (when (search-forward "Emacs END" nil t)
+        (beginning-of-line)
+        (when (looking-at "\\[\\(.*?\\)\\]")
+          (setq end-timestamp (match-string 1))))
+
+      (if (and begin-timestamp end-timestamp)
+          ;; (progn
+
+          ;; Claude did this... TERRIBLE!
+          ;; Parse timestamps manually - format is YYYY-MM-DDThh:mm:ss.ssssss
+          (let* ((begin-time-parts (split-string begin-timestamp "[T:]"))
+                 (end-time-parts (split-string end-timestamp "[T:]"))
+                 (begin-seconds-parts (split-string (nth 3 begin-time-parts) "\\."))
+                 (end-seconds-parts (split-string (nth 3 end-time-parts) "\\."))
+
+                 (begin-hour (string-to-number (nth 1 begin-time-parts)))
+                 (begin-min (string-to-number (nth 2 begin-time-parts)))
+                 (begin-sec (string-to-number (nth 0 begin-seconds-parts)))
+                 (begin-microsec (string-to-number (nth 1 begin-seconds-parts)))
+
+                 (end-hour (string-to-number (nth 1 end-time-parts)))
+                 (end-min (string-to-number (nth 2 end-time-parts)))
+                 (end-sec (string-to-number (nth 0 end-seconds-parts)))
+                 (end-microsec (string-to-number (nth 1 end-seconds-parts)))
+
+                 (begin-total-secs (+ (* begin-hour 3600) (* begin-min 60) begin-sec (/ begin-microsec 1000000.0)))
+                 (end-total-secs (+ (* end-hour 3600) (* end-min 60) end-sec (/ end-microsec 1000000.0)))
+                 (diff-secs (- end-total-secs begin-total-secs)))
+
+            (format "Emacs startup time: %.3f seconds" diff-secs))
+        "Could not find BEGIN and END markers in startup log."))))
+
+
+(message "Emacs END")
+(message (profile-emacs-startup))
 

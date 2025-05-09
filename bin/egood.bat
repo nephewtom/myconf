@@ -1,1 +1,1 @@
-runemacs.exe -Q -l ~/myconf/emacs/good/good.el &
+runemacs.exe --no-site-file --no-site-lisp --no-splash -l ~/myconf/emacs/good/good.el %1 &

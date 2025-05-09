@@ -1,18 +1,14 @@
-;; --- Packages stuff
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'load-path "~/.emacs.d/packages")
-
-(package-initialize)
-
-(load "~/myconf/emacs/magit-conf.el")
-
-
+;; ----------------------------------------------------------------------------
 ;; --- Start-up some stuff
+;; ----------------------------------------------------------------------------
 
 ;; Provide timestamp to *Messages* logs
 (load "~/myconf/emacs/log.el")
+(message "Emacs BEGIN")
+
+;; custom file for Emacs customize stuff not to mix with this conf
+(setq custom-file "~/myconf/emacs/custom.el")
+
 
 ;; Backup files: https://www.johndcook.com/blog/emacs_windows/#backup
 (setq backup-directory-alist
@@ -30,10 +26,26 @@
       (lambda ()
         (play-sound-file "~/myconf/emacs/hit.wav")))
 
+
+;; ----------------------------------------------------------------------------
+;; --- Packages stuff & server-start
+;; ----------------------------------------------------------------------------
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'load-path "~/.emacs.d/packages")
+
+(package-initialize)
+
+(load "~/myconf/emacs/magit-conf.el")
+
 (server-start)
 
 
-;; --- Bars, title and theme
+;; ----------------------------------------------------------------------------
+;; --- Bars, title, theme, hl-line and some faces
+;; ----------------------------------------------------------------------------
+
 (setq inhibit-startup-message t)
 (tool-bar-mode -1) ;; removes tool-bar
 (menu-bar-mode -1) ;; removes tool-bar
@@ -48,15 +60,18 @@
 
 (load-theme 'tango-dark t)
 
+
+;; --- hl-line-mode
+
 ;; https://stackoverflow.com/q/9990370/316232
 (global-hl-line-mode t) ;; highlight current line
 (make-variable-buffer-local 'global-hl-line-mode)
+;; ;; disable it with
+(global-hl-line-mode -1)
 
 ;; current line highlighted color
 (set-face-background hl-line-face "#406040")
 (set-face-foreground hl-line-face "#ffffff")
-;; (set-face-attribute 'hl-line nil :inherit 'highlight :background nil)
-
 
 ;; region highlight color
 (set-face-attribute 'region nil :background "#848000") ;;
@@ -64,19 +79,18 @@
 ;; fringe color (between line numbers and buffer)
 (set-face-attribute 'fringe nil :background "#505050")
 
-
+;; faces for comments
 (custom-set-faces
  '(font-lock-comment-face ((t (:foreground "forest green" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "forest green")))))
 
 
-
-
+;; ----------------------------------------------------------------------------
 ;; --- Miscellaneous
+;; ----------------------------------------------------------------------------
 (setq set-mark-command-repeat-pop t) ;; https://emacs.stackexchange.com/a/2818/6957
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 (setq-default tab-width 4)
-
 
 (delete-selection-mode 1) ;; Allows to delete without kill-ring & inserting over selection.
 (global-unset-key (kbd "C-x C-z")) ;; Unbind suspend-frame
@@ -117,6 +131,24 @@
         (t (self-insert-command (or arg 1)))))
 
 
+;; --- Move end of line / Join line
+
+(defun move-end-of-line-newline-and-indent ()
+  "Insert a newline, then indent according to major mode."
+  (interactive "*")
+  (move-end-of-line 1)
+  (newline)
+  (indent-according-to-mode))
+
+;;; It allows you to move the current line using M-up / M-down
+;; If a region is marked, it will move the region instead.
+(require 'move-text)
+(move-text-default-bindings)
+
+
+;; ----------------------------------------------------------------------------
+;; --- Condition for different OS
+;; ----------------------------------------------------------------------------
 (cond
  ;; --- Mac OS X stuff ---
  ((string-equal system-type "darwin")
@@ -174,8 +206,35 @@
   )
  )
 
+;; --- Mac OS X specific kill-word() ---
+(cond
+ ((string-equal system-type "darwin")
 
+  ;; Avoid C-k and M-backspace overwrite clipboard
+  (defun my-backward-kill-word ()
+    "Kill the previous word without overwriting the clipboard."
+    (interactive)
+    (let ((clipboard-content (gui-get-selection 'CLIPBOARD))) ;; Save clipboard
+      (backward-kill-word 1)
+      (gui-set-selection 'CLIPBOARD clipboard-content))) ;; Restore clipboard
+  
+  (global-set-key (kbd "M-<backspace>") 'my-backward-kill-word)
+
+  (defun my-kill-line ()
+    "Kill the line without overwriting the clipboard."
+    (interactive)
+    (let ((clipboard-content (gui-get-selection 'CLIPBOARD))) ;; Save clipboard
+      (kill-line)
+      (gui-set-selection 'CLIPBOARD clipboard-content))) ;; Restore clipboard
+  
+  (global-set-key (kbd "C-k") 'my-kill-line)
+  )
+ )
+
+
+;; ----------------------------------------------------------------------------
 ;; --- Cut, Copy, Paste from Xah Lee functions   ---
+;; ----------------------------------------------------------------------------
 
 ;; Check http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html
 (defun xah-cut-line-or-region ()
@@ -202,15 +261,15 @@ When `universal-argument' is called first, copy whole buffer (respects `narrow-t
 URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
 Version 2017-07-08"
   (interactive)
-    (if current-prefix-arg
+  (if current-prefix-arg
       (progn
         (kill-ring-save (point-min) (point-max))
         (message "All visible buffer text copied"))
-      (if (use-region-p)
+    (if (use-region-p)
         (progn
           (kill-ring-save (region-beginning) (region-end))
           (message "Active region copied"))
-    (if (eq last-command this-command)
+      (if (eq last-command this-command)
           (if (eobp)
               (progn (message "empty line at end of buffer." ))
             (progn
@@ -219,8 +278,8 @@ Version 2017-07-08"
                (buffer-substring-no-properties (line-beginning-position) (line-end-position))
                nil)
               (message "Line copy appended")
-        (progn
-            (end-of-line)
+              (progn
+                (end-of-line)
                 (forward-char))))
         (if (eobp)
             (if (eq (char-before) 10 )
@@ -229,29 +288,17 @@ Version 2017-07-08"
                 (kill-ring-save (line-beginning-position) (line-end-position))
                 (end-of-line)
                 (message "line copied")))
-      (progn
+          (progn
             (kill-ring-save (line-beginning-position) (line-end-position))
-    (end-of-line)
-    (forward-char)
+            (end-of-line)
+            (forward-char)
             (message "line copied")))))))
 
 
-;; --- Move end of line / Join line
-
-(defun move-end-of-line-newline-and-indent ()
-  "Insert a newline, then indent according to major mode."
-  (interactive "*")
-  (move-end-of-line 1)
-  (newline)
-  (indent-according-to-mode))
-
-;;; It allows you to move the current line using M-up / M-down
-;; If a region is marked, it will move the region instead.
-(require 'move-text)
-(move-text-default-bindings)
-
-
+;; ----------------------------------------------------------------------------
 ;; ===== Main Keybindings =======
+;; ----------------------------------------------------------------------------
+
 (require 'iso-transl) ;; Make dead keys work
 
 ;; NOTE: Do not bind C-y & M-w to anything.
@@ -270,7 +317,6 @@ Version 2017-07-08"
   )
 
 (define-key cua-global-keymap [C-return] 'special-c-return-in-dired)
-
 
 
 ;; --- Search with C-f like MOST apps...
@@ -295,7 +341,6 @@ Version 2017-07-08"
 ;; Differenciate <RET> from C-m 
 ;; https://emacs.stackexchange.com/questions/20240/how-to-distinguish-c-m-from-return
 ;; (define-key input-decode-map [?\C-m] [C-m])
-
 
 (global-set-key (kbd "C-<f7>") 'kmacro-start-macro)
 (global-set-key (kbd "C-<f8>") 'kmacro-end-and-call-macro)
@@ -384,7 +429,6 @@ Version 2017-07-08"
 (global-set-key [C-prior] 'windmove-left)
 
 
-
 ;; --- Font-size & split-pane size
 (global-set-key (kbd "C-=") 'text-scale-adjust)
 
@@ -416,8 +460,7 @@ Version 2017-07-08"
 (global-set-key (kbd "C-S-c") 'comment-line-or-region) ; Eclipse has this one too
 
 
-;; --- Miscellaneous
-
+;; --- query-replace stuff
 (defun my/query-replace-from-region ()
   "Start `query-replace` with the selected region as the initial string."
   (interactive)
@@ -429,7 +472,17 @@ Version 2017-07-08"
                                (query-replace from to))))
     (call-interactively 'query-replace)))
 
-;; Default query-replace as alias
+;; anzu will override this
+(global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
+
+(require 'anzu)
+(global-anzu-mode +1)
+(global-set-key [remap query-replace] 'anzu-query-replace)
+(global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
+(global-set-key (kbd "M-%") 'anzu-query-replace-at-cursor)
+
+
+;; --- Defalias
 (defalias 'qr 'query-replace)
 (defalias 'qrr 'query-replace-regexp)
 
@@ -442,14 +495,13 @@ Version 2017-07-08"
 (defalias 'df 'delete-frame)
 (defalias 'nf 'new-frame)
 
-;; anzu will override this, search 'anzu' below
-(global-set-key (kbd "C-S-r") 'query-replace) ;; Seems to remind me r=replace
+
+;; --- More keybindings
 
 (global-set-key (kbd "C-.") 'repeat) ;; Like . in vim
 (global-set-key (kbd "M-r") 'iedit-mode)
 
 (global-set-key (kbd "M-y") 'company-complete)
-;; (global-set-key (kbd "M-;") 'hippie-expand)
 (global-set-key (kbd "C-;") 'company-files)
 
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -484,8 +536,9 @@ Version 2017-07-08"
 (global-set-key (kbd "H-i") 'switch-to-buffer)
 
 
-
+;; ----------------------------------------------------------------------------
 ;; --- Elisp related
+;; ----------------------------------------------------------------------------
 
 ;; (require 'hl-defined)
 
@@ -499,8 +552,9 @@ Version 2017-07-08"
 
 
 
-
+;; ----------------------------------------------------------------------------
 ;; --- Multiple Cursors
+;; ----------------------------------------------------------------------------
 
 ;; https://github.com/magnars/multiple-cursors.el
 (require 'multiple-cursors)
@@ -527,8 +581,10 @@ Version 2017-07-08"
               (my/enable-c-electric-brace))))
 
 
-
+;; ----------------------------------------------------------------------------
 ;; --- smex - simpler and faster than helm
+;; ----------------------------------------------------------------------------
+
 (require 'smex)
 ;; (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
                                         ; when Smex is auto-initialized on its first run.
@@ -540,12 +596,20 @@ Version 2017-07-08"
 (ido-mode 1)
 (ido-everywhere 1)
 
+;; Copies the absolute file path under cursor in minibuffer when doing find-file
+(setq ido-use-filename-at-point 'guess)
+
 (require 'ido-completing-read+)
 (ido-ubiquitous-mode 1)
 
+;; TIP FOR OPENING DIRECTORIES
+;; After running find-file, type a . and then C-j to open the directory of the path
 
 
+;; ----------------------------------------------------------------------------
 ;; --- Dired ---
+;; ----------------------------------------------------------------------------
+
 (require 'dired)
 
 ;; Evitar el mensaje de confirmación para usar 'dired-find-alternate-file
@@ -580,7 +644,9 @@ Version 2017-07-08"
   (define-key dired-mode-map (kbd "M-i") nil))
 
 
+;; ----------------------------------------------------------------------------
 ;; --- Buffers stuff
+;; ----------------------------------------------------------------------------
 
 (require 'buffer-move)
 (defun win-swap () "Swap windows using buffer-move.el" (interactive)
@@ -605,7 +671,9 @@ Version 2017-07-08"
 ;;(toggle-uniquify-buffer-names) ;; Different buffer name for same name files
 
 
+;; ----------------------------------------------------------------------------
 ;; --- Ibuffer ----
+;; ----------------------------------------------------------------------------
 (require 'ibuffer)
 
 (define-key ibuffer-mode-map (kbd "C-o") nil)
@@ -689,7 +757,10 @@ Version 2017-07-08"
 (defalias 'ib 'indent-buffer)
 
 
+;; ----------------------------------------------------------------------------
 ;; --- Company ---
+;; ----------------------------------------------------------------------------
+
 (require 'company)
 
 ;; Enable company globally
@@ -716,47 +787,34 @@ Version 2017-07-08"
 (global-set-key (kbd "M-y") 'helm-company)
 
 
- ;; --- Mac OS X specific kill-word() ---
-(cond
- ((string-equal system-type "darwin")
+;; ----------------------------------------------------------------------------
+;; --- FlyCheck
+;; ----------------------------------------------------------------------------
+(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
-  ;; Avoid C-k and M-backspace overwrite clipboard
-  (defun my-backward-kill-word ()
-    "Kill the previous word without overwriting the clipboard."
-    (interactive)
-    (let ((clipboard-content (gui-get-selection 'CLIPBOARD))) ;; Save clipboard
-      (backward-kill-word 1)
-      (gui-set-selection 'CLIPBOARD clipboard-content))) ;; Restore clipboard
-  
-  (global-set-key (kbd "M-<backspace>") 'my-backward-kill-word)
+(defun my/flycheck-mode-line-status-text ()
+  "Custom Flycheck status with colors: yellow for warnings, red for errors."
+  (let ((error-count (flycheck-count-errors flycheck-current-errors)))
+    (let ((errors (or (cdr (assq 'error error-count)) 0))
+          (warnings (or (cdr (assq 'warning error-count)) 0)))
+      (cond
+       ((> errors 0)
+        (propertize (format " FlyC:%d|%d" errors warnings)
+                    'face 'error))
+       ((> warnings 0)
+        (propertize (format " FlyC:%d|%d" errors warnings)
+                    'face 'warning))
+       (t
+        (propertize " FlyC:OK" 'face 'success))))))
 
-  (defun my-kill-line ()
-    "Kill the line without overwriting the clipboard."
-    (interactive)
-    (let ((clipboard-content (gui-get-selection 'CLIPBOARD))) ;; Save clipboard
-      (kill-line)
-      (gui-set-selection 'CLIPBOARD clipboard-content))) ;; Restore clipboard
-  
-  (global-set-key (kbd "C-k") 'my-kill-line)
-  )
- )
+(setq flycheck-mode-line
+      '(:eval (my/flycheck-mode-line-status-text)))
 
 
-(require 'anzu)
-(global-anzu-mode +1)
-(global-set-key [remap query-replace] 'anzu-query-replace)
-(global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
-(global-set-key (kbd "M-%") 'anzu-query-replace-at-cursor)
-
-
-;; --- Cpp with Lsp-mode, but not by default (use only when needed)
-
-;; --- aggressive-indent
-(require 'aggressive-indent)
-(add-hook 'prog-mode-hook #'aggressive-indent-mode)
-(aggressive-indent-global-mode)
-
+;; ----------------------------------------------------------------------------
 ;; --- lsp-mode
+;; ----------------------------------------------------------------------------
+
 (require 'lsp-mode)
 
 ;; Enable lsp in specific modes
@@ -785,6 +843,12 @@ Version 2017-07-08"
             (local-set-key (kbd "M-<f6>") 'flycheck-previous-error)))
 
 ;; LSP keybindings
+(defun my-lsp-newline ()
+  "Custom function to override ENTER behavior in LSP buffers."
+  (interactive)
+  (insert-char ?\n)
+  (indent-according-to-mode))
+
 (with-eval-after-load 'lsp-mode
   (define-key lsp-mode-map (kbd "RET") #'my-lsp-newline)
   (define-key lsp-mode-map (kbd "M-RET") #'lsp-execute-code-action)
@@ -796,9 +860,20 @@ Version 2017-07-08"
 
 (set-face-attribute 'lsp-face-highlight-textual nil :background "#505000")
 (set-face-attribute 'lsp-face-highlight-textual nil :foreground "#ffffff")
+(set-face-attribute 'lsp-face-highlight-read nil :background "#505000")
+(set-face-attribute 'lsp-face-highlight-read nil :foreground "#ffffff")
+(set-face-attribute 'lsp-face-highlight-write nil :foreground "#ffffff")
 
-
+;; ----------------------------------------------------------------------------
 ;; --- cc-mode
+;; ----------------------------------------------------------------------------
+
+;; --- aggressive-indent
+(require 'aggressive-indent)
+(add-hook 'prog-mode-hook #'aggressive-indent-mode)
+(aggressive-indent-global-mode)
+
+
 (require 'cc-mode)
 (setq c-default-style "linux")
 (setq c-basic-offset 4)
@@ -844,10 +919,263 @@ Version 2017-07-08"
   (define-key glsl-mode-map (kbd "C-<f4>") #'run-glsl-viewer))
 
 
+(global-set-key (kbd "M-<f12>") 'compile)
 
+
+;; ----------------------------------------------------------------------------
+;; --- Compilation mode
+;; ----------------------------------------------------------------------------
+
+;; Hook for compilation mode
+(require 'ansi-color)
+(defun my-ansi-color-apply ()
+  "Apply ANSI colors to the *compilation* buffer."
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
+(defun my-compilation-hook ()
+  "Ensure *compilation* splits vertically and applies ANSI colors."
+  (unless (get-buffer-window "*compilation*")
+    (split-window-vertically))
+
+  (add-hook 'compilation-filter-hook 'my-ansi-color-apply))
+
+(add-hook 'compilation-mode-hook 'my-compilation-hook)
+
+
+;; Function for compiling 
+(defun my-compile ()
+  "Run compile and resize the compile window"
+  (interactive)
+  (progn
+
+    ;; Kill the running compilation process if it exists
+    (let ((comp-proc (get-buffer-process "*compilation*")))
+      (when comp-proc
+        (sit-for 0.1)  ;; Give Emacs a short delay to properly kill the process
+        (when (process-live-p comp-proc)  ;; If still running, force kill
+          (delete-process comp-proc)
+          )))
+
+    ;; Now run recompile and force it to not prompt (avoid the "kill it?" prompt)
+    (let ((compilation-ask-about-save nil))  ;; Prevent asking about saving buffers
+      (call-interactively 'recompile))
+    
+    (setq cur (selected-window))
+    (setq w (get-buffer-window "*compilation*"))
+    (select-window w)
+    (setq h (window-height w))
+    (shrink-window (- h 15))
+    (select-window cur)
+    ))
+(global-set-key (kbd "<f12>") 'my-compile)
+
+
+;; Hide compilation buffer
+(defun hide-compilation-buffer ()
+  (interactive)
+  (let ((w (get-buffer-window "*compilation*")))
+    (when w
+      (delete-window w))))
+(global-set-key (kbd "C-<f12>") 'hide-compilation-buffer)
+
+
+;; Change default comment for Windows .BAT files
+(defun my-bat-mode-hook ()
+  (setq comment-start ":: ")
+  (setq comment-start-skip "::[ \t]*"))
+
+(add-hook 'bat-mode-hook 'my-bat-mode-hook)
+
+
+;; ----------------------------------------------------------------------------
 ;; --- Importing Tsoding simpc-mode
+;; ----------------------------------------------------------------------------
 (add-to-list 'load-path "~/myconf/emacs")
 (require 'simpc-mode)
 ;; Automatically enabling simpc-mode on files with extensions like .h, .c, .cpp, .hpp
 (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 
+
+;; ----------------------------------------------------------------------------
+;; --- Super save
+;; ----------------------------------------------------------------------------
+
+(setq super-save-auto-save-when-idle t)
+(setq super-save-idle-duration 5)
+(super-save-mode 1)
+
+;; Manually add an idle timer
+(run-with-idle-timer super-save-idle-duration t #'super-save-command)
+
+(require 'yasnippet)
+(yas-global-mode 1)
+
+
+
+
+;; ----------------------------------------------------------------------------
+;; --- Org mode 
+;; ----------------------------------------------------------------------------
+
+;; NOTE SURE WHY THE OLD CONFIG DOES NOT SHOW THE SAME FACES IN ORG-MODE...
+
+;; Ensure org is loaded
+(require 'org)
+
+;; Key bindings
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c o") 'org-open-at-point)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c s") 'org-edit-special)
+(define-key org-mode-map (kbd "C-<tab>") nil)
+(define-key org-mode-map (kbd "M-h") nil)
+(define-key org-mode-map (kbd "C-<down>") 'org-forward-heading-same-level)
+(define-key org-mode-map (kbd "C-<up>") 'org-backward-heading-same-level)
+(define-key org-mode-map (kbd "M-p") 'backward-paragraph)
+(define-key org-mode-map (kbd "M-n") 'forward-paragraph)
+(define-key org-src-mode-map (kbd "C-c s") 'org-edit-src-exit)
+
+;; TODO keyword faces
+(setq org-todo-keyword-faces
+      '(("TODO" . (:foreground "dodger blue" :weight bold))
+        ("IN-PROGRESS" . (:foreground "red" :weight bold))
+        ("ON-HOLD" . (:foreground "orange" :weight bold))
+        ("DONE" . (:foreground "forest green" :weight bold))
+        ("TRY" . (:foreground "purple" :weight bold))
+        ("NOTE" . (:foreground "black" :weight bold))
+        ("REVIEW" . (:foreground "purple" :weight bold))
+        ("PERMANENT" . (:foreground "purple" :weight bold))
+        ("CANCELLED" . (:foreground "black" :weight bold))
+        ("CANCELLED" . (:foreground "black" :weight bold))
+        ("WTF" . (:foreground "orange" :weight bold))))
+
+;; Load org-tempo for <s etc.
+(require 'org-tempo)
+
+;; Define TODO sequences
+(setq org-todo-keywords
+      '((sequence "TODO" "IN-PROGRESS" "ON-HOLD" "|" "DONE")
+        (sequence "TRY" "NOTE" "REVIEW" "PERMANENT" "CANCELLED" "|" "WTF")))
+
+;; Priority faces
+(setq org-priority-faces
+      '((?A . (:background "#DD0000" :foreground "black" :box (:line-width 2 :style released-button)))
+        (?B . (:background "#A366FF" :foreground "black" :box (:line-width 2 :style released-button)))
+        (?C . (:background "#00CCFF" :foreground "black" :box (:line-width 2 :style released-button)))))
+
+;; Disable truncation by default
+(setq org-startup-truncated nil)
+
+;; Markdown export
+(eval-after-load "org" '(require 'ox-md nil t))
+(eval-after-load "org" '(require 'ox-gfm nil t))
+
+;; Enable dot language in Babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
+
+;; Custom function to fix inline images
+(defun my/fix-inline-images ()
+  (when org-inline-image-overlays
+    (org-redisplay-inline-images)))
+
+;; Toggle link display between literal and descriptive
+(defun org-toggle-link-display ()
+  "Toggle the literal or descriptive display of links."
+  (interactive)
+  (if org-descriptive-links
+      (progn (org-remove-from-invisibility-spec '(org-link))
+             (org-restart-font-lock)
+             (setq org-descriptive-links nil))
+    (progn (add-to-invisibility-spec '(org-link))
+           (org-restart-font-lock)
+           (setq org-descriptive-links t))))
+
+
+
+(load-file custom-file)
+(require 'recentf)
+(recentf-mode 1)
+(recentf-open-files)
+
+;; (defun profile-emacs-startup ()
+;;   "Calculate and display the total time spent during Emacs startup based on log timestamps."
+;;   (interactive)
+;;   (with-current-buffer "*Messages*"
+;;     (let ((begin-time nil)
+;;           (end-time nil))
+;;       ;; Find BEGIN timestamp
+;;       (goto-char (point-min))
+;;       (when (search-forward "Emacs BEGIN" nil t)
+;;         (beginning-of-line)
+;;         (when (looking-at "\\[\\(.*?\\)\\]")
+;;           (setq begin-time (match-string 1))))
+
+;;       ;; Find END timestamp
+;;       (goto-char (point-min))
+;;       (when (search-forward "Emacs END" nil t)
+;;         (beginning-of-line)
+;;         (when (looking-at "\\[\\(.*?\\)\\]")
+;;           (setq end-time (match-string 1))))
+
+;;       (if (and begin-time end-time)
+;;           (let* ((begin-seconds (float-time (date-to-time begin-time)))
+;;                  (end-seconds (float-time (date-to-time end-time)))
+;;                  (diff-seconds (- end-seconds begin-seconds)))
+;;             (message "BEGIN: %s (%.6f)\nEND: %s (%.6f)\nDIFF: %.3f seconds" 
+;;                      begin-time begin-seconds end-time end-seconds diff-seconds))
+;;         (message "Could not find BEGIN and END markers in startup log.")))))
+
+
+
+(defun profile-emacs-startup ()
+  "Calculate and display the total time spent during Emacs startup based on log timestamps."
+  (interactive)
+  (with-current-buffer "*Messages*"
+    (let ((begin-timestamp nil)
+          (end-timestamp nil))
+      ;; Find BEGIN timestamp
+      (goto-char (point-min))
+      (when (search-forward "Emacs BEGIN" nil t)
+        (beginning-of-line)
+        (when (looking-at "\\[\\(.*?\\)\\]")
+          (setq begin-timestamp (match-string 1))))
+
+      ;; Find END timestamp
+      (goto-char (point-min))
+      (when (search-forward "Emacs END" nil t)
+        (beginning-of-line)
+        (when (looking-at "\\[\\(.*?\\)\\]")
+          (setq end-timestamp (match-string 1))))
+
+      (if (and begin-timestamp end-timestamp)
+          ;; (progn
+
+          ;; Claude did this... TERRIBLE!
+          ;; Parse timestamps manually - format is YYYY-MM-DDThh:mm:ss.ssssss
+          (let* ((begin-time-parts (split-string begin-timestamp "[T:]"))
+                 (end-time-parts (split-string end-timestamp "[T:]"))
+                 (begin-seconds-parts (split-string (nth 3 begin-time-parts) "\\."))
+                 (end-seconds-parts (split-string (nth 3 end-time-parts) "\\."))
+
+                 (begin-hour (string-to-number (nth 1 begin-time-parts)))
+                 (begin-min (string-to-number (nth 2 begin-time-parts)))
+                 (begin-sec (string-to-number (nth 0 begin-seconds-parts)))
+                 (begin-microsec (string-to-number (nth 1 begin-seconds-parts)))
+
+                 (end-hour (string-to-number (nth 1 end-time-parts)))
+                 (end-min (string-to-number (nth 2 end-time-parts)))
+                 (end-sec (string-to-number (nth 0 end-seconds-parts)))
+                 (end-microsec (string-to-number (nth 1 end-seconds-parts)))
+
+                 (begin-total-secs (+ (* begin-hour 3600) (* begin-min 60) begin-sec (/ begin-microsec 1000000.0)))
+                 (end-total-secs (+ (* end-hour 3600) (* end-min 60) end-sec (/ end-microsec 1000000.0)))
+                 (diff-secs (- end-total-secs begin-total-secs)))
+
+            (format "Emacs startup time: %.3f seconds" diff-secs))
+        "Could not find BEGIN and END markers in startup log."))))
+
+
+(message "Emacs END")
+(message (profile-emacs-startup))

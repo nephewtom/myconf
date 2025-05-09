@@ -35,7 +35,7 @@ elisp.el
 multiple-cursors.el
 cua.el
 
-anzu.el
+anzu-conf.el
 basic-special.el"
 
 

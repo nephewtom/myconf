@@ -1,5 +1,8 @@
 ;; Provide timestamp to *Messages* logs
 (load "~/myconf/emacs/log.el")
+(message "Emacs BEGIN")
+
+(setq custom-file "~/myconf/emacs/custom.el")
 
 ;; Backup files: https://www.johndcook.com/blog/emacs_windows/#backup
 (setq backup-directory-alist

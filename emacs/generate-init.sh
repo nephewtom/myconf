@@ -4,7 +4,7 @@
 echo "*** Generating DEFAULT configuration:"
 
 FILES="begin.el
-package.el
+package-conf.el
 theme.el
 bars-and-title.el
 column-and-line-numbers.el
@@ -16,22 +16,22 @@ xah-cut-copy.el
 keybindings.el
 sudo.el
 defalias.el
-dired.el
+dired-conf.el
 neotree.el
 ediff.el
-helm.el
+helm-conf.el
 movement.el
 buffers-utils.el
 elisp.el
 flycheck.el
-company.el
+company-conf.el
 google-translate.el
 magit.el
 org-mode.el
 nxml.el
 markdown.el
 cpp.el
-python.el
+python-conf.el
 
 compilation.el
 multiple-cursors.el

@@ -4,7 +4,7 @@
 echo "*** Generating BASIC configuration:"
 
 FILES="begin.el
-package.el
+package-conf.el
 
 bars-and-title.el
 column-and-line-numbers.el
@@ -16,7 +16,7 @@ xah-cut-copy.el
 keybindings.el
 
 defalias.el
-dired.el
+dired-conf.el
 
 
 

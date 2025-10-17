@@ -43,15 +43,20 @@
   :init
   (global-company-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode)
-
+  
   :ensure t
-
   :config
   (company-mode)
   (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
+
+  
   (add-to-list 'company-backends 'company-dabbrev)
   
+  (setq company-dabbrev-downcase nil)
+  (setq company-dabbrev-ignore-case nil)
+  (setq company-dabbrev-code-ignore-case nil)
 
   :bind (:map company-search-map  
               ("C-t" . company-search-toggle-filtering)
@@ -61,7 +66,7 @@
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
 
-(global-set-key (kbd "M-y") 'helm-company)
+(global-set-key (kbd "M-y") 'company-complete)
 
 
 (defun helm-company-complete ()

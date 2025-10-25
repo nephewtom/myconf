@@ -15,12 +15,12 @@ xah-cut-copy.el
 keybindings.el
 
 defalias.el
-dired.el
+dired-conf.el
 
 
 
-
-
+movement.el
+buffers-utils.el
 elisp.el
 
 
@@ -28,13 +28,13 @@ elisp.el
 
 
 
+markdown-conf.el 
 
-
-
-
+python-conf.el
+compilation.el
 multiple-cursors.el
 cua.el
-
+super-save-conf.el
 anzu-conf.el
 basic-special.el"
 

@@ -32,11 +32,7 @@
 
 
 ;; how-can-i-make-ibuffer-auto-refresh-the-list-of-buffers
-;; Not using this one
-;; https://emacs.stackexchange.com/a/2178/6957
-;;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-auto-mode 1))) ;; Update ibuffer automatically
-
-;; Using this one
+;; Using this:
 ;; https://emacs.stackexchange.com/a/2179/6957
 (defun my-ibuffer-stale-p (&optional noconfirm)
   ;; let's reuse the variable that's used for 'ibuffer-auto-mode

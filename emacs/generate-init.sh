@@ -15,27 +15,27 @@ xah-cut-copy.el
 keybindings.el
 sudo.el
 defalias.el
-dired.el
-neotree.el
+dired-conf.el
+
 ediff.el
 helm-conf.el
 movement.el
 buffers-utils.el
 elisp.el
 flycheck-conf.el
-company.el
+company-conf.el
 google-translate.el
-magit-conf.el
+
 org-mode.el
 nxml.el
-markdown.el
+markdown-conf.el
 cpp.el
-python.el
+python-conf.el
 compilation.el
 multiple-cursors.el
 cua.el
 super-save-conf.el
-anzu-conf.el
+
 end.el"
 
 rm -f init.el 

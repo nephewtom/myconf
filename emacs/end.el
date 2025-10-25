@@ -29,14 +29,6 @@
 ;; For some reason this get disabled if I put it in keybinding.el
 (global-set-key (kbd "C-=") 'text-scale-adjust)
 
-;; --- Importing Tsoding simpc-mode
-
-
-;; (add-to-list 'load-path "~/myconf/emacs")
-;; (require 'simpc-mode)
-;; ;; Automatically enabling simpc-mode on files with extensions like .h, .c, .cpp, .hpp
-;; (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
-
 
 (load-file custom-file)
 (require 'recentf)
@@ -90,7 +82,6 @@
 
             (format "Emacs startup time: %.3f seconds" diff-secs))
         "Could not find BEGIN and END markers in startup log."))))
-
 
 (message "Emacs END")
 (message (profile-emacs-startup))

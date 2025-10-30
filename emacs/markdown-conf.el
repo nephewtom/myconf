@@ -9,8 +9,10 @@
          :map markdown-mode-map
          ("C-c C-c t" . markdown-toc/generate-toc)
          ("M-p" . nil)
-         ("M-n" . nil))
-
+         ("M-n" . nil)
+         ("C-<down>" . markdown-outline-next-same-level)
+         ("C-<up>" . markdown-outline-previous-same-level))
+ 
   :config
   (setq markdown-open-command "markdownmonster.exe")
   ;;(setq markdown-command "markdown")
